@@ -62,7 +62,7 @@
     "touchSensor": [
         {
             #This value will determine the name of the motor in the program
-            "name": "backTouchSensor",
+            "name": "frontTouchSensor",
 
             #This value does nothing
             "type": "REV Touch Sensor"

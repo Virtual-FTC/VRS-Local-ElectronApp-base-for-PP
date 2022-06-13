@@ -83,7 +83,7 @@
 	],
 	"touchSensor": [
 		{
-			"name": "backTouchSensor",
+			"name": "frontTouchSensor",
 			"type": "REV Touch Sensor"
 		}
 	]

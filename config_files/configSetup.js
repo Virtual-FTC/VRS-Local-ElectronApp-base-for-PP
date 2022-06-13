@@ -86,8 +86,9 @@ function createTouchSensorDropdown() {
 	var CHOICES = [];
 	for (i = 0; i < robotConfig["touchSensor"].length; i++)
 		CHOICES[i] = [robotConfig["touchSensor"][i]["name"], "touchSensor" + i];
-	if (CHOICES.length == 0)
+	if (CHOICES.length == 0) {
 		CHOICES[0] = ["<None>", "touchSensor0"];
+	}
 	return new Blockly.FieldDropdown(CHOICES);
 }
 
