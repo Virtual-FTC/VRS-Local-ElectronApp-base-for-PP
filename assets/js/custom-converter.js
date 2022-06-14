@@ -18,6 +18,7 @@ const replaceJSString = [
     [": ElapsedTime;", " = null;"]
     , [" : DcMotor;", " = null;"]    
     , [": number;", " = null;"]
+    ,[": number ", ""]
 
     , ["{}", "{\n}"]
     
@@ -134,7 +135,7 @@ const valueConverter = (str) => {
         const keyV = `${gamepadV[2]}_stick_${gamepadV[3]}`
         let returnStr = ""
         if(gamepadValues[keyV]<4)
-            returnStr =  `gamepad.numberValue(${gamepadV[1]-1}, ${gamepadValues[keyV]}`
+            returnStr =  `gamepad.numberValue(${gamepadV[1]-1}, ${gamepadValues[keyV]})`
         else 
             returnStr =  `gamepad.boolValue(${gamepadV[1]-1}, ${gamepadValues[keyV]}, 'Both')`
         return returnStr
@@ -230,7 +231,8 @@ const customConvert = (str) => {
     }
 
     else if (result.includes('.setDirection')) {
-        let hardmaps = /this.(\w+).setDirection\(DcMotorSimple.Direction.(\w+)\);/g.exec(result);
+        let hardmaps = /this.(\w+).setDirection\((DcMotorSimple|DcMotor).Direction.(\w+)\);/g.exec(result);
+      
         const varName = hardmaps[1];
         const value = hardmaps[2];
         return `motor.setProperty([${mortorVars[varName]}], 'Direction', ['${value}']);`;
@@ -328,29 +330,10 @@ async function convert_2js(url, javaCode, callback) {
     var funcBlocks = {}
     var funcValues = {}
     var funcName = ''
-    var modeType = 0
     var lineTxt = ""
     let rawSource = ""
 
     try {
-        // modeTypes.map((mode, i)=>{
-        //     if(javaString.includes("extends " + mode)) modeType = i
-        // })
-
-        // var classString1 =  javaString.split("extends " + modeTypes[modeType])
-
-        // var classString2 = classString1[0].split("@TeleOp(")
-
-        // if(classString2.length == 1)classString2 = ['', classString2[0]]
-
-        // var classString3 = classString2[1].split("public class ")
-
-        // javaString = (classString2[0]==''?'':( classString2[0] + "@TeleOp(")) + (classString3[0] + "public class MainControlClass extends " + modeTypes[modeType]) +classString1[1]
-
-        // removeWordsJAVA.map(word=>{
-        //     firstJS = firstJS.replaceAll(word, "")
-        // })
-        // result = javaToJavascript(javaString);
 
         await axios({
             method: 'post',
