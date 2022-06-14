@@ -1,4 +1,4 @@
-
+let OpMode = ""
 const directions = {
     'frontLeft': 0,
     'frontRight': 1,
@@ -15,16 +15,19 @@ const removeWordsJAVA = [
 ]
 
 const replaceJSString = [
-    [": ElapsedTime;", " = null;"], [" : DcMotor;", " = null;"], ["export class", "class"], 
-    ["DistanceUnit.CM", "'CM'"], ['opModeIsActive', 'linearOpMode.opModeIsActive'], 
-    ['Range.clip(', 'range.clip('], ["DcMotor, ", ""], ["DcMotorSimple.Direction.", ""], 
-    ["ColorSensor, ", ""], [": void ", ""], ["public ", ""],
-    ["JavaUtil.formatNumber(", "misc.formatNumber("], [": number;", " = null;"]
+    [": ElapsedTime;", " = null;"]
+    , [" : DcMotor;", " = null;"]    
+    , [": number;", " = null;"]
+
+    , ["{}", "{\n}"]
+    
+    , ['opModeIsActive', 'linearOpMode.opModeIsActive']
+    , ['Range.clip(', 'range.clip(']
+    , ["ColorSensor, ", ""]
+    , ["JavaUtil.formatNumber(", "misc.formatNumber("]
 ]
 
 const modeTypes = ["LinearOpMode", "OpMode"]
-
-
 const colorData = {
     'bottomColorSensor': 0
 }
@@ -43,11 +46,17 @@ const exteralFuncs = {
       }
       `]
 }
+
 var mortorVars = {}
 var colorVars = {}
 var elapsedTimeVars = {}
+var accelerateVars = {}
+
+
+
 var convertedSource = ""
-const gamepadVars = ["gamepad1", "gamepad2", "gamepad3", "gamepad4"]
+// const gamepadVars = ["gamepad1", "gamepad2", "gamepad3", "gamepad4"]
+
 const gamepadValues = {
     "left_stick_x": 0,
     "left_stick_y": 1,
@@ -55,6 +64,8 @@ const gamepadValues = {
     "right_stick_y": 3,
     "right_stick_button": 11
 }
+
+
 
 const checkBrackets = (str) => {
     const openBracket = (str.match(/{/g) || []).length;
@@ -94,32 +105,79 @@ const valueConverter = (str) => {
     } else if (str.includes(".blue()")) {
         let sides = str.split(".blue()");
         const varName = sides[0];
-        return `colorSensor.getProperty(${colorVars[varName]}, 'Blue')`
+        return `colorSensor.getColor(${colorVars[varName]}, 'Blue')`
+
     } else if (str.includes(".red()")) {
         let sides = str.split(".red()");
         const varName = sides[0];
-        return `colorSensor.getProperty(${colorVars[varName]}, 'Red')`
+        return `colorSensor.getColor(${colorVars[varName]}, 'Red')`
+
     } else if (str.includes(".green()")) {
         let sides = str.split(".green()");
         const varName = sides[0];
-        return `colorSensor.getProperty(${colorVars[varName]}, 'Green')`
+        return `colorSensor.getColor(${colorVars[varName]}, 'Green')`
+
     } else if (str.includes("getRuntime(")) {
-        return str.replaceAll('getRuntime(', "linearOpMode.getRuntime(")
-    } else if (str.includes(".getDistance(")) {
+        return str.replaceAll('getRuntime(', "linearOpMode.getRuntime(");
+
+    }else if (str.includes(".getDistance(")) {
         let sides = str.split(".getDistance(")
         let colorIndex = 0
         Object.keys(colorData).map((color) => {
             if (sides[0].includes(color)) colorIndex = color
         })
-
         let value = getBracketContent(sides[1])
         return `colorSensor.getDistance(${colorData[colorIndex]}, ${value})`;
+
+    }else if(/gamepad(\d+).(\w+)_stick_(\w)/.test(str)){
+        const gamepadV = /gamepad(\d+).(\w+)_stick_(\w)/.exec(str)
+        const keyV = `${gamepadV[2]}_stick_${gamepadV[3]}`
+        let returnStr = ""
+        if(gamepadValues[keyV]<4)
+            returnStr =  `gamepad.numberValue(${gamepadV[1]-1}, ${gamepadValues[keyV]}`
+        else 
+            returnStr =  `gamepad.boolValue(${gamepadV[1]-1}, ${gamepadValues[keyV]}, 'Both')`
+        return returnStr
+
+    }else if(str.includes(".getPower()")){
+        const exeVars = /this.(\w+).getPower/.exec(str)
+        let returnStr = str.replace("()", "")
+        return returnStr.replaceAll(/this.(\w+).getPower/g, `motor.getProperty(${mortorVars[exeVars[1]]}, 'Power')`)
+
+    }else if(str.includes("DistanceUnit.CM")){
+        const exeVars = /DistanceUnit.(\w+)/g.exec(str)
+        return str.replaceAll(`DistanceUnit.${exeVars[1]}`, `'${exeVars[1]}'`)
     }
-    // else if (elapsedTimeVars[str])
-    //     return `elapsedTime.toText(${str})`
 
+    else if(/(\w+).toString\(\)/g.test(str)){
+        let values = /(\w+).toString\(\)/g.exec(str)
+        if(elapsedTimeVars[values[1]]){
+            return str.replace(/(\w+).toString\(\)/g, `String(elapsedTime.toText(${values[1]}))`)
+        }
+    }
 
+    else if(/(\w+).seconds\(\)/g.test(str)){
+        let values = /(\w+).seconds\(\)/g.exec(str)
+        if(elapsedTimeVars[values[1]]){
+            return str.replace(/(\w+).seconds\(\)/g, `String(elapsedTime.get("Seconds", ${values[1]}))`)
+        }
+    }
 
+    else if(/(\w+).reset\(\)/g.test(str)){
+        let values = /(\w+).reset\(\)/g.exec(str)
+        if(elapsedTimeVars[values[1]]){
+            return str.replace(/(\w+).reset\(\)/g, `elapsedTime.reset(${values[1]})`)
+        }
+    }
+
+    else if(/(\w+).toUnit\((\w+)\)/g.test(str)){
+        let values = /(\w+).toUnit\((\w+)\)/g.exec(str)
+        if(accelerateVars[values[1]]){
+            return str.replace(/(\w+).toUnit\((\w+)\)/g, `acceleration.toDistanceUnit(${values[1]}, "${values[2]}")`)
+        }
+    }
+
+    
     return str
 }
 const valueChecker = (str) => {
@@ -134,11 +192,8 @@ const valueChecker = (str) => {
             if (bracks < 0) break;
             else listValue += sides[1][i]
         }
-
-        console.log("listValue update: ", listValue)
         let listValueArr = listValue.split(", ")
         listValueArr = `${listValueArr[0]}[${listValueArr[2]}]`
-
         return str.replaceAll("JavaUtil.inListGet(" + listValue + ")", listValueArr)
     }
     var words = str.split(" ")
@@ -150,13 +205,11 @@ const valueChecker = (str) => {
         return str;
 }
 const customConvert = (str) => {
-    // let result = "";
-
-    if (str.includes('hardwareMap.get')) {
-        let sides = str.split(" = ");
-        const varName = sides[0];
-        // console.log("var value sides[1] : ", sides)
-        const varValue = sides[1].split("hardwareMap.get(\"")[1].split("\")")[0]
+    let result = str;
+    if (result.includes('hardwareMap.get')) {
+        let hardmaps = /this.(\w+) = hardwareMap.get\(DcMotor, "(\w+)"\);/g.exec(result);
+        const varName = hardmaps[1];
+        const varValue = hardmaps[2];
         if (directions[varValue] != undefined)
             mortorVars[varName] = directions[varValue];
         else if (colorData[varValue] != undefined)
@@ -165,86 +218,87 @@ const customConvert = (str) => {
     }
 
     else if (str.includes("new ElapsedTime()")) {
-        let sides = str.split(" = ");
-        elapsedTimeVars[sides[0]] = true        
-        return str.replace("new ElapsedTime()", "elapsedTime.create()")
+        let values = /(\w+) = /.exec(str);
+        elapsedTimeVars[values[1]] = true;
+        return str.replace("new ElapsedTime()", "elapsedTime.create()");
     }
-    else if (str.includes('.setDirection')) {
-        let sides = str.split(".setDirection(")
-        const varName = sides[0]
-        const value = valueChecker(sides[1].replace('DcMotorSimple.Direction.', '').split(");")[0])
+
+    else if (str.includes("new Acceleration()")) {
+        let values = /this.(\w+) = /.exec(str);
+        accelerateVars[values[1]] = true;
+        return str.replace("new Acceleration()", "Acceleration.create()");
+    }
+
+    else if (result.includes('.setDirection')) {
+        let hardmaps = /this.(\w+).setDirection\(DcMotorSimple.Direction.(\w+)\);/g.exec(result);
+        const varName = hardmaps[1];
+        const value = hardmaps[2];
         return `motor.setProperty([${mortorVars[varName]}], 'Direction', ['${value}']);`;
     }
     else if (str.includes('waitForStart()')) {
         return str.replace('waitForStart', 'await linearOpMode.waitForStart');
     }
-
     else if (str.includes('.setPower(')) {
-        let sides = str.split(".setPower(")
-        const varName = sides[0]
-        const value = valueChecker(sides[1].split(");")[0]) ? valueChecker(sides[1].split(");")[0]) : 0
-        return `motor.setProperty([${mortorVars[varName]}], 'Power', [${value}]);`;
+        // let regStr = result.replaceAll(`(`, "OOO").replaceAll(`)`, "CCC");
+        let matches = /this.(\w+).setPower\((.*)\);/g.exec(result);        
+        const varName = matches[1];
+        const value = valueChecker(matches[2]);
+        return `motor.setProperty([${mortorVars[varName]}], 'Power', [${value?value:0}]);`;
     }
-
-    else if (str.includes('setMode(')) {
-        let sides = str.split(".setMode(");
-        const varName = sides[0];
-        const value = valueChecker(sides[1].replace('DcMotor.RunMode.', '').split(");")[0]);
+    else if (str.includes('setMode(')) {        
+        // let regStr = result.replaceAll(`(`, "OOO").replaceAll(`)`, "CCC");
+        let hardmaps = /this.(\w+).setMode\(DcMotor.RunMode.(\w+)\);/g.exec(str);
+        const varName = hardmaps[1];
+        const value = hardmaps[2];
         return `motor.setProperty([${mortorVars[varName]}], 'Mode', ['${value}']);`;
     }
-
     else if (str.includes('setTargetPosition(')) {
-        let sides = str.split(".setTargetPosition(");
-        const varName = sides[0];
-        const value = valueChecker(sides[1].split(");")[0]);
-        return `motor.setProperty([${mortorVars[varName]}], 'TargetPosition', [${value}]);`;
-    }
-    
+        // let regStr = result.replaceAll(`(`, "OOO").replaceAll(`)`, "CCC");
+        let matches = /this.(\w+).setTargetPosition\((.*)\);/g.exec(str);        
+        const varName = matches[1];
+        const value = valueChecker(matches[2]);
+        return `motor.setProperty([${mortorVars[varName]}], 'TargetPosition', [${value?value:0}]);`;
+    }    
     else if (str.includes('setZeroPowerBehavior(')) {
-        let sides = str.split(".setZeroPowerBehavior(");
-        const varName = sides[0]
-        const value = valueChecker(sides[1].replace('DcMotor.ZeroPowerBehavior.', '').split(");")[0])
+        let regStr = result.replaceAll(`(`, "OOO").replaceAll(`)`, "CCC");
+        let matches = /this.(\w+).setZeroPowerBehavior\(DcMotor.ZeroPowerBehavior.(\w+)\);/g.exec(regStr);
+        const varName = matches[1];
+        const value = matches[2];
         return `motor.setProperty([${mortorVars[varName]}], 'ZeroPowerBehavior', ['${value}']);`;
     }
-
     else if (str.includes('setTargetPositionTolerance(')) {
-        let sides = str.split(").setTargetPositionTolerance(");
-        const varName = sides[0].split("(")[1];
-        const value = valueChecker(sides[1].split(");")[0]);
-        return `motor.setProperty([${mortorVars[varName]}], 'TargetPositionTolerance', [${value}]);`;
+        // let regStr = result.replaceAll(`(`, "OOO").replaceAll(`)`, "CCC");
+        let matches = /this.(\w+).setTargetPositionTolerance\((.*)\);/g.exec(str);
+        const varName = matches[1];
+        const value = valueChecker(matches[2]);
+        return `motor.setProperty([${mortorVars[varName]}], 'TargetPositionTolerance', [${value?value:0}]);`;
     }
-
     else if (str.includes("if (")) {
         let sides = str.split("if (");
         const value = valueChecker(sides[1].split(") {")[0]);
         return `if (${value}) {` + sides[1].split(") {")[1];
     }
-
     else if (str.includes("JavaUtil.createListWith(")) {
         let sides = str.split("JavaUtil.createListWith(");
         const value = valueChecker(sides[1].split(");")[0]);
         return `${sides[0]}[${value}];`;
     }
-
     else if (str.includes("GoToPosition(")) {
         let sides = str.split("GoToPosition(");
         const value = valueChecker(sides[1].split(");")[0]);
         return `${sides[0]} GoToPosition(${value});`;
     }
-
     else if (str.includes("while (")) {
         let sides = str.split("while (");
         const value = valueChecker(sides[1].split(") {")[0]);
         return `while (${value}) {await linearOpMode.sleep(1);\n` + sides[1].split(") {")[1];
     }
-
     else if (str.includes("for (")) {
         let sides = str.split("for (");
         const value = valueChecker(sides[1].split(") {")[0]);
         return `for (${value}) {` + sides[1].split(") {")[1];
 
     } else if (str.includes("telemetry.addData(")) {
-
         let sides = str.split("telemetry.addData(")[1].split(");")[0]
         // .split(" ")
         let bracketCount = 0
@@ -259,8 +313,7 @@ const customConvert = (str) => {
         sides.map(item => {
             newVars.push(valueChecker(item))
         })
-        newVars = newVars.join(", ")
-
+        newVars = newVars.join(", ");
         return `telemetry.addData(${newVars});`
     }
     else if (str.includes('sleep')) {
@@ -312,28 +365,33 @@ async function convert_2js(url, javaCode, callback) {
 
             })
 
-
         replaceJSString.map(word => {
             result = result.replaceAll(word[0], word[1])
         })
 
-        console.log("javaString : ", result)
+        if(/export class (\w+) extends LinearOpMode\b/g.test(result)){
+            OpMode = "LinearOpMode"
+        }else if(/export class (\w+) extends OpMode\b/g.test(result)){
+            OpMode = "OpMode"
+        }else
+            return "Parse Error"
 
+        console.log(OpMode)
         result = result.split('\n');
         for (let i = 1; i < result.length; i++) {
-            let space_letter = ""
-            for (var j = 0; i < result[i].length; j++)if (result[i][j] !== " ") break; else space_letter += " ";
-
             lineTxt = result[i].trim();
             brackets += checkBrackets(lineTxt);
             // var 
             if (brackets == 1 && !funcName) {
-                funcName = lineTxt.split("(")[0];
+                const values = /(public)? (\w+)\((.*)\)(: void)? {/g.exec(lineTxt)
+                funcName =   values[2];
                 funcBlocks[funcName] = [];
-                funcValues[funcName] = lineTxt.split("(")[1].split("){")[0];
+                funcValues[funcName] = values[3];
             } else if (brackets > 0) {
+
                 var jsLine = customConvert(lineTxt);
-                if (jsLine != "") funcBlocks[funcName].push(space_letter + jsLine);
+                if (jsLine != "") funcBlocks[funcName].push(jsLine);
+
             } else if (brackets == 0 && funcName) {
                 if (funcName != 'constructor')
                     funcBlocks[funcName] = funcBlocks[funcName].join("\n");
@@ -354,7 +412,6 @@ async function convert_2js(url, javaCode, callback) {
             if (key === 'constructor') return
             Object.keys(funcBlocks).map(key1 => {
                 if (key == key1 || key1 === 'constructor') return
-                // console.log(key1)
                 funcBlocks[key1] = funcBlocks[key1].replaceAll((key + "("), ("await " + key + "("));
             })
 
@@ -366,7 +423,6 @@ async function convert_2js(url, javaCode, callback) {
             })
         })
 
-
         Object.keys(funcBlocks).map(key => {
             if (key != "constructor")
                 jsString += `async function ${key}(${funcValues[key]}) { 
@@ -374,43 +430,25 @@ async function convert_2js(url, javaCode, callback) {
             }\n`
         })
 
-
-        // ========================= external var convertion ============================= //
-
-
-        Object.keys(elapsedTimeVars).map(key=>{
-            console.log("eltime var key : ", key)
-
-            jsString = jsString.replaceAll(`${key}.toString()`, `String(elapsedTime.toText(${key}))`)
-            jsString = jsString.replaceAll(`${key}.seconds()`, `String(elapsedTime.get("Seconds", ${key}))`)
-            jsString = jsString.replaceAll(`${key}.reset()`, `elapsedTime.reset(${key})`)
-        })
-
-        Object.keys(mortorVars).map(key=>{
-            console.log("motor var key : ", key)
-            jsString = jsString.replaceAll(`${key}.getPower()`, `motor.getProperty(${mortorVars[key]}, 'Power')`)
-        })
-
-
-        gamepadVars.map((item, i0)=>{
-            Object.keys(gamepadValues).map(key=>{
-
-                if(gamepadValues[key]<4)
-                    jsString =  jsString.replaceAll(`${item}.${key}`, `gamepad.numberValue(${i0}, ${gamepadValues[key]})`)
-                else 
-                    jsString =  jsString.replaceAll(`${item}.${key}`, `gamepad.boolValue(${i0}, ${gamepadValues[key]}, 'Both')`)
-
-
-            })
-        })
-
-
-        if (modeType == 0)
+        if (OpMode == "LinearOpMode")
             jsString += `          
             await runOpMode();`
         else
             jsString += `  
-            await init();`
+            function runOpMode() {
+                await init();
+                while (!linearOpMode.isStarted())
+                  await init_loop();
+                await start();
+                while (linearOpMode.opModeIsActive())
+                  await loop();
+                await stop();
+              }
+            
+            await runOpMode();`
+
+
+        jsString  = js_beautify(jsString)
 
     } catch (e) {
         console.log(lineTxt)
