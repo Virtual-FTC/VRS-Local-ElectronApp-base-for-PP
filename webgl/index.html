@@ -131,7 +131,14 @@
       localStorage.setItem('colorSensorReadings', "[[" + R + "," + G + "," + B + "," + Distance + "]]");
     }
 
+
+    function setColorSensorData(state) {
+      // console.log("SETTING COLOR SENSOR READINGSS: " + R + "," + G + "," + B + "," + Distance);
+      localStorage.setItem('touchSensorReadings', "[[" + state + "]]");
+    }
+
     function setDistanceSensorData(distance) {
+      setColorSensorData(false);
       // console.log("SET DIST SENSOR READINGSS: " + distance);
       localStorage.setItem('distanceSensorReadings', "[[" + distance + "]]");
     }

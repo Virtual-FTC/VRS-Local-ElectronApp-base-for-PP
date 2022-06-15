@@ -383,6 +383,22 @@ let distanceSensor = {
 	},
 }
 
+
+
+let touchSensor = {
+	setProperty: function (sensorNum, property, value) {
+		robotConfig["touchSensor"][sensorNum][property] = value;
+		return;
+	},
+	getProperty: function (sensorNum, property) {
+		return robotConfig["touchSensor"][sensorNum][property];
+	},
+	getDistance: function (sensorNum) {
+		return robotConfig["touchSensor"][sensorNum]["State"];
+	},
+}
+
+
 let colorUtil = {
 	rgbToColor: function (r, g, b, a) {
 		//RGBA to Integer Hex
