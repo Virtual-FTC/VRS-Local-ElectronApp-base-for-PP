@@ -56,7 +56,7 @@ Blockly.Blocks['touchSensor_getProperty'] = {
 Blockly.JavaScript['touchSensor_getProperty'] = function(block) {
   var identifier = block.getFieldValue('IDENTIFIER');
   var property = block.getFieldValue('PROP');
-  var code = identifier + '.get' + property + '()';
+  var code = 'touchSensor.getProperty(' + identifier.substring(identifier.length - 1) + ', "' + property + '")';
   return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
