@@ -370,32 +370,18 @@ let colorSensor = {
 }
 
 let distanceSensor = {
-	setProperty: function (sensorNum, property, value) {
-		robotConfig["distanceSensor"][sensorNum][property] = value;
-		return;
-	},
-	getProperty: function (sensorNum, property) {
-		return robotConfig["distanceSensor"][sensorNum][property];
-	},
 	getDistance: function (sensorNum, unit) {
 		var conversion = convertDistUnits("CM", unit);
 		return robotConfig["distanceSensor"][sensorNum]["Distance"] * conversion;
-	},
+	}
 }
 
 
 
 let touchSensor = {
-	setProperty: function (sensorNum, property, value) {
-		robotConfig["touchSensor"][sensorNum][property] = value;
-		return;
-	},
 	getProperty: function (sensorNum, property) {
 		return robotConfig["touchSensor"][sensorNum][property];
-	},
-	getDistance: function (sensorNum) {
-		return robotConfig["touchSensor"][sensorNum]["State"];
-	},
+	}
 }
 
 
@@ -937,6 +923,16 @@ function variableUpdate() {
 	for (i = 0; i < robotConfig["colorSensor"].length; i++) {
 		for (j = 0; j < colorSensorReadings[i].length; j++) {
 			robotConfig["colorSensor"][i][orderOfColorSensorDataObjects[j]] = colorSensorReadings[i][j];
+		}
+	}
+
+	//Receives Touch Sensor Data
+	var touchSensorReadings = JSON.parse(localStorage.getItem("touchSensorReadings"));
+	var orderOfTouchSensorObjects = ["IsPressed"] // add more, to match the block option
+	// ASSUMUNG FORMAT OF COLOR SENSORS: [sensor: ["alpha, etc..."], sensor2: [...], ...]
+	for (i = 0; i < robotConfig["touchSensor"].length; i++) {
+		for (j = 0; j < touchSensorReadings[i].length; j++) {
+			robotConfig["touchSensor"][i][orderOfTouchSensorObjects[j]] = touchSensorReadings[i][j];
 		}
 	}
 
