@@ -596,7 +596,9 @@
           <div class="divider"></div>
           <div style="display: inline-block;" onclick="switchTab(this, 1)" class="textNormal">Field</div>
           <div class="divider"></div>
-          <div style="display: inline-block;" onclick="switchTab(this, 2)" class="textNormal">Lessons</div>
+          <div style="display: inline-block;" onclick="switchTab(this, 2)" class="textNormal">Novice Lessons</div>
+          <div class="divider"></div>
+          <div style="display: inline-block;" onclick="switchTab(this, 3)" class="textNormal">Advanced Lessons</div>
           <div style="width: 20px; display: inline-block;"></div>
         </div>
         <div style="width:100%; height: 10px; background-color: #4B4B4B; margin-top: 15px; margin-bottom: 20px;"></div>
@@ -651,16 +653,47 @@
               </h2>
             </div>
           </div>
+          <!-- Novice Lessons -->
           <div style="display: none; height: 100%;">
             <div style="display: flex; justify-content: space-between; overflow: hidden; height: 11%">
               <div style="width: 112px;"></div>
               <div class="dropdown dropdown-dark"
                 style="display: inline-block; background-color: #FFFFFF; height: 24.8px;">
-                <select id="lessonSelect" class="dropdown-select" onChange="loadLesson()" style="font-size:20px;">
+                <select id="lessonSelectNovice" class="dropdown-select" onChange="loadNoviceLesson()" style="font-size:20px;">
                   <option value=-1>-Coding Lessons-</option>
                   <option value=0>Drive to White Line - 2 Motors</option> <!-- Timing			-->
                   <option value=1>Drive to White Line - 4 Motors</option> <!-- Timing x2		-->
                   <option value=2>Drive and Rotate 90 Degress</option> <!-- Precise Timing	-->
+                </select>
+              </div>
+			  <a class="button1" style="margin-right: 10px; padding: 6px; padding-top: 1.5px; height: 15px;" target="_blank"
+				href='https://docs.google.com/document/d/1hoTT80vSFAznXJxUHRxzsnOcURv5CSV3Pf-GS-vgjOA/edit?usp=sharingm'>
+				Document <i class="fa fa-external-link-square" aria-hidden="true"></i></a>
+            </div>
+            <div style="width:100%; overflow:hidden; background-color: #323232;">
+              <h2 id="lessonTextNovice" style="font-size: 20px; overflow: auto; height: 91%;">Select a Lesson to begin
+                Learning!</h2>
+            </div>
+            <div id="lessonButtonsNovice"
+              style="display: none; justify-content: center; align-items: center; overflow: hidden; height: 14.5%;">
+              <button class="button1" onClick="runNoviceLessonCode()"
+                style="font-size: 20px; white-space: nowrap; height: 29.2px;">Show the Task</button>
+              <div style="width: 10%; display: inline-block;"></div>
+              <button class="button1" onClick="playNoviceVideo(1)"
+                style="font-size: 20px; white-space: nowrap; height: 29.2px;">Video Hint</button>
+              <div style="width: 10%; display: inline-block;"></div>
+              <button class="button1" onClick="playNoviceVideo(2)"
+                style="font-size:20px; white-space: nowrap; height: 29.2px;">Video Solution</button>
+            </div>
+          </div>
+          <!-- Advanced Lessons -->
+          <div style="display: none; height: 100%;">
+            <div style="display: flex; justify-content: space-between; overflow: hidden; height: 11%">
+              <div style="width: 112px;"></div>
+              <div class="dropdown dropdown-dark"
+                style="display: inline-block; background-color: #FFFFFF; height: 24.8px;">
+                <select id="lessonSelectAdvanced" class="dropdown-select" onChange="loadAdvancedLesson()" style="font-size:20px;">
+                  <option value=-1>-Coding Lessons-</option>
                   <option value=3>Drive and Rotate in a Square</option> <!-- Loops			-->
                   <option value=4>Drive and Strafe in a Square</option> <!-- Strafing		-->
                   <option value=5>Wobble Goal - 1st Position</option> <!-- First Task		-->
@@ -675,18 +708,18 @@
 				Document <i class="fa fa-external-link-square" aria-hidden="true"></i></a>
             </div>
             <div style="width:100%; overflow:hidden; background-color: #323232;">
-              <h2 id="lessonText" style="font-size: 20px; overflow: auto; height: 91%;">Select a Lesson to begin
+              <h2 id="lessonTextAdvanced" style="font-size: 20px; overflow: auto; height: 91%;">Select a Lesson to begin
                 Learning!</h2>
             </div>
-            <div id="lessonButtons"
+            <div id="lessonButtonsAdvanced"
               style="display: none; justify-content: center; align-items: center; overflow: hidden; height: 14.5%;">
-              <button class="button1" onClick="runLessonCode()"
+              <button class="button1" onClick="runAdvancedLessonCode()"
                 style="font-size: 20px; white-space: nowrap; height: 29.2px;">Show the Task</button>
               <div style="width: 10%; display: inline-block;"></div>
-              <button class="button1" onClick="playVideo(1)"
+              <button class="button1" onClick="playAdvancedVideo(1)"
                 style="font-size: 20px; white-space: nowrap; height: 29.2px;">Video Hint</button>
               <div style="width: 10%; display: inline-block;"></div>
-              <button class="button1" onClick="playVideo(2)"
+              <button class="button1" onClick="playAdvancedVideo(2)"
                 style="font-size:20px; white-space: nowrap; height: 29.2px;">Video Solution</button>
             </div>
           </div>
