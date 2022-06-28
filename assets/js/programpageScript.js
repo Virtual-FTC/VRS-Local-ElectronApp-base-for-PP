@@ -788,21 +788,22 @@ function loadNoviceLesson() {
 	document.getElementById('lessonButtonsNovice').style.display = "flex";
     document.getElementById('lessonTextNovice').parentElement.style.height = '75%';
     switch (document.getElementById('lessonSelectNovice').value) {
-    case "0":
-        document.getElementById('lessonTextNovice').innerText = "Difficulty: Easy\n" +
-            "In this first lesson, you will need to power the Front Left and Front Right Wheels for a certain amount of time in order to get the robot on the White Line for +5 Points during Autonomous. Press the \"Show the Task\" button to see what you need to do or \"Video Hint\" for an introduction." +
-            "\n\nYou'll Learn:\nBasic Motor Powering\nMovement Timing";
-        break;
-    case "1":
-        document.getElementById('lessonTextNovice').innerText = "Difficulty: Easy\n" +
-            "The next stage will now be to add power to all 4 Wheels in your program. This will require a bit more precision, but will benefit with the added Torque and Speed the motors will provide. Your robot can have a max of 8 motors and 12 servos for full movement!" +
-            "\n\nYou'll Learn:\nBalance between Speed and Reliability\nMore Motor Control";
-        break;
-    case "2":
-        document.getElementById('lessonTextNovice').innerText = "Difficulty: Easy\n" +
-            "For this lesson, we will be adding more than just forwards and backwards and introducing rotation! This may require alot more precision than you initially think. If only there was a way of consistently moving..." +
-            "\n\nYou'll Learn:\nThe Limits to using Timing\nRotation Basics";
-        break;
+	case "0":
+		document.getElementById('lessonTextNovice').innerText = "Difficulty: Easy\n" +
+			"In this first lesson, you will need to power the Front Left and Front Right Wheels for a certain amount of time in order to get the robot on the White Line for +5 Points during Autonomous. Press the \"Show the Task\" button to see what you need to do or \"Video Hint\" for an introduction." +
+			"\n\nYou'll Learn:\nBasic Motor Powering\nMovement Timing";
+	break;
+	case "1":
+		document.getElementById('lessonTextNovice').innerText = "Difficulty: Easy\n" +
+			"The next stage will now be to add power to all 4 Wheels in your program. This will require a bit more precision, but will benefit with the added Torque and Speed the motors will provide. Your robot can have a max of 8 motors and 12 servos for full movement!" +
+			"\n\nYou'll Learn:\nBalance between Speed and Reliability\nMore Motor Control";
+		break;
+	case "2":
+		document.getElementById('lessonTextNovice').innerText = "Difficulty: Easy\n" +
+			"For this lesson, we will be adding more than just forwards and backwards and introducing rotation! This may require alot more precision than you initially think. If only there was a way of consistently moving..." +
+			"\n\nYou'll Learn:\nThe Limits to using Timing\nRotation Basics";
+	break;
+
     default:
         document.getElementById('lessonButtonsNovice').style.display = "none";
         document.getElementById('lessonTextNovice').innerText = "Select a Lesson to begin Learning!";

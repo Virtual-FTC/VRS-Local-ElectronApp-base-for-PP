@@ -843,10 +843,6 @@
 				<field name="IDENTIFIER">imu0</field>
 				<field name="PROP">LinearAcceleration</field>
 			</block>
-			<block type="bno055imu_getProperty_MagneticFlux">
-				<field name="IDENTIFIER">imu0</field>
-				<field name="PROP">MagneticFieldStrength</field>
-			</block>
 			<block type="bno055imu_getProperty_Acceleration">
 				<field name="IDENTIFIER">imu0</field>
 				<field name="PROP">OverallAcceleration</field>
@@ -1768,68 +1764,6 @@
 					<shadow type="text">
 						<field name="TEXT">abc</field>
 					</shadow>
-				</value>
-			</block>
-		</category>
-		<category css-icon="" name="MagneticFlux">
-			<block type="magneticFlux_getProperty_Number">
-				<field name="PROP">X</field>
-				<value name="MAGNETIC_FLUX">
-					<block type="variables_get">
-						<field name="VAR">{magneticFluxVariable}</field>
-					</block>
-				</value>
-			</block>
-			<block type="magneticFlux_getProperty_Number">
-				<field name="PROP">Y</field>
-				<value name="MAGNETIC_FLUX">
-					<block type="variables_get">
-						<field name="VAR">{magneticFluxVariable}</field>
-					</block>
-				</value>
-			</block>
-			<block type="magneticFlux_getProperty_Number">
-				<field name="PROP">Z</field>
-				<value name="MAGNETIC_FLUX">
-					<block type="variables_get">
-						<field name="VAR">{magneticFluxVariable}</field>
-					</block>
-				</value>
-			</block>
-			<block type="magneticFlux_getProperty_Number">
-				<field name="PROP">AcquisitionTime</field>
-				<value name="MAGNETIC_FLUX">
-					<block type="variables_get">
-						<field name="VAR">{magneticFluxVariable}</field>
-					</block>
-				</value>
-			</block>
-			<block type="magneticFlux_toText">
-				<value name="MAGNETIC_FLUX">
-					<block type="variables_get">
-						<field name="VAR">{magneticFluxVariable}</field>
-					</block>
-				</value>
-			</block>
-			<block type="magneticFlux_create"/>
-			<block type="magneticFlux_create_withArgs">
-				<value name="X">
-					<shadow type="math_number">
-						<field name="NUM">10</field>
-					</shadow>
-				</value>
-				<value name="Y">
-					<shadow type="math_number">
-						<field name="NUM">20</field>
-					</shadow>
-				</value>
-				<value name="Z">
-					<shadow type="math_number">
-						<field name="NUM">30</field>
-					</shadow>
-				</value>
-				<value name="ACQUISITION_TIME">
-					<shadow type="system_nanoTime"/>
 				</value>
 			</block>
 		</category>
