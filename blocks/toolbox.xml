@@ -851,10 +851,6 @@
 				<field name="IDENTIFIER">imu0</field>
 				<field name="PROP">Position</field>
 			</block>
-			<block type="bno055imu_getProperty_Quaternion">
-				<field name="IDENTIFIER">imu0</field>
-				<field name="PROP">QuaternionOrientation</field>
-			</block>
 			<block type="bno055imu_getProperty_String">
 				<field name="IDENTIFIER">imu0</field>
 				<field name="PROP">SystemError</field>
@@ -864,10 +860,6 @@
 				<field name="PROP">SystemStatus</field>
 			</block>
 			<block type="bno055imu_typedEnum_systemStatus"/>
-			<block type="bno055imu_getProperty_Temperature">
-				<field name="IDENTIFIER">imu0</field>
-				<field name="PROP">Temperature</field>
-			</block>
 			<block type="bno055imu_getProperty_Velocity">
 				<field name="IDENTIFIER">imu0</field>
 				<field name="PROP">Velocity</field>
@@ -2897,88 +2889,6 @@
 				</value>
 			</block>
 		</category>
-		<category css-icon="" name="Quaternion">
-			<block type="quaternion_getProperty_Number">
-				<field name="PROP">W</field>
-				<value name="QUATERNION">
-					<block type="variables_get">
-						<field name="VAR">{quaternionVariable}</field>
-					</block>
-				</value>
-			</block>
-			<block type="quaternion_getProperty_Number">
-				<field name="PROP">X</field>
-				<value name="QUATERNION">
-					<block type="variables_get">
-						<field name="VAR">{quaternionVariable}</field>
-					</block>
-				</value>
-			</block>
-			<block type="quaternion_getProperty_Number">
-				<field name="PROP">Y</field>
-				<value name="QUATERNION">
-					<block type="variables_get">
-						<field name="VAR">{quaternionVariable}</field>
-					</block>
-				</value>
-			</block>
-			<block type="quaternion_getProperty_Number">
-				<field name="PROP">Z</field>
-				<value name="QUATERNION">
-					<block type="variables_get">
-						<field name="VAR">{quaternionVariable}</field>
-					</block>
-				</value>
-			</block>
-			<block type="quaternion_getProperty_Number">
-				<field name="PROP">AcquisitionTime</field>
-				<value name="QUATERNION">
-					<block type="variables_get">
-						<field name="VAR">{quaternionVariable}</field>
-					</block>
-				</value>
-			</block>
-			<block type="quaternion_normalized">
-				<value name="QUATERNION">
-					<block type="variables_get">
-						<field name="VAR">{quaternionVariable}</field>
-					</block>
-				</value>
-			</block>
-			<block type="quaternion_congugate">
-				<value name="QUATERNION">
-					<block type="variables_get">
-						<field name="VAR">{quaternionVariable}</field>
-					</block>
-				</value>
-			</block>
-			<block type="quaternion_create"/>
-			<block type="quaternion_create_withArgs">
-				<value name="W">
-					<shadow type="math_number">
-						<field name="NUM">10</field>
-					</shadow>
-				</value>
-				<value name="X">
-					<shadow type="math_number">
-						<field name="NUM">20</field>
-					</shadow>
-				</value>
-				<value name="Y">
-					<shadow type="math_number">
-						<field name="NUM">30</field>
-					</shadow>
-				</value>
-				<value name="Z">
-					<shadow type="math_number">
-						<field name="NUM">40</field>
-					</shadow>
-				</value>
-				<value name="ACQUISITION_TIME">
-					<shadow type="system_nanoTime"/>
-				</value>
-			</block>
-		</category>
 		<category css-icon="" name="Range">
 			<block type="range_clip">
 				<value name="MIN">
@@ -3112,56 +3022,6 @@
 			<block type="telemetry_setDisplayFormat" disabled="true">
 				<value name="DISPLAY_FORMAT">
 					<shadow type="telemetry_typedEnum_displayFormat"/>
-				</value>
-			</block>
-		</category>
-		<category css-icon="" name="Temperature">
-			<block type="temperature_getProperty_TempUnit">
-				<field name="PROP">TempUnit</field>
-				<value name="TEMPERATURE">
-					<block type="variables_get">
-						<field name="VAR">{temperatureVariable}</field>
-					</block>
-				</value>
-			</block>
-			<block type="temperature_getProperty_Number">
-				<field name="PROP">Temperature</field>
-				<value name="TEMPERATURE">
-					<block type="variables_get">
-						<field name="VAR">{temperatureVariable}</field>
-					</block>
-				</value>
-			</block>
-			<block type="temperature_getProperty_Number">
-				<field name="PROP">AcquisitionTime</field>
-				<value name="TEMPERATURE">
-					<block type="variables_get">
-						<field name="VAR">{temperatureVariable}</field>
-					</block>
-				</value>
-			</block>
-			<block type="temperature_create"/>
-			<block type="temperature_create_withArgs">
-				<value name="TEMP_UNIT">
-					<shadow type="navigation_typedEnum_tempUnit"/>
-				</value>
-				<value name="TEMPERATURE">
-					<shadow type="math_number">
-						<field name="NUM">20</field>
-					</shadow>
-				</value>
-				<value name="ACQUISITION_TIME">
-					<shadow type="system_nanoTime"/>
-				</value>
-			</block>
-			<block type="temperature_toTempUnit">
-				<value name="TEMPERATURE">
-					<block type="variables_get">
-						<field name="VAR">{temperatureVariable}</field>
-					</block>
-				</value>
-				<value name="TEMP_UNIT">
-					<shadow type="navigation_typedEnum_tempUnit"/>
 				</value>
 			</block>
 		</category>
