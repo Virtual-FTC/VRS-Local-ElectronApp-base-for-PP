@@ -20,6 +20,7 @@ const gamepadBoxVars = {
 
 const replaceJSString = [
     ,[": number ", ""]
+    ,[": string ", ""]
     , ["{}", "{\n}"]    
     , ['opModeIsActive', 'linearOpMode.opModeIsActive']
     , ['Range.clip(', 'range.clip(']
@@ -103,22 +104,22 @@ const valueConverter = (str) => {
         let sides = str.split(".getCurrentPosition(");
         const varName = sides[0];
         return `motor.getProperty(${directions[varName]}, 'CurrentPosition')`
-    } else if (str.includes(".blue()")) {
-        let sides = str.split(".blue()");
-        const varName = sides[0];
-        return `colorSensor.getColor(${colorVars[varName]}, 'Blue')`
-
-    } else if (str.includes(".red()")) {
-        let sides = str.split(".red()");
-        const varName = sides[0];
-        return `colorSensor.getColor(${colorVars[varName]}, 'Red')`
-
-    } else if (str.includes(".green()")) {
-        let sides = str.split(".green()");
-        const varName = sides[0];
-        return `colorSensor.getColor(${colorVars[varName]}, 'Green')`
-
-    } else if (str.includes("getRuntime(")) {
+    } else if (/this\.(\w+)\.blue()/.test(str)) {
+        const values = /this\.(\w+)\.blue()/.exec(str)
+        const varName = values[1];
+        return `colorSensor.getProperty(${colorVars[varName]}, 'Blue')`
+    }
+    else if (/this\.(\w+)\.red()/.test(str)) {
+        const values = /this\.(\w+)\.red()/.exec(str)
+        const varName = values[1];
+        return `colorSensor.getProperty(${colorVars[varName]}, 'Red')`
+    }
+    else if (/this\.(\w+)\.green()/.test(str)) {
+        const values = /this\.(\w+)\.green()/.exec(str)
+        const varName = values[1];
+        return `colorSensor.getProperty(${colorVars[varName]}, 'Green')`
+    }
+     else if (str.includes("getRuntime(")) {
         return str.replaceAll('getRuntime(', "linearOpMode.getRuntime(");
 
     }else if (str.includes(".getDistance(")) {
@@ -275,6 +276,7 @@ const customConvert = (str) => {
             mortorVars[varName] = directions[varValue];
         else if (hardmaps[2] == 'ColorSensor')
             colorVars[varName] = colorData[varValue];
+            console.log("color bars : ", colorVars)
         return "";
     }
 
@@ -292,31 +294,27 @@ const customConvert = (str) => {
 
     else if (result.includes('.setDirection')) {
         let hardmaps = /this.(\w+).setDirection\((DcMotorSimple|DcMotor).Direction.(\w+)\);/g.exec(result);
-      
         const varName = hardmaps[1];
-        const value = hardmaps[2];
+        const value = hardmaps[3];
         return `motor.setProperty([${mortorVars[varName]}], 'Direction', ['${value}']);`;
     }
     else if (str.includes('waitForStart()')) {
         return str.replace('waitForStart', 'await linearOpMode.waitForStart');
     }
     else if (str.includes('.setPower(')) {
-        // let regStr = result.replaceAll(`(`, "OOO").replaceAll(`)`, "CCC");
-        let matches = /this.(\w+).setPower\((.*)\);/g.exec(result);        
+        let matches = /this.(\w+).setPower\((.*)\);/g.exec(result);
         const varName = matches[1];
         const value = valueChecker(matches[2]);
         return `motor.setProperty([${mortorVars[varName]}], 'Power', [${value?value:0}]);`;
     }
     else if (str.includes('setMode(')) {        
-        // let regStr = result.replaceAll(`(`, "OOO").replaceAll(`)`, "CCC");
         let hardmaps = /this.(\w+).setMode\(DcMotor.RunMode.(\w+)\);/g.exec(str);
         const varName = hardmaps[1];
         const value = hardmaps[2];
         return `motor.setProperty([${mortorVars[varName]}], 'Mode', ['${value}']);`;
     }
     else if (str.includes('setTargetPosition(')) {
-        // let regStr = result.replaceAll(`(`, "OOO").replaceAll(`)`, "CCC");
-        let matches = /this.(\w+).setTargetPosition\((.*)\);/g.exec(str);        
+        let matches = /this.(\w+).setTargetPosition\((.*)\);/g.exec(str);
         const varName = matches[1];
         const value = valueChecker(matches[2]);
         return `motor.setProperty([${mortorVars[varName]}], 'TargetPosition', [${value?value:0}]);`;
