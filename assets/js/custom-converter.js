@@ -24,7 +24,6 @@ const replaceJSString = [
     , ["{}", "{\n}"]    
     , ['opModeIsActive', 'linearOpMode.opModeIsActive']
     , ['Range.clip(', 'range.clip(']
-    // , ["JavaUtil.formatNumber(", "misc.formatNumber("]
 ]
 
 const modeTypes = ["LinearOpMode", "OpMode"]
@@ -51,11 +50,7 @@ var mortorVars = {}
 var colorVars = {}
 var elapsedTimeVars = {}
 var accelerateVars = {}
-
 var normalizedColors = {}
-
-
-
 var convertedSource = ""
 // const gamepadVars = ["gamepad1", "gamepad2", "gamepad3", "gamepad4"]
 
@@ -130,21 +125,6 @@ const valueConverter = (str) => {
         })
         let value = getBracketContent(sides[1])
         return `colorSensor.getDistance(${colorData[colorIndex]}, ${value})`;
-
-    }else if(/gamepad(\d+)\.(\w+)_stick_(\w)/.test(str)){
-        const gamepadV = /gamepad(\d+).(\w+)_stick_(\w)/.exec(str)
-        const keyV = `${gamepadV[2]}_stick_${gamepadV[3]}`
-        let returnStr = ""
-        if(gamepadValues[keyV]<4)
-            returnStr =  `gamepad.numberValue(${gamepadV[1]-1}, ${gamepadValues[keyV]})`
-        else 
-            returnStr =  `gamepad.boolValue(${gamepadV[1]-1}, ${gamepadValues[keyV]}, 'Both')`
-        return returnStr
-
-    }else if(/gamepad(\d+).(a|b|c|d)/.test(str)){
-        const values = /gamepad(\d+).(a|b|c|d)/.exec(str)
-
-        return `gamepad.boolValue(${values[1]-1}, ${gamepadBoxVars[values[2]]}, 'Xbox')`
     }
     
     else if(str.includes(".getPower()")){
@@ -197,11 +177,7 @@ const valueConverter = (str) => {
         const values = /\(?this.(\w+)\)?.getLightDetected\(\)/g.exec(str)
         return str.replace(/\(?this.(\w+)\)?.getLightDetected\(\)/g, `colorSensor.getProperty(${colorVars[values[1]]}, "LightDetected")`)
     }
-    // else if(/misc.formatNumber\((\w+).(\w+), (\d+)\)/.test(str)){
-    else if(/\bmisc\.formatNumber\((\w+)\.(\w+),/.test(str)){
-        const values = /misc.formatNumber\((\w+).(\w+),/.exec(str)
-        return str.replace(/misc.formatNumber\((\w+).(\w+),/, `misc.roundDecimal(colorUtil.normalized("${capitalize(values[2])}", ${values[1]}),`)
-    }
+
 
     else if(/\bmisc\.colorToValue\((\w+)\)/.test(str)){
         const values = /misc\.colorToValue\((\w+)\)/.exec(str)
@@ -228,6 +204,25 @@ const valueConverter = (str) => {
         return str.replace(/\bmisc.formatNumber\(/, "misc.roundDecimal(")
     }
 
+    
+    else if(/gamepad(\d+)\.(\w+)_stick_(\w)/.test(str)){
+        const gamepadV = /gamepad(\d+).(\w+)_stick_(\w)/.exec(str)
+        const keyV = `${gamepadV[2]}_stick_${gamepadV[3]}`
+        let returnStr = ""
+        if(gamepadValues[keyV]<4)
+            returnStr =  `gamepad.numberValue(${gamepadV[1]-1}, ${gamepadValues[keyV]})`
+        else 
+            returnStr =  `gamepad.boolValue(${gamepadV[1]-1}, ${gamepadValues[keyV]}, 'Both')`
+        return returnStr
+
+    }else if(/gamepad(\d+).(a|b|c|d)/.test(str)){
+        const values = /gamepad(\d+).(a|b|c|d)/.exec(str)
+        return `gamepad.boolValue(${values[1]-1}, ${gamepadBoxVars[values[2]]}, 'Xbox')`
+    }
+    else if(/\bmisc\.formatNumber\((\w+)\.(\w+),/.test(str)){
+        const values = /misc.formatNumber\((\w+).(\w+),/.exec(str)
+        return str.replace(/misc.formatNumber\((\w+).(\w+),/, `misc.roundDecimal(colorUtil.normalized("${capitalize(values[2])}", ${values[1]}),`)
+    }
     else if(/\bColor\.parseColor\("(\w+)"\)/.test(str)){
         const values = /\bColor\.parseColor\("(\w+)"\)/.exec(str)
         console.log("color values : ", values)
@@ -320,14 +315,13 @@ const customConvert = (str) => {
         return `motor.setProperty([${mortorVars[varName]}], 'TargetPosition', [${value?value:0}]);`;
     }    
     else if (str.includes('setZeroPowerBehavior(')) {
-        let regStr = result.replaceAll(`(`, "OOO").replaceAll(`)`, "CCC");
-        let matches = /this.(\w+).setZeroPowerBehavior\(DcMotor.ZeroPowerBehavior.(\w+)\);/g.exec(regStr);
+        let matches = /this.(\w+).setZeroPowerBehavior\(DcMotor.ZeroPowerBehavior.(\w+)\);/g.exec(str);
+        console.log("matches : ", matches)
         const varName = matches[1];
         const value = matches[2];
         return `motor.setProperty([${mortorVars[varName]}], 'ZeroPowerBehavior', ['${value}']);`;
     }
     else if (str.includes('setTargetPositionTolerance(')) {
-        // let regStr = result.replaceAll(`(`, "OOO").replaceAll(`)`, "CCC");
         let matches = /this.(\w+).setTargetPositionTolerance\((.*)\);/g.exec(str);
         const varName = matches[1];
         const value = valueChecker(matches[2]);
@@ -504,7 +498,7 @@ async function convert_2js(url, javaCode, callback) {
             await runOpMode();`
         else
             jsString += `  
-            function runOpMode() {
+            async function runOpMode() {
                 await init();
                 while (!linearOpMode.isStarted())
                   await init_loop();
