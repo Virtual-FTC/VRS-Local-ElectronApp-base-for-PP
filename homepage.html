@@ -5,6 +5,15 @@
 	<meta charset="utf-8">
 	<title>Virtual Robot Simulator</title>
 	<link rel="icon" type="image/x-icon" href="./logo.ico">
+	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-P455J3M');</script>
+
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P455J3M"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
 	<style>
 		body {
 			background: linear-gradient(248.98deg, #b24505 2.75%, #8d1d17 114.64%);
@@ -615,8 +624,7 @@
 		<div id="VersionText">Version 1.3.0 - 6/6/2022</div>
 	</div>
 	<div id="NavItems">
-		<button class="NavButtons"
-			onClick="overlay('https://www.youtube.com/embed/HvywykxdrBU?list=PLszFVnnZcmarYReNB-qCSZLiu2l3Mvlvz', true)">How
+		<button class="NavButtons" id="how-to-use-button">How
 			To Use</button>
 		<div style="width: 1vw;"></div>
 	</div>
@@ -624,7 +632,7 @@
 			style="width: 100%;"></a>
 	<div id="Selections">
 		<button id="localButton" class="SelectionPanel" onmouseover="buttonHover(this, true)"
-			onmouseout="buttonHover(this, false)" onClick="nextPage('programpage.html')">
+			onmouseout="buttonHover(this, false)">
 			<div class="SelectionTitle">Programming</div>
 			<img class="SelectionIcon" src="./assets/laptop.png">
 			<div class="SelectionHint">Learn More</div>
@@ -632,7 +640,7 @@
 				programming language or Java</div>
 		</button>
 		<button id="multiplayerButton" class="SelectionPanel" onmouseover="buttonHover(this, true)"
-			onmouseout="buttonHover(this, false)" onClick="nextPage('arenapage.html')">
+			onmouseout="buttonHover(this, false)">
 			<div class="SelectionTitle">Robot Arena</div>
 			<img class="SelectionIcon" src="./assets/gamepad.png">
 			<div class="SelectionHint">Learn More</div>
@@ -655,6 +663,34 @@
 			</div>
 		</div>
 	</div>
+
+	<script>
+		document.getElementById('localButton').addEventListener('click', () => {
+			window.dataLayer.push({ 'event': 'click', 'label': 'Programming button' })
+			nextPage('programpage.html');
+		})
+		document.getElementById('multiplayerButton').addEventListener('click', () => {
+			window.dataLayer.push({ 'event': 'click', 'label': 'Multiplayer button' })
+			nextPage('arenapage.html')
+		})
+		document.getElementById('how-to-use-button').addEventListener('click', () => {
+			window.dataLayer.push({ 'event': 'click', 'label': 'How to use button' })
+			overlay('https://www.youtube.com/embed/HvywykxdrBU?list=PLszFVnnZcmarYReNB-qCSZLiu2l3Mvlvz', true)
+		})
+		document.getElementById('VRSLogo').addEventListener('click', () => {
+			window.dataLayer.push({ 'event': 'click', 'label': 'Top right VRS logo' })
+		})
+		document.getElementById('FIRSTIllinois').addEventListener('click', () => {
+			window.dataLayer.push({ 'event': 'click', 'label': 'Top left First illinois robotics logo' })
+		})
+		document.getElementById('FTCLogo').addEventListener('click', () => {
+			window.dataLayer.push({ 'event': 'click', 'label': 'Top left FTCLogo' })
+		})
+
+		document.getElementById('ConfigText').addEventListener('click', () => {
+			window.dataLayer.push({ 'event': 'click', 'label': 'Robot configuration' })
+		})
+	</script>
 
 	<script>
 		document.body.style.background = "#242424";
