@@ -4,13 +4,16 @@ function check() {
     if (UnityInstance != null) {
         var playMode = localStorage.getItem('playMode');
         if (playMode == "Autonomous" && !alreadySetPlayMode) {
-            UnityInstance.SendMessage("Main Menu", "changeSinglePlayer");
+            UnityInstance.SendMessage("VRS-Messenger", "SetPlaymode", "Auto");
+            UnityInstance.SendMessage("Main Menu", "changeSinglePlayer");            
             alreadySetPlayMode = true;
         } else if (playMode == "TeleOp" && !alreadySetPlayMode) {
+            UnityInstance.SendMessage("VRS-Messenger", "SetPlaymode", "TeleOp");
             // alert("VRS Multiplayer is optimized with fullscreen mode. Please click on the blue button below the game window.");
             alreadySetPlayMode = true;
         }
         if (playMode == "Autonomous") {
+            UnityInstance.SendMessage("VRS-Messenger", "SetPlaymode", "Auto");
             setTimeout(writeMotorPowers, 1);
         }
     } else {
