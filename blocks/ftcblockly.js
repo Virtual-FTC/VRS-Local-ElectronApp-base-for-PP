@@ -378,8 +378,22 @@ let distanceSensor = {
 
 
 let imu = {
+	//orderOfIMUSensorObjects ["x", "y", "z", "angularX", "angularY", "angularZ", "positionX", "positionY", "positionZ"] // add more, to match the block option
 	get: function (property) {
-		return robotConfig["IMU"][0]["x"];
+		if (property == "Acceleration") {
+			var list = [];
+			list["XAccel"] = robotConfig["IMU"][0]["x"]
+			list["YAccel"] = robotConfig["IMU"][0]["y"]
+			list["ZAccel"] = robotConfig["IMU"][0]["z"]
+			return list;
+		} else if (property == "AngularVelocity") {
+			var list = [];
+			list["XRotationRate"] = robotConfig["IMU"][0]["angularX"]
+			list["YRotationRate"] = robotConfig["IMU"][0]["angularY"]
+			list["ZRotationRate"] = robotConfig["IMU"][0]["angularZ"]
+			return list;
+		}
+		return -1;
 	}
 }
 

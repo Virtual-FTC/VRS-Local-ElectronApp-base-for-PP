@@ -355,7 +355,7 @@ Blockly.JavaScript['bno055imu_getProperty_AngularVelocity'] = function (block) {
   var identifier = block.getFieldValue('IDENTIFIER');
   var angleUnit = Blockly.JavaScript.valueToCode(
     block, 'ANGLE_UNIT', Blockly.JavaScript.ORDER_NONE);
-  var code = identifier.substring(identifier.length - 1) + '.getAngularVelocity()';
+  var code = identifier.slice(0, -1) + '.get(\"AngularVelocity\")';
   return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
