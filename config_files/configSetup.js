@@ -69,7 +69,7 @@ function createBNO055IMUDropdown() {
 	for (i = 0; i < robotConfig["IMU"].length; i++)
 		CHOICES[i] = [robotConfig["IMU"][i]["name"], "imu" + i];
 	if (CHOICES.length == 0)
-		CHOICES[0] = ["<None>", "imu0"];
+		CHOICES[0] = ["<None>", "IMU"];
 	return new Blockly.FieldDropdown(CHOICES);
 }
 
