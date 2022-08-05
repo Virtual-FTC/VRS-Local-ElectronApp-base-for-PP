@@ -377,6 +377,13 @@ let distanceSensor = {
 }
 
 
+let imu = {
+	get: function (property) {
+		return robotConfig["IMU"][0]["x"];
+	}
+}
+
+
 
 let touchSensor = {
 	getProperty: function (sensorNum, property) {
@@ -943,6 +950,16 @@ function variableUpdate() {
 	for (i = 0; i < robotConfig["distanceSensor"].length; i++) {
 		for (j = 0; j < distanceSensorReadings[i].length; j++) {
 			robotConfig["distanceSensor"][i][orderOfDistanceSensorObjects[j]] = distanceSensorReadings[i][j];
+		}
+	}
+
+
+	//Receives IMU Sensor Data
+	var imuSensorReadings = JSON.parse(localStorage.getItem("imuSensorReadings"));
+	var orderOfIMUSensorObjects = ["x", "y", "z", "angularX", "angularY", "angularZ", "positionX", "positionY", "positionZ"] // add more, to match the block option
+	for (i = 0; i < robotConfig["IMU"].length; i++) {
+		for (j = 0; j < imuSensorReadings[i].length; j++) {
+			robotConfig["IMU"][i][orderOfIMUSensorObjects[j]] = imuSensorReadings[i][j];
 		}
 	}
 	//Do it again

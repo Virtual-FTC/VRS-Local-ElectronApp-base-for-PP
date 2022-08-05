@@ -786,35 +786,35 @@
 		</category>
 		<category css-icon="customIcon fa fa-compass" name="IMU-BNO055" toolboxitemid="IMUSensor">
 			<block type="bno055imu_getProperty_Acceleration">
-				<field name="IDENTIFIER">imu0</field>
+				<field name="IDENTIFIER">IMU</field>
 				<field name="PROP">Acceleration</field>
 			</block>
 			<block type="bno055imu_getProperty_Orientation">
-				<field name="IDENTIFIER">imu0</field>
+				<field name="IDENTIFIER">IMU</field>
 				<field name="PROP">AngularOrientation</field>
 			</block>
 			<block type="bno055imu_getProperty_Array">
-				<field name="IDENTIFIER">imu0</field>
+				<field name="IDENTIFIER">IMU</field>
 				<field name="PROP">AngularOrientationAxes</field>
 			</block>
 			<block type="bno055imu_getProperty_AngularVelocity">
-				<field name="IDENTIFIER">imu0</field>
+				<field name="IDENTIFIER">IMU</field>
 				<field name="PROP">AngularVelocity</field>
 			</block>
 			<block type="bno055imu_getProperty_Array">
-				<field name="IDENTIFIER">imu0</field>
+				<field name="IDENTIFIER">IMU</field>
 				<field name="PROP">AngularVelocityAxes</field>
 			</block>
 			<block type="bno055imu_getProperty_String">
-				<field name="IDENTIFIER">imu0</field>
+				<field name="IDENTIFIER">IMU</field>
 				<field name="PROP">CalibrationStatus</field>
 			</block>
 			<block type="bno055imu_getProperty_Acceleration">
-				<field name="IDENTIFIER">imu0</field>
+				<field name="IDENTIFIER">IMU</field>
 				<field name="PROP">Gravity</field>
 			</block>
 			<block type="bno055imu_setProperty_Number">
-				<field name="IDENTIFIER">imu0</field>
+				<field name="IDENTIFIER">IMU</field>
 				<field name="PROP">I2cAddress7Bit</field>
 				<value name="VALUE">
 					<shadow type="math_number">
@@ -823,11 +823,11 @@
 				</value>
 			</block>
 			<block type="bno055imu_getProperty_Number">
-				<field name="IDENTIFIER">imu0</field>
+				<field name="IDENTIFIER">IMU</field>
 				<field name="PROP">I2cAddress7Bit</field>
 			</block>
 			<block type="bno055imu_setProperty_Number">
-				<field name="IDENTIFIER">imu0</field>
+				<field name="IDENTIFIER">IMU</field>
 				<field name="PROP">I2cAddress8Bit</field>
 				<value name="VALUE">
 					<shadow type="math_number">
@@ -836,36 +836,36 @@
 				</value>
 			</block>
 			<block type="bno055imu_getProperty_Number">
-				<field name="IDENTIFIER">imu0</field>
+				<field name="IDENTIFIER">IMU</field>
 				<field name="PROP">I2cAddress8Bit</field>
 			</block>
 			<block type="bno055imu_getProperty_Acceleration">
-				<field name="IDENTIFIER">imu0</field>
+				<field name="IDENTIFIER">IMU</field>
 				<field name="PROP">LinearAcceleration</field>
 			</block>
 			<block type="bno055imu_getProperty_Acceleration">
-				<field name="IDENTIFIER">imu0</field>
+				<field name="IDENTIFIER">IMU</field>
 				<field name="PROP">OverallAcceleration</field>
 			</block>
 			<block type="bno055imu_getProperty_Position">
-				<field name="IDENTIFIER">imu0</field>
+				<field name="IDENTIFIER">IMU</field>
 				<field name="PROP">Position</field>
 			</block>
 			<block type="bno055imu_getProperty_String">
-				<field name="IDENTIFIER">imu0</field>
+				<field name="IDENTIFIER">IMU</field>
 				<field name="PROP">SystemError</field>
 			</block>
 			<block type="bno055imu_getProperty_SystemStatus">
-				<field name="IDENTIFIER">imu0</field>
+				<field name="IDENTIFIER">IMU</field>
 				<field name="PROP">SystemStatus</field>
 			</block>
 			<block type="bno055imu_typedEnum_systemStatus"/>
 			<block type="bno055imu_getProperty_Velocity">
-				<field name="IDENTIFIER">imu0</field>
+				<field name="IDENTIFIER">IMU</field>
 				<field name="PROP">Velocity</field>
 			</block>
 			<block type="bno055imu_getAngularOrientation">
-				<field name="IDENTIFIER">imu0</field>
+				<field name="IDENTIFIER">IMU</field>
 				<value name="AXES_REFERENCE">
 					<shadow type="navigation_typedEnum_axesReference"/>
 				</value>
@@ -877,13 +877,13 @@
 				</value>
 			</block>
 			<block type="bno055imu_getAngularVelocity">
-				<field name="IDENTIFIER">imu0</field>
+				<field name="IDENTIFIER">IMU</field>
 				<value name="ANGLE_UNIT">
 					<shadow type="navigation_typedEnum_angleUnit"/>
 				</value>
 			</block>
 			<block type="bno055imu_initialize">
-				<field name="IDENTIFIER">imu0</field>
+				<field name="IDENTIFIER">IMU</field>
 				<value name="PARAMETERS">
 					<block type="variables_get">
 						<field name="VAR">{parametersVariable}</field>
@@ -891,19 +891,19 @@
 				</value>
 			</block>
 			<block type="bno055imu_isAccelerometerCalibrated">
-				<field name="IDENTIFIER">imu0</field>
+				<field name="IDENTIFIER">IMU</field>
 			</block>
 			<block type="bno055imu_isGyroCalibrated">
-				<field name="IDENTIFIER">imu0</field>
+				<field name="IDENTIFIER">IMU</field>
 			</block>
 			<block type="bno055imu_isMagnetometerCalibrated">
-				<field name="IDENTIFIER">imu0</field>
+				<field name="IDENTIFIER">IMU</field>
 			</block>
 			<block type="bno055imu_isSystemCalibrated">
-				<field name="IDENTIFIER">imu0</field>
+				<field name="IDENTIFIER">IMU</field>
 			</block>
 			<block type="bno055imu_saveCalibrationData">
-				<field name="IDENTIFIER">imu0</field>
+				<field name="IDENTIFIER">IMU</field>
 				<value name="FILE_NAME">
 					<shadow type="text">
 						<field name="TEXT">IMUCalibration.json</field>
@@ -911,7 +911,7 @@
 				</value>
 			</block>
 			<block type="bno055imu_startAccelerationIntegration_with1">
-				<field name="IDENTIFIER">imu0</field>
+				<field name="IDENTIFIER">IMU</field>
 				<value name="MS_POLL_INTERVAL">
 					<shadow type="math_number">
 						<field name="NUM">1000</field>
@@ -919,7 +919,7 @@
 				</value>
 			</block>
 			<block type="bno055imu_startAccelerationIntegration_with3">
-				<field name="IDENTIFIER">imu0</field>
+				<field name="IDENTIFIER">IMU</field>
 				<value name="INITIAL_POSITION">
 					<block type="variables_get">
 						<field name="VAR">{positionVariable}</field>
@@ -937,7 +937,7 @@
 				</value>
 			</block>
 			<block type="bno055imu_stopAccelerationIntegration">
-				<field name="IDENTIFIER">imu0</field>
+				<field name="IDENTIFIER">IMU</field>
 			</block>
 		</category>
 		<category css-icon="customIcon fa fa-folder" name="IMU-BNO055.Parameters" toolboxitemid="IMUParamSensor">

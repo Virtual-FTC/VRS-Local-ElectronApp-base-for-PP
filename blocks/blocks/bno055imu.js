@@ -30,7 +30,7 @@
 
 //VRS-When ready add this set of code to wrapper (also other methods)
 /*
-	  //Video Example: https://www.youtube.com/watch?v=YbXa8qn4OVE
+    //Video Example: https://www.youtube.com/watch?v=YbXa8qn4OVE
       //IMU Blocks
       var imu = interpreter.nativeToPseudo({});
       interpreter.setProperty(globalObject, 'imuAsBNO055IMU', imu);
@@ -38,19 +38,19 @@
 
 
 //VRS-Put property in call
-Blockly.JavaScript['bno055imu_setProperty'] = function(block) {
+Blockly.JavaScript['bno055imu_setProperty'] = function (block) {
   var identifier = block.getFieldValue('IDENTIFIER');
   var property = block.getFieldValue('PROP');
   var value = Blockly.JavaScript.valueToCode(
-      block, 'VALUE', Blockly.JavaScript.ORDER_NONE);
+    block, 'VALUE', Blockly.JavaScript.ORDER_NONE);
   return identifier + '.set(\"' + property + '\", ' + value + ');\n';
 };
 
-Blockly.FtcJava['bno055imu_setProperty'] = function(block) {
+Blockly.FtcJava['bno055imu_setProperty'] = function (block) {
   var identifier = Blockly.FtcJava.importDeclareAssign_(block, 'IDENTIFIER', 'BNO055IMU');
   var property = block.getFieldValue('PROP');
   var value = Blockly.FtcJava.valueToCode(
-      block, 'VALUE', Blockly.FtcJava.ORDER_NONE);
+    block, 'VALUE', Blockly.FtcJava.ORDER_NONE);
   var code;
   switch (property) {
     case 'I2cAddress7Bit':
@@ -72,27 +72,27 @@ Blockly.FtcJava['bno055imu_setProperty'] = function(block) {
 };
 
 Blockly.Blocks['bno055imu_setProperty_Number'] = {
-  init: function() {
+  init: function () {
     var PROPERTY_CHOICES = [
-        ['I2cAddress7Bit', 'I2cAddress7Bit'],
-        ['I2cAddress8Bit', 'I2cAddress8Bit'],
+      ['I2cAddress7Bit', 'I2cAddress7Bit'],
+      ['I2cAddress8Bit', 'I2cAddress8Bit'],
     ];
     this.appendValueInput('VALUE').setCheck('Number')
-        .appendField('set')
-        .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
-        .appendField('.')
-        .appendField(new Blockly.FieldDropdown(PROPERTY_CHOICES), 'PROP')
-        .appendField('to');
+      .appendField('set')
+      .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
+      .appendField('.')
+      .appendField(new Blockly.FieldDropdown(PROPERTY_CHOICES), 'PROP')
+      .appendField('to');
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     this.setColour(propertyColorSensors);
     // Assign 'this' to a variable for use in the closures below.
     var thisBlock = this;
     var TOOLTIPS = [
-        ['I2cAddress7Bit', 'Sets the 7 bit I2C address of the sensor.'],
-        ['I2cAddress8Bit', 'Sets the 8 bit I2C address of the sensor.'],
+      ['I2cAddress7Bit', 'Sets the 7 bit I2C address of the sensor.'],
+      ['I2cAddress8Bit', 'Sets the 8 bit I2C address of the sensor.'],
     ];
-    this.setTooltip(function() {
+    this.setTooltip(function () {
       var key = thisBlock.getFieldValue('PROP');
       for (var i = 0; i < TOOLTIPS.length; i++) {
         if (TOOLTIPS[i][0] == key) {
@@ -101,7 +101,7 @@ Blockly.Blocks['bno055imu_setProperty_Number'] = {
       }
       return '';
     });
-    this.getFtcJavaInputType = function(inputName) {
+    this.getFtcJavaInputType = function (inputName) {
       if (inputName == 'VALUE') {
         var property = thisBlock.getFieldValue('PROP');
         switch (property) {
@@ -118,69 +118,69 @@ Blockly.Blocks['bno055imu_setProperty_Number'] = {
 };
 
 Blockly.JavaScript['bno055imu_setProperty_Number'] =
-    Blockly.JavaScript['bno055imu_setProperty'];
+  Blockly.JavaScript['bno055imu_setProperty'];
 
 Blockly.FtcJava['bno055imu_setProperty_Number'] =
-    Blockly.FtcJava['bno055imu_setProperty'];
+  Blockly.FtcJava['bno055imu_setProperty'];
 
 Blockly.Blocks['bno055imu_getProperty'] = {
-  init: function() {
+  init: function () {
     var PROPERTY_CHOICES = [
-        ['Acceleration', 'Acceleration'],
-        ['AngularOrientation', 'AngularOrientation'],
-        ['AngularVelocity', 'AngularVelocity'],
-        ['CalibrationStatus', 'CalibrationStatus'],
-        ['Gravity', 'Gravity'],
-        ['LinearAcceleration', 'LinearAcceleration'],
-        ['MagneticFieldStrength', 'MagneticFieldStrength'],
-        ['OverallAcceleration', 'OverallAcceleration'],
-        ['Parameters', 'Parameters'],
-        ['Position', 'Position'],
-        ['QuaternionOrientation', 'QuaternionOrientation'],
-        ['SystemError', 'SystemError'],
-        ['SystemStatus', 'SystemStatus'],
-        ['Temperature', 'Temperature'],
-        ['Velocity', 'Velocity'],
+      ['Acceleration', 'Acceleration'],
+      ['AngularOrientation', 'AngularOrientation'],
+      ['AngularVelocity', 'AngularVelocity'],
+      ['CalibrationStatus', 'CalibrationStatus'],
+      ['Gravity', 'Gravity'],
+      ['LinearAcceleration', 'LinearAcceleration'],
+      ['MagneticFieldStrength', 'MagneticFieldStrength'],
+      ['OverallAcceleration', 'OverallAcceleration'],
+      ['Parameters', 'Parameters'],
+      ['Position', 'Position'],
+      ['QuaternionOrientation', 'QuaternionOrientation'],
+      ['SystemError', 'SystemError'],
+      ['SystemStatus', 'SystemStatus'],
+      ['Temperature', 'Temperature'],
+      ['Velocity', 'Velocity'],
     ];
     this.setOutput(true); // no type, for compatibility
     this.appendDummyInput()
-        .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
-        .appendField('.')
-        .appendField(new Blockly.FieldDropdown(PROPERTY_CHOICES), 'PROP');
+      .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
+      .appendField('.')
+      .appendField(new Blockly.FieldDropdown(PROPERTY_CHOICES), 'PROP');
     this.setColour(propertyColorSensors);
     // Assign 'this' to a variable for use in the tooltip closure below.
     var thisBlock = this;
     var TOOLTIPS = [
-        ['Acceleration', 'Returns an Acceleration object representing the last observed ' +
-            'acceleration of the sensor. Note that this does not communicate with the sensor, ' +
-            'but rather returns the most recent value reported to the acceleration integration ' +
-            'algorithm.'],
-        ['AngularOrientation', 'Returns an Orientation object representing the absolute ' +
-            'orientation of the sensor as a set three angles.'],
-        ['AngularVelocity', 'Returns an AngularVelocity object representing the rate of change ' +
-            'of the absolute orientation of the sensor.'],
-        ['CalibrationStatus', 'Returns a text value representing the calibration status of the IMU.'],
-        ['Gravity', 'Returns an Acceleration object representing the direction of the force of ' +
-            'gravity relative to the sensor.'],
-        ['LinearAcceleration', 'Returns an Acceleration object representing the acceleration ' +
-            'detected by the sensor due to the movement of the sensor.'],
-        ['MagneticFieldStrength', 'Returns a MagneticFlux object representing the magnetic field ' +
-            'strength detected by the sensor.'],
-        ['OverallAcceleration', 'Returns an Acceleration object representing the overall ' +
-            'acceleration detected by the sensor. This is composed of a component due to the ' +
-            'movement of the sensor and a component due to the force of gravity.'],
-        ['Parameters', 'Returns the parameters with which initialization was last attempted.'],
-        ['Position', 'Returns a Position object representing the current position of the sensor ' +
-            'as calculated by doubly integrating the observed sensor accelerations.'],
-        ['QuaternionOrientation', 'Returns a Quaternion object representing the absolute ' +
-            'orientation of the sensor.'],
-        ['SystemError', 'If SystemStatus is "SYSTEM_ERROR", returns text describing the error.'],
-        ['SystemStatus', 'Returns a text value representing the current status of the system.'],
-        ['Temperature', 'Returns a Temperature object representing the current temperature.'],
-        ['Velocity', 'Returns a Velocity object representing the current velocity of the sensor ' +
-            'as calculated by integrating the observed sensor accelerations.'],
+      ['Acceleration', 'Returns an Acceleration object representing the last observed ' +
+        'acceleration of the sensor. Note that this does not communicate with the sensor, ' +
+        'but rather returns the most recent value reported to the acceleration integration ' +
+        'algorithm.'],
+      ['AngularOrientation', 'Returns an Orientation object representing the absolute ' +
+        'orientation of the sensor as a set three angles.'],
+      ['AngularVelocity', 'Returns an AngularVelocity object representing the rate of change ' +
+        'of the absolute orientation of the sensor.'],
+      ['CalibrationStatus', 'Returns a text value representing the calibration status of the IMU.'],
+      ['Gravity', 'Returns an Acceleration object representing the direction of the force of ' +
+        'gravity relative to the sensor.'],
+      ['LinearAcceleration', 'Returns an Acceleration object representing the acceleration ' +
+        'detected by the sensor due to the movement of the sensor.'],
+      ['MagneticFieldStrength', 'Returns a MagneticFlux object representing the magnetic field ' +
+        'strength detected by the sensor.'],
+      ['OverallAcceleration', 'Returns an Acceleration object representing the overall ' +
+        'acceleration detected by the sensor. This is composed of a component due to the ' +
+        'movement of the sensor and a component due to the force of gravity.'],
+      ['Parameters', 'Returns the parameters with which initialization was last attempted.'],
+      ['Position', 'Returns a Position object representing the current position of the sensor ' +
+        'as calculated by doubly integrating the observed sensor accelerations.'],
+      ['QuaternionOrientation', 'Returns a Quaternion object representing the absolute ' +
+        'orientation of the sensor.'],
+      ['SystemError', 'If SystemStatus is "SYSTEM_ERROR", returns text describing the error.'],
+      ['SystemStatus', 'Returns a text value representing the current status of the system.'],
+      ['Temperature', 'Returns a Temperature object representing the current temperature.'],
+      ['Velocity', 'Returns a Velocity object representing the current velocity of the sensor ' +
+        'as calculated by integrating the observed sensor accelerations.'],
     ];
-    this.setTooltip(function() {
+    this.setTooltip(function () {
       var key = thisBlock.getFieldValue('PROP');
       for (var i = 0; i < TOOLTIPS.length; i++) {
         if (TOOLTIPS[i][0] == key) {
@@ -192,14 +192,14 @@ Blockly.Blocks['bno055imu_getProperty'] = {
   }
 };
 
-Blockly.JavaScript['bno055imu_getProperty'] = function(block) {
+Blockly.JavaScript['bno055imu_getProperty'] = function (block) {
   var identifier = block.getFieldValue('IDENTIFIER');
   var property = block.getFieldValue('PROP');
-  var code = identifier + '.get(\"' + property + '\")';
+  var code = identifier.slice(0, -1) + '.get(\"' + property + '\")';
   return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
-Blockly.FtcJava['bno055imu_getProperty'] = function(block) {
+Blockly.FtcJava['bno055imu_getProperty'] = function (block) {
   var identifier = Blockly.FtcJava.importDeclareAssign_(block, 'IDENTIFIER', 'BNO055IMU');
   var property = block.getFieldValue('PROP');
   var code;
@@ -238,35 +238,35 @@ Blockly.FtcJava['bno055imu_getProperty'] = function(block) {
 };
 
 Blockly.Blocks['bno055imu_getProperty_Acceleration'] = {
-  init: function() {
+  init: function () {
     var PROPERTY_CHOICES = [
-        ['Acceleration', 'Acceleration'],
-        ['Gravity', 'Gravity'],
-        ['LinearAcceleration', 'LinearAcceleration'],
-        ['OverallAcceleration', 'OverallAcceleration'],
+      ['Acceleration', 'Acceleration'],
+      ['Gravity', 'Gravity'],
+      ['LinearAcceleration', 'LinearAcceleration'],
+      ['OverallAcceleration', 'OverallAcceleration'],
     ];
     this.setOutput(true, 'Acceleration');
     this.appendDummyInput()
-        .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
-        .appendField('.')
-        .appendField(new Blockly.FieldDropdown(PROPERTY_CHOICES), 'PROP');
+      .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
+      .appendField('.')
+      .appendField(new Blockly.FieldDropdown(PROPERTY_CHOICES), 'PROP');
     this.setColour(propertyColorSensors);
     // Assign 'this' to a variable for use in the tooltip closure below.
     var thisBlock = this;
     var TOOLTIPS = [
-        ['Acceleration', 'Returns an Acceleration object representing the last observed ' +
-            'acceleration of the sensor. Note that this does not communicate with the sensor, ' +
-            'but rather returns the most recent value reported to the acceleration integration ' +
-            'algorithm.'],
-        ['Gravity', 'Returns an Acceleration object representing the direction of the force of ' +
-            'gravity relative to the sensor.'],
-        ['LinearAcceleration', 'Returns an Acceleration object representing the acceleration ' +
-            'detected by the sensor due to the movement of the sensor.'],
-        ['OverallAcceleration', 'Returns an Acceleration object representing the overall ' +
-            'acceleration detected by the sensor. This is composed of a component due to the ' +
-            'movement of the sensor and a component due to the force of gravity.'],
+      ['Acceleration', 'Returns an Acceleration object representing the last observed ' +
+        'acceleration of the sensor. Note that this does not communicate with the sensor, ' +
+        'but rather returns the most recent value reported to the acceleration integration ' +
+        'algorithm.'],
+      ['Gravity', 'Returns an Acceleration object representing the direction of the force of ' +
+        'gravity relative to the sensor.'],
+      ['LinearAcceleration', 'Returns an Acceleration object representing the acceleration ' +
+        'detected by the sensor due to the movement of the sensor.'],
+      ['OverallAcceleration', 'Returns an Acceleration object representing the overall ' +
+        'acceleration detected by the sensor. This is composed of a component due to the ' +
+        'movement of the sensor and a component due to the force of gravity.'],
     ];
-    this.setTooltip(function() {
+    this.setTooltip(function () {
       var key = thisBlock.getFieldValue('PROP');
       for (var i = 0; i < TOOLTIPS.length; i++) {
         if (TOOLTIPS[i][0] == key) {
@@ -279,29 +279,29 @@ Blockly.Blocks['bno055imu_getProperty_Acceleration'] = {
 };
 
 Blockly.JavaScript['bno055imu_getProperty_Acceleration'] =
-    Blockly.JavaScript['bno055imu_getProperty'];
+  Blockly.JavaScript['bno055imu_getProperty'];
 
 Blockly.FtcJava['bno055imu_getProperty_Acceleration'] =
-    Blockly.FtcJava['bno055imu_getProperty'];
+  Blockly.FtcJava['bno055imu_getProperty'];
 
 Blockly.Blocks['bno055imu_getProperty_Orientation'] = {
-  init: function() {
+  init: function () {
     var PROPERTY_CHOICES = [
-        ['AngularOrientation', 'AngularOrientation'],
+      ['AngularOrientation', 'AngularOrientation'],
     ];
     this.setOutput(true, 'Orientation');
     this.appendDummyInput()
-        .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
-        .appendField('.')
-        .appendField(new Blockly.FieldDropdown(PROPERTY_CHOICES), 'PROP');
+      .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
+      .appendField('.')
+      .appendField(new Blockly.FieldDropdown(PROPERTY_CHOICES), 'PROP');
     this.setColour(propertyColorSensors);
     // Assign 'this' to a variable for use in the tooltip closure below.
     var thisBlock = this;
     var TOOLTIPS = [
-        ['AngularOrientation', 'Returns an Orientation object representing the absolute ' +
-            'orientation of the sensor as a set three angles.'],
+      ['AngularOrientation', 'Returns an Orientation object representing the absolute ' +
+        'orientation of the sensor as a set three angles.'],
     ];
-    this.setTooltip(function() {
+    this.setTooltip(function () {
       var key = thisBlock.getFieldValue('PROP');
       for (var i = 0; i < TOOLTIPS.length; i++) {
         if (TOOLTIPS[i][0] == key) {
@@ -313,33 +313,33 @@ Blockly.Blocks['bno055imu_getProperty_Orientation'] = {
   }
 };
 
-Blockly.JavaScript['bno055imu_getProperty_Orientation'] = function(block) {
+Blockly.JavaScript['bno055imu_getProperty_Orientation'] = function (block) {
   var identifier = block.getFieldValue('IDENTIFIER');
   var code = identifier + '.getAngularOrientation()';
   return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
 Blockly.FtcJava['bno055imu_getProperty_Orientation'] =
-    Blockly.FtcJava['bno055imu_getProperty'];
+  Blockly.FtcJava['bno055imu_getProperty'];
 
 Blockly.Blocks['bno055imu_getProperty_AngularVelocity'] = {
-  init: function() {
+  init: function () {
     var PROPERTY_CHOICES = [
-        ['AngularVelocity', 'AngularVelocity'],
+      ['AngularVelocity', 'AngularVelocity'],
     ];
     this.setOutput(true, 'AngularVelocity');
     this.appendDummyInput()
-        .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
-        .appendField('.')
-        .appendField(new Blockly.FieldDropdown(PROPERTY_CHOICES), 'PROP');
+      .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
+      .appendField('.')
+      .appendField(new Blockly.FieldDropdown(PROPERTY_CHOICES), 'PROP');
     this.setColour(propertyColorSensors);
     // Assign 'this' to a variable for use in the tooltip closure below.
     var thisBlock = this;
     var TOOLTIPS = [
-        ['AngularVelocity', 'Returns an AngularVelocity object representing the rate of change ' +
-            'of the absolute orientation of the sensor.'],
+      ['AngularVelocity', 'Returns an AngularVelocity object representing the rate of change ' +
+        'of the absolute orientation of the sensor.'],
     ];
-    this.setTooltip(function() {
+    this.setTooltip(function () {
       var key = thisBlock.getFieldValue('PROP');
       for (var i = 0; i < TOOLTIPS.length; i++) {
         if (TOOLTIPS[i][0] == key) {
@@ -351,38 +351,38 @@ Blockly.Blocks['bno055imu_getProperty_AngularVelocity'] = {
   }
 };
 
-Blockly.JavaScript['bno055imu_getProperty_AngularVelocity'] = function(block) {
+Blockly.JavaScript['bno055imu_getProperty_AngularVelocity'] = function (block) {
   var identifier = block.getFieldValue('IDENTIFIER');
   var angleUnit = Blockly.JavaScript.valueToCode(
-      block, 'ANGLE_UNIT', Blockly.JavaScript.ORDER_NONE);
-  var code = identifier + '.getAngularVelocity()';
+    block, 'ANGLE_UNIT', Blockly.JavaScript.ORDER_NONE);
+  var code = identifier.substring(identifier.length - 1) + '.getAngularVelocity()';
   return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
 Blockly.FtcJava['bno055imu_getProperty_AngularVelocity'] =
-    Blockly.FtcJava['bno055imu_getProperty'];
+  Blockly.FtcJava['bno055imu_getProperty'];
 
 Blockly.Blocks['bno055imu_getProperty_String'] = {
-  init: function() {
+  init: function () {
     var PROPERTY_CHOICES = [
-        ['CalibrationStatus', 'CalibrationStatus'],
-        ['SystemError', 'SystemError'],
-        ['SystemStatus', 'SystemStatus'],
+      ['CalibrationStatus', 'CalibrationStatus'],
+      ['SystemError', 'SystemError'],
+      ['SystemStatus', 'SystemStatus'],
     ];
     this.setOutput(true, 'String');
     this.appendDummyInput()
-        .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
-        .appendField('.')
-        .appendField(new Blockly.FieldDropdown(PROPERTY_CHOICES), 'PROP');
+      .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
+      .appendField('.')
+      .appendField(new Blockly.FieldDropdown(PROPERTY_CHOICES), 'PROP');
     this.setColour(propertyColorSensors);
     // Assign 'this' to a variable for use in the tooltip closure below.
     var thisBlock = this;
     var TOOLTIPS = [
-        ['CalibrationStatus', 'Returns a text value representing the calibration status of the IMU.'],
-        ['SystemError', 'If SystemStatus is "SYSTEM_ERROR", returns text describing the error.'],
-        ['SystemStatus', 'Returns a text value representing the current status of the system.'],
+      ['CalibrationStatus', 'Returns a text value representing the calibration status of the IMU.'],
+      ['SystemError', 'If SystemStatus is "SYSTEM_ERROR", returns text describing the error.'],
+      ['SystemStatus', 'Returns a text value representing the current status of the system.'],
     ];
-    this.setTooltip(function() {
+    this.setTooltip(function () {
       var key = thisBlock.getFieldValue('PROP');
       for (var i = 0; i < TOOLTIPS.length; i++) {
         if (TOOLTIPS[i][0] == key) {
@@ -395,28 +395,28 @@ Blockly.Blocks['bno055imu_getProperty_String'] = {
 };
 
 Blockly.JavaScript['bno055imu_getProperty_String'] =
-    Blockly.JavaScript['bno055imu_getProperty'];
+  Blockly.JavaScript['bno055imu_getProperty'];
 
 Blockly.FtcJava['bno055imu_getProperty_String'] =
-    Blockly.FtcJava['bno055imu_getProperty'];
+  Blockly.FtcJava['bno055imu_getProperty'];
 
 Blockly.Blocks['bno055imu_getProperty_SystemStatus'] = {
-  init: function() {
+  init: function () {
     var PROPERTY_CHOICES = [
-        ['SystemStatus', 'SystemStatus'],
+      ['SystemStatus', 'SystemStatus'],
     ];
     this.setOutput(true, 'BNO055IMU.SystemStatus');
     this.appendDummyInput()
-        .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
-        .appendField('.')
-        .appendField(new Blockly.FieldDropdown(PROPERTY_CHOICES), 'PROP');
+      .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
+      .appendField('.')
+      .appendField(new Blockly.FieldDropdown(PROPERTY_CHOICES), 'PROP');
     this.setColour(propertyColorSensors);
     // Assign 'this' to a variable for use in the tooltip closure below.
     var thisBlock = this;
     var TOOLTIPS = [
-        ['SystemStatus', 'Returns a SystemStatus value representing the current status of the system.'],
+      ['SystemStatus', 'Returns a SystemStatus value representing the current status of the system.'],
     ];
-    this.setTooltip(function() {
+    this.setTooltip(function () {
       var key = thisBlock.getFieldValue('PROP');
       for (var i = 0; i < TOOLTIPS.length; i++) {
         if (TOOLTIPS[i][0] == key) {
@@ -429,9 +429,9 @@ Blockly.Blocks['bno055imu_getProperty_SystemStatus'] = {
 };
 
 Blockly.JavaScript['bno055imu_getProperty_SystemStatus'] =
-    Blockly.JavaScript['bno055imu_getProperty'];
+  Blockly.JavaScript['bno055imu_getProperty'];
 
-Blockly.FtcJava['bno055imu_getProperty_SystemStatus'] = function(block) {
+Blockly.FtcJava['bno055imu_getProperty_SystemStatus'] = function (block) {
   var identifier = Blockly.FtcJava.importDeclareAssign_(block, 'IDENTIFIER', 'BNO055IMU');
   var property = block.getFieldValue('PROP');
   var code = identifier + '.get' + property + '()';
@@ -439,23 +439,23 @@ Blockly.FtcJava['bno055imu_getProperty_SystemStatus'] = function(block) {
 };
 
 Blockly.Blocks['bno055imu_getProperty_MagneticFlux'] = {
-  init: function() {
+  init: function () {
     var PROPERTY_CHOICES = [
-        ['MagneticFieldStrength', 'MagneticFieldStrength'],
+      ['MagneticFieldStrength', 'MagneticFieldStrength'],
     ];
     this.setOutput(true, 'MagneticFlux');
     this.appendDummyInput()
-        .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
-        .appendField('.')
-        .appendField(new Blockly.FieldDropdown(PROPERTY_CHOICES), 'PROP');
+      .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
+      .appendField('.')
+      .appendField(new Blockly.FieldDropdown(PROPERTY_CHOICES), 'PROP');
     this.setColour(propertyColorSensors);
     // Assign 'this' to a variable for use in the tooltip closure below.
     var thisBlock = this;
     var TOOLTIPS = [
-        ['MagneticFieldStrength', 'Returns a MagneticFlux object representing the magnetic field ' +
-            'strength detected by the sensor.'],
+      ['MagneticFieldStrength', 'Returns a MagneticFlux object representing the magnetic field ' +
+        'strength detected by the sensor.'],
     ];
-    this.setTooltip(function() {
+    this.setTooltip(function () {
       var key = thisBlock.getFieldValue('PROP');
       for (var i = 0; i < TOOLTIPS.length; i++) {
         if (TOOLTIPS[i][0] == key) {
@@ -468,28 +468,28 @@ Blockly.Blocks['bno055imu_getProperty_MagneticFlux'] = {
 };
 
 Blockly.JavaScript['bno055imu_getProperty_MagneticFlux'] =
-    Blockly.JavaScript['bno055imu_getProperty'];
+  Blockly.JavaScript['bno055imu_getProperty'];
 
 Blockly.FtcJava['bno055imu_getProperty_MagneticFlux'] =
-    Blockly.FtcJava['bno055imu_getProperty'];
+  Blockly.FtcJava['bno055imu_getProperty'];
 
 Blockly.Blocks['bno055imu_getProperty_Parameters'] = {
-  init: function() {
+  init: function () {
     var PROPERTY_CHOICES = [
-        ['Parameters', 'Parameters'],
+      ['Parameters', 'Parameters'],
     ];
     this.setOutput(true, 'BNO055IMU.Parameters');
     this.appendDummyInput()
-        .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
-        .appendField('.')
-        .appendField(new Blockly.FieldDropdown(PROPERTY_CHOICES), 'PROP');
+      .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
+      .appendField('.')
+      .appendField(new Blockly.FieldDropdown(PROPERTY_CHOICES), 'PROP');
     this.setColour(propertyColorSensors);
     // Assign 'this' to a variable for use in the tooltip closure below.
     var thisBlock = this;
     var TOOLTIPS = [
-        ['Parameters', 'Returns the parameters with which initialization was last attempted.'],
+      ['Parameters', 'Returns the parameters with which initialization was last attempted.'],
     ];
-    this.setTooltip(function() {
+    this.setTooltip(function () {
       var key = thisBlock.getFieldValue('PROP');
       for (var i = 0; i < TOOLTIPS.length; i++) {
         if (TOOLTIPS[i][0] == key) {
@@ -502,29 +502,29 @@ Blockly.Blocks['bno055imu_getProperty_Parameters'] = {
 };
 
 Blockly.JavaScript['bno055imu_getProperty_Parameters'] =
-    Blockly.JavaScript['bno055imu_getProperty'];
+  Blockly.JavaScript['bno055imu_getProperty'];
 
 Blockly.FtcJava['bno055imu_getProperty_Parameters'] =
-    Blockly.FtcJava['bno055imu_getProperty'];
+  Blockly.FtcJava['bno055imu_getProperty'];
 
 Blockly.Blocks['bno055imu_getProperty_Position'] = {
-  init: function() {
+  init: function () {
     var PROPERTY_CHOICES = [
-        ['Position', 'Position'],
+      ['Position', 'Position'],
     ];
     this.setOutput(true, 'Position');
     this.appendDummyInput()
-        .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
-        .appendField('.')
-        .appendField(new Blockly.FieldDropdown(PROPERTY_CHOICES), 'PROP');
+      .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
+      .appendField('.')
+      .appendField(new Blockly.FieldDropdown(PROPERTY_CHOICES), 'PROP');
     this.setColour(propertyColorSensors);
     // Assign 'this' to a variable for use in the tooltip closure below.
     var thisBlock = this;
     var TOOLTIPS = [
-        ['Position', 'Returns a Position object representing the current position of the sensor ' +
-            'as calculated by doubly integrating the observed sensor accelerations.'],
+      ['Position', 'Returns a Position object representing the current position of the sensor ' +
+        'as calculated by doubly integrating the observed sensor accelerations.'],
     ];
-    this.setTooltip(function() {
+    this.setTooltip(function () {
       var key = thisBlock.getFieldValue('PROP');
       for (var i = 0; i < TOOLTIPS.length; i++) {
         if (TOOLTIPS[i][0] == key) {
@@ -537,29 +537,29 @@ Blockly.Blocks['bno055imu_getProperty_Position'] = {
 };
 
 Blockly.JavaScript['bno055imu_getProperty_Position'] =
-    Blockly.JavaScript['bno055imu_getProperty'];
+  Blockly.JavaScript['bno055imu_getProperty'];
 
 Blockly.FtcJava['bno055imu_getProperty_Position'] =
-    Blockly.FtcJava['bno055imu_getProperty'];
+  Blockly.FtcJava['bno055imu_getProperty'];
 
 Blockly.Blocks['bno055imu_getProperty_Quaternion'] = {
-  init: function() {
+  init: function () {
     var PROPERTY_CHOICES = [
-        ['QuaternionOrientation', 'QuaternionOrientation'],
+      ['QuaternionOrientation', 'QuaternionOrientation'],
     ];
     this.setOutput(true, 'Quaternion');
     this.appendDummyInput()
-        .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
-        .appendField('.')
-        .appendField(new Blockly.FieldDropdown(PROPERTY_CHOICES), 'PROP');
+      .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
+      .appendField('.')
+      .appendField(new Blockly.FieldDropdown(PROPERTY_CHOICES), 'PROP');
     this.setColour(propertyColorSensors);
     // Assign 'this' to a variable for use in the tooltip closure below.
     var thisBlock = this;
     var TOOLTIPS = [
-        ['QuaternionOrientation', 'Returns a Quaternion object representing the absolute ' +
-            'orientation of the sensor.'],
+      ['QuaternionOrientation', 'Returns a Quaternion object representing the absolute ' +
+        'orientation of the sensor.'],
     ];
-    this.setTooltip(function() {
+    this.setTooltip(function () {
       var key = thisBlock.getFieldValue('PROP');
       for (var i = 0; i < TOOLTIPS.length; i++) {
         if (TOOLTIPS[i][0] == key) {
@@ -572,28 +572,28 @@ Blockly.Blocks['bno055imu_getProperty_Quaternion'] = {
 };
 
 Blockly.JavaScript['bno055imu_getProperty_Quaternion'] =
-    Blockly.JavaScript['bno055imu_getProperty'];
+  Blockly.JavaScript['bno055imu_getProperty'];
 
 Blockly.FtcJava['bno055imu_getProperty_Quaternion'] =
-    Blockly.FtcJava['bno055imu_getProperty'];
+  Blockly.FtcJava['bno055imu_getProperty'];
 
 Blockly.Blocks['bno055imu_getProperty_Temperature'] = {
-  init: function() {
+  init: function () {
     var PROPERTY_CHOICES = [
-        ['Temperature', 'Temperature'],
+      ['Temperature', 'Temperature'],
     ];
     this.setOutput(true, 'Temperature');
     this.appendDummyInput()
-        .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
-        .appendField('.')
-        .appendField(new Blockly.FieldDropdown(PROPERTY_CHOICES), 'PROP');
+      .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
+      .appendField('.')
+      .appendField(new Blockly.FieldDropdown(PROPERTY_CHOICES), 'PROP');
     this.setColour(propertyColorSensors);
     // Assign 'this' to a variable for use in the tooltip closure below.
     var thisBlock = this;
     var TOOLTIPS = [
-        ['Temperature', 'Returns a Temperature object representing the current temperature.'],
+      ['Temperature', 'Returns a Temperature object representing the current temperature.'],
     ];
-    this.setTooltip(function() {
+    this.setTooltip(function () {
       var key = thisBlock.getFieldValue('PROP');
       for (var i = 0; i < TOOLTIPS.length; i++) {
         if (TOOLTIPS[i][0] == key) {
@@ -606,29 +606,29 @@ Blockly.Blocks['bno055imu_getProperty_Temperature'] = {
 };
 
 Blockly.JavaScript['bno055imu_getProperty_Temperature'] =
-    Blockly.JavaScript['bno055imu_getProperty'];
+  Blockly.JavaScript['bno055imu_getProperty'];
 
 Blockly.FtcJava['bno055imu_getProperty_Temperature'] =
-    Blockly.FtcJava['bno055imu_getProperty'];
+  Blockly.FtcJava['bno055imu_getProperty'];
 
 Blockly.Blocks['bno055imu_getProperty_Velocity'] = {
-  init: function() {
+  init: function () {
     var PROPERTY_CHOICES = [
-        ['Velocity', 'Velocity'],
+      ['Velocity', 'Velocity'],
     ];
     this.setOutput(true, 'Velocity');
     this.appendDummyInput()
-        .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
-        .appendField('.')
-        .appendField(new Blockly.FieldDropdown(PROPERTY_CHOICES), 'PROP');
+      .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
+      .appendField('.')
+      .appendField(new Blockly.FieldDropdown(PROPERTY_CHOICES), 'PROP');
     this.setColour(propertyColorSensors);
     // Assign 'this' to a variable for use in the tooltip closure below.
     var thisBlock = this;
     var TOOLTIPS = [
-        ['Velocity', 'Returns a Velocity object representing the current velocity of the sensor ' +
-            'as calculated by integrating the observed sensor accelerations.'],
+      ['Velocity', 'Returns a Velocity object representing the current velocity of the sensor ' +
+        'as calculated by integrating the observed sensor accelerations.'],
     ];
-    this.setTooltip(function() {
+    this.setTooltip(function () {
       var key = thisBlock.getFieldValue('PROP');
       for (var i = 0; i < TOOLTIPS.length; i++) {
         if (TOOLTIPS[i][0] == key) {
@@ -641,30 +641,30 @@ Blockly.Blocks['bno055imu_getProperty_Velocity'] = {
 };
 
 Blockly.JavaScript['bno055imu_getProperty_Velocity'] =
-    Blockly.JavaScript['bno055imu_getProperty'];
+  Blockly.JavaScript['bno055imu_getProperty'];
 
 Blockly.FtcJava['bno055imu_getProperty_Velocity'] =
-    Blockly.FtcJava['bno055imu_getProperty'];
+  Blockly.FtcJava['bno055imu_getProperty'];
 
 Blockly.Blocks['bno055imu_getProperty_Number'] = {
-  init: function() {
+  init: function () {
     var PROPERTY_CHOICES = [
-        ['I2cAddress7Bit', 'I2cAddress7Bit'],
-        ['I2cAddress8Bit', 'I2cAddress8Bit'],
+      ['I2cAddress7Bit', 'I2cAddress7Bit'],
+      ['I2cAddress8Bit', 'I2cAddress8Bit'],
     ];
     this.setOutput(true, 'Number');
     this.appendDummyInput()
-        .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
-        .appendField('.')
-        .appendField(new Blockly.FieldDropdown(PROPERTY_CHOICES), 'PROP');
+      .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
+      .appendField('.')
+      .appendField(new Blockly.FieldDropdown(PROPERTY_CHOICES), 'PROP');
     this.setColour(propertyColorSensors);
     // Assign 'this' to a variable for use in the closures below.
     var thisBlock = this;
     var TOOLTIPS = [
-        ['I2cAddress7Bit', 'Returns the 7 bit I2C address of the sensor.'],
-        ['I2cAddress8Bit', 'Returns the 8 bit I2C address of the sensor.'],
+      ['I2cAddress7Bit', 'Returns the 7 bit I2C address of the sensor.'],
+      ['I2cAddress8Bit', 'Returns the 8 bit I2C address of the sensor.'],
     ];
-    this.setTooltip(function() {
+    this.setTooltip(function () {
       var key = thisBlock.getFieldValue('PROP');
       for (var i = 0; i < TOOLTIPS.length; i++) {
         if (TOOLTIPS[i][0] == key) {
@@ -673,7 +673,7 @@ Blockly.Blocks['bno055imu_getProperty_Number'] = {
       }
       return '';
     });
-    this.getFtcJavaOutputType = function() {
+    this.getFtcJavaOutputType = function () {
       var property = thisBlock.getFieldValue('PROP');
       switch (property) {
         case 'I2cAddress7Bit':
@@ -687,35 +687,35 @@ Blockly.Blocks['bno055imu_getProperty_Number'] = {
 };
 
 Blockly.JavaScript['bno055imu_getProperty_Number'] =
-    Blockly.JavaScript['bno055imu_getProperty'];
+  Blockly.JavaScript['bno055imu_getProperty'];
 
 Blockly.FtcJava['bno055imu_getProperty_Number'] =
-    Blockly.FtcJava['bno055imu_getProperty'];
+  Blockly.FtcJava['bno055imu_getProperty'];
 
 Blockly.Blocks['bno055imu_getProperty_Array'] = {
-  init: function() {
+  init: function () {
     var PROPERTY_CHOICES = [
-        ['AngularOrientationAxes', 'AngularOrientationAxes'],
-        ['AngularVelocityAxes', 'AngularVelocityAxes'],
+      ['AngularOrientationAxes', 'AngularOrientationAxes'],
+      ['AngularVelocityAxes', 'AngularVelocityAxes'],
     ];
     this.setOutput(true, 'Array');
     this.appendDummyInput()
-        .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
-        .appendField('.')
-        .appendField(new Blockly.FieldDropdown(PROPERTY_CHOICES), 'PROP');
+      .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
+      .appendField('.')
+      .appendField(new Blockly.FieldDropdown(PROPERTY_CHOICES), 'PROP');
     this.setColour(propertyColorSensors);
     // Assign 'this' to a variable for use in the tooltip closure below.
     var thisBlock = this;
     var TOOLTIPS = [
-        ['AngularOrientationAxes', 'Returns a List of the axes on which the sensor measures ' +
-            'angular orientation.'],
-        ['AngularVelocityAxes', 'Returns a List of the axes on which the sensor measures ' +
-            'angular velocity. Some sensors measure angular velocity on all three axes ' +
-            '(X, Y, & Z) while others measure on only a subset, typically the Z axis. This block ' +
-            'allows you to determine what information is usefully returned through the ' +
-            '\'get AngularVelocity\' block.'],
+      ['AngularOrientationAxes', 'Returns a List of the axes on which the sensor measures ' +
+        'angular orientation.'],
+      ['AngularVelocityAxes', 'Returns a List of the axes on which the sensor measures ' +
+        'angular velocity. Some sensors measure angular velocity on all three axes ' +
+        '(X, Y, & Z) while others measure on only a subset, typically the Z axis. This block ' +
+        'allows you to determine what information is usefully returned through the ' +
+        '\'get AngularVelocity\' block.'],
     ];
-    this.setTooltip(function() {
+    this.setTooltip(function () {
       var key = thisBlock.getFieldValue('PROP');
       for (var i = 0; i < TOOLTIPS.length; i++) {
         if (TOOLTIPS[i][0] == key) {
@@ -724,7 +724,7 @@ Blockly.Blocks['bno055imu_getProperty_Array'] = {
       }
       return '';
     });
-    this.getFtcJavaOutputType = function() {
+    this.getFtcJavaOutputType = function () {
       var property = thisBlock.getFieldValue('PROP');
       switch (property) {
         case 'AngularOrientationAxes':
@@ -737,14 +737,14 @@ Blockly.Blocks['bno055imu_getProperty_Array'] = {
   }
 };
 
-Blockly.JavaScript['bno055imu_getProperty_Array'] = function(block) {
+Blockly.JavaScript['bno055imu_getProperty_Array'] = function (block) {
   var identifier = block.getFieldValue('IDENTIFIER');
   var property = block.getFieldValue('PROP');
   var code = 'JSON.parse(' + identifier + '.get(\"' + property + '\"))';
   return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
-Blockly.FtcJava['bno055imu_getProperty_Array'] = function(block) {
+Blockly.FtcJava['bno055imu_getProperty_Array'] = function (block) {
   var identifier = Blockly.FtcJava.importDeclareAssign_(block, 'IDENTIFIER', 'BNO055IMU');
   var property = block.getFieldValue('PROP');
   var code;
@@ -770,36 +770,36 @@ Blockly.FtcJava['bno055imu_getProperty_Array'] = function(block) {
 // Enums
 
 Blockly.Blocks['bno055imu_typedEnum_systemStatus'] = {
-  init: function() {
+  init: function () {
     var SYSTEM_STATUS_CHOICES = [
-        ['SYSTEM_ERROR', 'SYSTEM_ERROR'],
-        ['IDLE', 'IDLE'],
-        ['INITIALIZING_PERIPHERALS', 'INITIALIZING_PERIPHERALS'],
-        ['SYSTEM_INITIALIZATION', 'SYSTEM_INITIALIZATION'],
-        ['SELF_TEST', 'SELF_TEST'],
-        ['RUNNING_FUSION', 'RUNNING_FUSION'],
-        ['RUNNING_NO_FUSION', 'RUNNING_NO_FUSION'],
-        ['UNKNOWN', 'UNKNOWN'],
+      ['SYSTEM_ERROR', 'SYSTEM_ERROR'],
+      ['IDLE', 'IDLE'],
+      ['INITIALIZING_PERIPHERALS', 'INITIALIZING_PERIPHERALS'],
+      ['SYSTEM_INITIALIZATION', 'SYSTEM_INITIALIZATION'],
+      ['SELF_TEST', 'SELF_TEST'],
+      ['RUNNING_FUSION', 'RUNNING_FUSION'],
+      ['RUNNING_NO_FUSION', 'RUNNING_NO_FUSION'],
+      ['UNKNOWN', 'UNKNOWN'],
     ];
     this.setOutput(true, 'BNO055IMU.SystemStatus');
     this.appendDummyInput()
-        .appendField(createNonEditableField('SystemStatus'))
-        .appendField('.')
-        .appendField(new Blockly.FieldDropdown(SYSTEM_STATUS_CHOICES), 'SYSTEM_STATUS');
+      .appendField(createNonEditableField('SystemStatus'))
+      .appendField('.')
+      .appendField(new Blockly.FieldDropdown(SYSTEM_STATUS_CHOICES), 'SYSTEM_STATUS');
     this.setColour(propertyColorSensors);
     // Assign 'this' to a variable for use in the tooltip closure below.
     var thisBlock = this;
     var TOOLTIPS = [
-        ['SYSTEM_ERROR', 'The SystemStatus value SYSTEM_ERROR.'],
-        ['IDLE', 'The SystemStatus value IDLE.'],
-        ['INITIALIZING_PERIPHERALS', 'The SystemStatus value INITIALIZING_PERIPHERALS.'],
-        ['SYSTEM_INITIALIZATION', 'The SystemStatus value SYSTEM_INITIALIZATION.'],
-        ['SELF_TEST', 'The SystemStatus value SELF_TEST.'],
-        ['RUNNING_FUSION', 'The SystemStatus value RUNNING_FUSION.'],
-        ['RUNNING_NO_FUSION', 'The SystemStatus value RUNNING_NO_FUSION.'],
-        ['UNKNOWN', 'The SystemStatus value UNKNOWN.'],
+      ['SYSTEM_ERROR', 'The SystemStatus value SYSTEM_ERROR.'],
+      ['IDLE', 'The SystemStatus value IDLE.'],
+      ['INITIALIZING_PERIPHERALS', 'The SystemStatus value INITIALIZING_PERIPHERALS.'],
+      ['SYSTEM_INITIALIZATION', 'The SystemStatus value SYSTEM_INITIALIZATION.'],
+      ['SELF_TEST', 'The SystemStatus value SELF_TEST.'],
+      ['RUNNING_FUSION', 'The SystemStatus value RUNNING_FUSION.'],
+      ['RUNNING_NO_FUSION', 'The SystemStatus value RUNNING_NO_FUSION.'],
+      ['UNKNOWN', 'The SystemStatus value UNKNOWN.'],
     ];
-    this.setTooltip(function() {
+    this.setTooltip(function () {
       var key = thisBlock.getFieldValue('SYSTEM_STATUS');
       for (var i = 0; i < TOOLTIPS.length; i++) {
         if (TOOLTIPS[i][0] == key) {
@@ -811,12 +811,12 @@ Blockly.Blocks['bno055imu_typedEnum_systemStatus'] = {
   }
 };
 
-Blockly.JavaScript['bno055imu_typedEnum_systemStatus'] = function(block) {
+Blockly.JavaScript['bno055imu_typedEnum_systemStatus'] = function (block) {
   var code = '"' + block.getFieldValue('SYSTEM_STATUS') + '"';
   return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
 
-Blockly.FtcJava['bno055imu_typedEnum_systemStatus'] = function(block) {
+Blockly.FtcJava['bno055imu_typedEnum_systemStatus'] = function (block) {
   var code = 'BNO055IMU.SystemStatus.' + block.getFieldValue('SYSTEM_STATUS');
   Blockly.FtcJava.generateImport_('BNO055IMU');
   return [code, Blockly.FtcJava.ORDER_MEMBER];
@@ -825,54 +825,54 @@ Blockly.FtcJava['bno055imu_typedEnum_systemStatus'] = function(block) {
 // Functions
 
 Blockly.Blocks['bno055imu_initialize'] = {
-  init: function() {
+  init: function () {
     this.appendDummyInput()
-        .appendField('call')
-        .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
-        .appendField('.')
-        .appendField(createNonEditableField('initialize'));
+      .appendField('call')
+      .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
+      .appendField('.')
+      .appendField(createNonEditableField('initialize'));
     this.appendValueInput('PARAMETERS').setCheck('BNO055IMU.Parameters')
-        .appendField('parameters')
-        .setAlign(Blockly.ALIGN_RIGHT);
+      .appendField('parameters')
+      .setAlign(Blockly.ALIGN_RIGHT);
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     this.setColour(propertyColorSensors);
     this.setTooltip('Initializes the sensor using the given parameters. Note that this operation ' +
-        'can take several tens of milliseconds.');
+      'can take several tens of milliseconds.');
   }
 };
 
-Blockly.JavaScript['bno055imu_initialize'] = function(block) {
+Blockly.JavaScript['bno055imu_initialize'] = function (block) {
   var identifier = block.getFieldValue('IDENTIFIER');
   var parameters = Blockly.JavaScript.valueToCode(
-      block, 'PARAMETERS', Blockly.JavaScript.ORDER_NONE);
+    block, 'PARAMETERS', Blockly.JavaScript.ORDER_NONE);
   return identifier + '.initialize(' + parameters + ');\n';
 };
 
-Blockly.FtcJava['bno055imu_initialize'] = function(block) {
+Blockly.FtcJava['bno055imu_initialize'] = function (block) {
   var identifier = Blockly.FtcJava.importDeclareAssign_(block, 'IDENTIFIER', 'BNO055IMU');
   var parameters = Blockly.FtcJava.valueToCode(
-      block, 'PARAMETERS', Blockly.FtcJava.ORDER_NONE);
+    block, 'PARAMETERS', Blockly.FtcJava.ORDER_NONE);
   return identifier + '.initialize(' + parameters + ');\n';
 };
 
 Blockly.Blocks['bno055imu_startAccelerationIntegration_with1'] = {
-  init: function() {
+  init: function () {
     this.appendDummyInput()
-        .appendField('call')
-        .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
-        .appendField('.')
-        .appendField(createNonEditableField('startAccelerationIntegration'));
+      .appendField('call')
+      .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
+      .appendField('.')
+      .appendField(createNonEditableField('startAccelerationIntegration'));
     this.appendValueInput('MS_POLL_INTERVAL').setCheck('Number')
-        .appendField('msPollInterval')
-        .setAlign(Blockly.ALIGN_RIGHT);
+      .appendField('msPollInterval')
+      .setAlign(Blockly.ALIGN_RIGHT);
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     this.setColour(propertyColorSensors);
     this.setTooltip('Start (or re-start) polling, at the given interval, the current linear ' +
-        'acceleration of the sensor and integrate it to provide velocity and position ' +
-        'information.');
-    this.getFtcJavaInputType = function(inputName) {
+      'acceleration of the sensor and integrate it to provide velocity and position ' +
+      'information.');
+    this.getFtcJavaInputType = function (inputName) {
       switch (inputName) {
         case 'MS_POLL_INTERVAL':
           return 'int';
@@ -882,43 +882,43 @@ Blockly.Blocks['bno055imu_startAccelerationIntegration_with1'] = {
   }
 };
 
-Blockly.JavaScript['bno055imu_startAccelerationIntegration_with1'] = function(block) {
+Blockly.JavaScript['bno055imu_startAccelerationIntegration_with1'] = function (block) {
   var identifier = block.getFieldValue('IDENTIFIER');
   var msPollInterval = Blockly.JavaScript.valueToCode(
-      block, 'MS_POLL_INTERVAL', Blockly.JavaScript.ORDER_NONE);
+    block, 'MS_POLL_INTERVAL', Blockly.JavaScript.ORDER_NONE);
   return identifier + '.startAccelerationIntegration_with1(' + msPollInterval + ');\n';
 };
 
-Blockly.FtcJava['bno055imu_startAccelerationIntegration_with1'] = function(block) {
+Blockly.FtcJava['bno055imu_startAccelerationIntegration_with1'] = function (block) {
   var identifier = Blockly.FtcJava.importDeclareAssign_(block, 'IDENTIFIER', 'BNO055IMU');
   var msPollInterval = Blockly.FtcJava.valueToCode(
-      block, 'MS_POLL_INTERVAL', Blockly.FtcJava.ORDER_NONE);
+    block, 'MS_POLL_INTERVAL', Blockly.FtcJava.ORDER_NONE);
   return identifier + '.startAccelerationIntegration(null, null, ' + msPollInterval + ');\n';
 };
 
 Blockly.Blocks['bno055imu_startAccelerationIntegration_with3'] = {
-  init: function() {
+  init: function () {
     this.appendDummyInput()
-        .appendField('call')
-        .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
-        .appendField('.')
-        .appendField(createNonEditableField('startAccelerationIntegration'));
+      .appendField('call')
+      .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
+      .appendField('.')
+      .appendField(createNonEditableField('startAccelerationIntegration'));
     this.appendValueInput('INITIAL_POSITION').setCheck('Position')
-        .appendField('initialPosition')
-        .setAlign(Blockly.ALIGN_RIGHT);
+      .appendField('initialPosition')
+      .setAlign(Blockly.ALIGN_RIGHT);
     this.appendValueInput('INITIAL_VELOCITY').setCheck('Velocity')
-        .appendField('initialVelocity')
-        .setAlign(Blockly.ALIGN_RIGHT);
+      .appendField('initialVelocity')
+      .setAlign(Blockly.ALIGN_RIGHT);
     this.appendValueInput('MS_POLL_INTERVAL').setCheck('Number')
-        .appendField('msPollInterval')
-        .setAlign(Blockly.ALIGN_RIGHT);
+      .appendField('msPollInterval')
+      .setAlign(Blockly.ALIGN_RIGHT);
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     this.setColour(propertyColorSensors);
     this.setTooltip('Start (or re-start) polling, at the given interval, the current linear ' +
-        'acceleration of the sensor and integrate it to provide velocity and position ' +
-        'information.');
-    this.getFtcJavaInputType = function(inputName) {
+      'acceleration of the sensor and integrate it to provide velocity and position ' +
+      'information.');
+    this.getFtcJavaInputType = function (inputName) {
       switch (inputName) {
         case 'MS_POLL_INTERVAL':
           return 'int';
@@ -928,37 +928,37 @@ Blockly.Blocks['bno055imu_startAccelerationIntegration_with3'] = {
   }
 };
 
-Blockly.JavaScript['bno055imu_startAccelerationIntegration_with3'] = function(block) {
+Blockly.JavaScript['bno055imu_startAccelerationIntegration_with3'] = function (block) {
   var identifier = block.getFieldValue('IDENTIFIER');
   var initialPosition = Blockly.JavaScript.valueToCode(
-      block, 'INITIAL_POSITION', Blockly.JavaScript.ORDER_COMMA);
+    block, 'INITIAL_POSITION', Blockly.JavaScript.ORDER_COMMA);
   var initialVelocity = Blockly.JavaScript.valueToCode(
-      block, 'INITIAL_VELOCITY', Blockly.JavaScript.ORDER_COMMA);
+    block, 'INITIAL_VELOCITY', Blockly.JavaScript.ORDER_COMMA);
   var msPollInterval = Blockly.JavaScript.valueToCode(
-      block, 'MS_POLL_INTERVAL', Blockly.JavaScript.ORDER_COMMA);
+    block, 'MS_POLL_INTERVAL', Blockly.JavaScript.ORDER_COMMA);
   return identifier + '.startAccelerationIntegration_with3(' + initialPosition + ', ' +
-      initialVelocity + ', ' + msPollInterval + ');\n';
+    initialVelocity + ', ' + msPollInterval + ');\n';
 };
 
-Blockly.FtcJava['bno055imu_startAccelerationIntegration_with3'] = function(block) {
+Blockly.FtcJava['bno055imu_startAccelerationIntegration_with3'] = function (block) {
   var identifier = Blockly.FtcJava.importDeclareAssign_(block, 'IDENTIFIER', 'BNO055IMU');
   var initialPosition = Blockly.FtcJava.valueToCode(
-      block, 'INITIAL_POSITION', Blockly.FtcJava.ORDER_COMMA);
+    block, 'INITIAL_POSITION', Blockly.FtcJava.ORDER_COMMA);
   var initialVelocity = Blockly.FtcJava.valueToCode(
-      block, 'INITIAL_VELOCITY', Blockly.FtcJava.ORDER_COMMA);
+    block, 'INITIAL_VELOCITY', Blockly.FtcJava.ORDER_COMMA);
   var msPollInterval = Blockly.FtcJava.valueToCode(
-      block, 'MS_POLL_INTERVAL', Blockly.FtcJava.ORDER_COMMA);
+    block, 'MS_POLL_INTERVAL', Blockly.FtcJava.ORDER_COMMA);
   return identifier + '.startAccelerationIntegration(' + initialPosition + ', ' +
-      initialVelocity + ', ' + msPollInterval + ');\n';
+    initialVelocity + ', ' + msPollInterval + ');\n';
 };
 
 Blockly.Blocks['bno055imu_stopAccelerationIntegration'] = {
-  init: function() {
+  init: function () {
     this.appendDummyInput()
-        .appendField('call')
-        .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
-        .appendField('.')
-        .appendField(createNonEditableField('stopAccelerationIntegration'));
+      .appendField('call')
+      .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
+      .appendField('.')
+      .appendField(createNonEditableField('stopAccelerationIntegration'));
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     this.setColour(propertyColorSensors);
@@ -966,127 +966,127 @@ Blockly.Blocks['bno055imu_stopAccelerationIntegration'] = {
   }
 };
 
-Blockly.JavaScript['bno055imu_stopAccelerationIntegration'] = function(block) {
+Blockly.JavaScript['bno055imu_stopAccelerationIntegration'] = function (block) {
   var identifier = block.getFieldValue('IDENTIFIER');
   return identifier + '.stopAccelerationIntegration();\n';
 };
 
-Blockly.FtcJava['bno055imu_stopAccelerationIntegration'] = function(block) {
+Blockly.FtcJava['bno055imu_stopAccelerationIntegration'] = function (block) {
   var identifier = Blockly.FtcJava.importDeclareAssign_(block, 'IDENTIFIER', 'BNO055IMU');
   return identifier + '.stopAccelerationIntegration();\n';
 };
 
 Blockly.Blocks['bno055imu_isSystemCalibrated'] = {
-  init: function() {
+  init: function () {
     this.setOutput(true, 'Boolean');
     this.appendDummyInput()
-        .appendField('call')
-        .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
-        .appendField('.')
-        .appendField(createNonEditableField('isSystemCalibrated'));
+      .appendField('call')
+      .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
+      .appendField('.')
+      .appendField(createNonEditableField('isSystemCalibrated'));
     this.setColour(propertyColorSensors);
     this.setTooltip('Returns true if the system is fully calibrated. The system is fully ' +
-        'calibrated if the gyro, accelerometer, and magnetometer are fully calibrated.');
+      'calibrated if the gyro, accelerometer, and magnetometer are fully calibrated.');
   }
 };
 
-Blockly.JavaScript['bno055imu_isSystemCalibrated'] = function(block) {
+Blockly.JavaScript['bno055imu_isSystemCalibrated'] = function (block) {
   var identifier = block.getFieldValue('IDENTIFIER');
   var code = identifier + '.is(\"SystemCalibrated\")';
   return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
-Blockly.FtcJava['bno055imu_isSystemCalibrated'] = function(block) {
+Blockly.FtcJava['bno055imu_isSystemCalibrated'] = function (block) {
   var identifier = Blockly.FtcJava.importDeclareAssign_(block, 'IDENTIFIER', 'BNO055IMU');
   var code = identifier + '.isSystemCalibrated()';
   return [code, Blockly.FtcJava.ORDER_FUNCTION_CALL];
 };
 
 Blockly.Blocks['bno055imu_isGyroCalibrated'] = {
-  init: function() {
+  init: function () {
     this.setOutput(true, 'Boolean');
     this.appendDummyInput()
-        .appendField('call')
-        .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
-        .appendField('.')
-        .appendField(createNonEditableField('isGyroCalibrated'));
+      .appendField('call')
+      .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
+      .appendField('.')
+      .appendField(createNonEditableField('isGyroCalibrated'));
     this.setColour(propertyColorSensors);
     this.setTooltip('Returns true if the gyro is fully calibrated.');
   }
 };
 
-Blockly.JavaScript['bno055imu_isGyroCalibrated'] = function(block) {
+Blockly.JavaScript['bno055imu_isGyroCalibrated'] = function (block) {
   var identifier = block.getFieldValue('IDENTIFIER');
   var code = identifier + '.is(\"GyroCalibrated\")';
   return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
-Blockly.FtcJava['bno055imu_isGyroCalibrated'] = function(block) {
+Blockly.FtcJava['bno055imu_isGyroCalibrated'] = function (block) {
   var identifier = Blockly.FtcJava.importDeclareAssign_(block, 'IDENTIFIER', 'BNO055IMU');
   var code = identifier + '.isGyroCalibrated()';
   return [code, Blockly.FtcJava.ORDER_FUNCTION_CALL];
 };
 
 Blockly.Blocks['bno055imu_isAccelerometerCalibrated'] = {
-  init: function() {
+  init: function () {
     this.setOutput(true, 'Boolean');
     this.appendDummyInput()
-        .appendField('call')
-        .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
-        .appendField('.')
-        .appendField(createNonEditableField('isAccelerometerCalibrated'));
+      .appendField('call')
+      .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
+      .appendField('.')
+      .appendField(createNonEditableField('isAccelerometerCalibrated'));
     this.setColour(propertyColorSensors);
     this.setTooltip('Returns true if the accelerometer is fully calibrated.');
   }
 };
 
-Blockly.JavaScript['bno055imu_isAccelerometerCalibrated'] = function(block) {
+Blockly.JavaScript['bno055imu_isAccelerometerCalibrated'] = function (block) {
   var identifier = block.getFieldValue('IDENTIFIER');
   var code = identifier + '.is(\"AccelerometerCalibrated\")';
   return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
-Blockly.FtcJava['bno055imu_isAccelerometerCalibrated'] = function(block) {
+Blockly.FtcJava['bno055imu_isAccelerometerCalibrated'] = function (block) {
   var identifier = Blockly.FtcJava.importDeclareAssign_(block, 'IDENTIFIER', 'BNO055IMU');
   var code = identifier + '.isAccelerometerCalibrated()';
   return [code, Blockly.FtcJava.ORDER_FUNCTION_CALL];
 };
 
 Blockly.Blocks['bno055imu_isMagnetometerCalibrated'] = {
-  init: function() {
+  init: function () {
     this.setOutput(true, 'Boolean');
     this.appendDummyInput()
-        .appendField('call')
-        .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
-        .appendField('.')
-        .appendField(createNonEditableField('isMagnetometerCalibrated'));
+      .appendField('call')
+      .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
+      .appendField('.')
+      .appendField(createNonEditableField('isMagnetometerCalibrated'));
     this.setColour(propertyColorSensors);
     this.setTooltip('Returns true if the magnetometer is fully calibrated.');
   }
 };
 
-Blockly.JavaScript['bno055imu_isMagnetometerCalibrated'] = function(block) {
+Blockly.JavaScript['bno055imu_isMagnetometerCalibrated'] = function (block) {
   var identifier = block.getFieldValue('IDENTIFIER');
   var code = identifier + '.is(\"MagnetometerCalibrated\")';
   return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
-Blockly.FtcJava['bno055imu_isMagnetometerCalibrated'] = function(block) {
+Blockly.FtcJava['bno055imu_isMagnetometerCalibrated'] = function (block) {
   var identifier = Blockly.FtcJava.importDeclareAssign_(block, 'IDENTIFIER', 'BNO055IMU');
   var code = identifier + '.isMagnetometerCalibrated()';
   return [code, Blockly.FtcJava.ORDER_FUNCTION_CALL];
 };
 
 Blockly.Blocks['bno055imu_saveCalibrationData'] = {
-  init: function() {
+  init: function () {
     this.appendDummyInput()
-        .appendField('call')
-        .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
-        .appendField('.')
-        .appendField(createNonEditableField('saveCalibrationData'));
+      .appendField('call')
+      .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
+      .appendField('.')
+      .appendField(createNonEditableField('saveCalibrationData'));
     this.appendValueInput('FILE_NAME').setCheck('String')
-        .appendField('fileName')
-        .setAlign(Blockly.ALIGN_RIGHT);
+      .appendField('fileName')
+      .setAlign(Blockly.ALIGN_RIGHT);
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     this.setColour(propertyColorSensors);
@@ -1094,54 +1094,54 @@ Blockly.Blocks['bno055imu_saveCalibrationData'] = {
   }
 };
 
-Blockly.JavaScript['bno055imu_saveCalibrationData'] = function(block) {
+Blockly.JavaScript['bno055imu_saveCalibrationData'] = function (block) {
   var identifier = block.getFieldValue('IDENTIFIER');
   var fileName = Blockly.JavaScript.valueToCode(
-      block, 'FILE_NAME', Blockly.JavaScript.ORDER_NONE);
+    block, 'FILE_NAME', Blockly.JavaScript.ORDER_NONE);
   return identifier + '.saveCalibrationData(' + fileName + ');\n';
 };
 
-Blockly.FtcJava['bno055imu_saveCalibrationData'] = function(block) {
+Blockly.FtcJava['bno055imu_saveCalibrationData'] = function (block) {
   var identifier = Blockly.FtcJava.importDeclareAssign_(block, 'IDENTIFIER', 'BNO055IMU');
   var fileName = Blockly.FtcJava.valueToCode(
-      block, 'FILE_NAME', Blockly.FtcJava.ORDER_NONE);
+    block, 'FILE_NAME', Blockly.FtcJava.ORDER_NONE);
   Blockly.FtcJava.generateImport_('ReadWriteFile');
   Blockly.FtcJava.generateImport_('AppUtil');
   return 'ReadWriteFile.writeFile(\n' +
-      Blockly.FtcJava.INDENT_CONTINUE + 'AppUtil.getInstance().getSettingsFile(' + fileName + '),\n' +
-      Blockly.FtcJava.INDENT_CONTINUE + identifier + '.readCalibrationData().serialize());\n';
+    Blockly.FtcJava.INDENT_CONTINUE + 'AppUtil.getInstance().getSettingsFile(' + fileName + '),\n' +
+    Blockly.FtcJava.INDENT_CONTINUE + identifier + '.readCalibrationData().serialize());\n';
 };
 
 Blockly.Blocks['bno055imu_getAngularVelocity'] = {
-  init: function() {
+  init: function () {
     this.setOutput(true, 'AngularVelocity');
     this.appendDummyInput()
-        .appendField('call')
-        .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
-        .appendField('.')
-        .appendField(createNonEditableField('getAngularVelocity'));
+      .appendField('call')
+      .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
+      .appendField('.')
+      .appendField(createNonEditableField('getAngularVelocity'));
     this.appendValueInput('ANGLE_UNIT').setCheck('AngleUnit')
-        .appendField('angleUnit')
-        .setAlign(Blockly.ALIGN_RIGHT);
+      .appendField('angleUnit')
+      .setAlign(Blockly.ALIGN_RIGHT);
     this.setColour(propertyColorSensors);
     this.setTooltip('Returns an AngularVelocity object representing the angular rotation rate ' +
-        'across all the axes measured by the sensor. Axes on which angular velocity is not ' +
-        'measured are reported as zero.');
+      'across all the axes measured by the sensor. Axes on which angular velocity is not ' +
+      'measured are reported as zero.');
   }
 };
 
-Blockly.JavaScript['bno055imu_getAngularVelocity'] = function(block) {
+Blockly.JavaScript['bno055imu_getAngularVelocity'] = function (block) {
   var identifier = block.getFieldValue('IDENTIFIER');
   var angleUnit = Blockly.JavaScript.valueToCode(
-      block, 'ANGLE_UNIT', Blockly.JavaScript.ORDER_NONE);
+    block, 'ANGLE_UNIT', Blockly.JavaScript.ORDER_NONE);
   var code = identifier + '.getAngularVelocity(' + angleUnit + ')';
   return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
-Blockly.FtcJava['bno055imu_getAngularVelocity'] = function(block) {
+Blockly.FtcJava['bno055imu_getAngularVelocity'] = function (block) {
   var identifier = Blockly.FtcJava.importDeclareAssign_(block, 'IDENTIFIER', 'BNO055IMU');
   var angleUnit = Blockly.FtcJava.valueToCode(
-      block, 'ANGLE_UNIT', Blockly.FtcJava.ORDER_NONE);
+    block, 'ANGLE_UNIT', Blockly.FtcJava.ORDER_NONE);
   // This java code will throw ClassCastException if the BNO055IMU is not a Gyroscope.
   Blockly.FtcJava.generateImport_('Gyroscope');
   var code = '((Gyroscope) ' + identifier + ').getAngularVelocity(' + angleUnit + ')';
@@ -1149,49 +1149,49 @@ Blockly.FtcJava['bno055imu_getAngularVelocity'] = function(block) {
 };
 
 Blockly.Blocks['bno055imu_getAngularOrientation'] = {
-  init: function() {
+  init: function () {
     this.setOutput(true, 'Orientation');
     this.appendDummyInput()
-        .appendField('call')
-        .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
-        .appendField('.')
-        .appendField(createNonEditableField('getAngularOrientation'));
+      .appendField('call')
+      .appendField(createBNO055IMUDropdown(), 'IDENTIFIER')
+      .appendField('.')
+      .appendField(createNonEditableField('getAngularOrientation'));
     this.appendValueInput('AXES_REFERENCE').setCheck('AxesReference')
-        .appendField('axesReference')
-        .setAlign(Blockly.ALIGN_RIGHT);
+      .appendField('axesReference')
+      .setAlign(Blockly.ALIGN_RIGHT);
     this.appendValueInput('AXES_ORDER').setCheck('AxesOrder')
-        .appendField('axesOrder')
-        .setAlign(Blockly.ALIGN_RIGHT);
+      .appendField('axesOrder')
+      .setAlign(Blockly.ALIGN_RIGHT);
     this.appendValueInput('ANGLE_UNIT').setCheck('AngleUnit')
-        .appendField('angleUnit')
-        .setAlign(Blockly.ALIGN_RIGHT);
+      .appendField('angleUnit')
+      .setAlign(Blockly.ALIGN_RIGHT);
     this.setColour(propertyColorSensors);
     this.setTooltip('Returns an Orienation object representing the absolute orientation of the ' +
-        'sensor as a set three angles. Axes on which absolute orientation is not measured are ' +
-        'reported as zero.');
+      'sensor as a set three angles. Axes on which absolute orientation is not measured are ' +
+      'reported as zero.');
   }
 };
 
-Blockly.JavaScript['bno055imu_getAngularOrientation'] = function(block) {
+Blockly.JavaScript['bno055imu_getAngularOrientation'] = function (block) {
   var identifier = block.getFieldValue('IDENTIFIER');
   var axesReference = Blockly.JavaScript.valueToCode(
-      block, 'AXES_REFERENCE', Blockly.JavaScript.ORDER_COMMA);
+    block, 'AXES_REFERENCE', Blockly.JavaScript.ORDER_COMMA);
   var axesOrder = Blockly.JavaScript.valueToCode(
-      block, 'AXES_ORDER', Blockly.JavaScript.ORDER_COMMA);
+    block, 'AXES_ORDER', Blockly.JavaScript.ORDER_COMMA);
   var angleUnit = Blockly.JavaScript.valueToCode(
-      block, 'ANGLE_UNIT', Blockly.JavaScript.ORDER_COMMA);
+    block, 'ANGLE_UNIT', Blockly.JavaScript.ORDER_COMMA);
   var code = identifier + '.getAngularOrientation(' + axesReference + ', ' + axesOrder + ', ' + angleUnit + ')';
   return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
-Blockly.FtcJava['bno055imu_getAngularOrientation'] = function(block) {
+Blockly.FtcJava['bno055imu_getAngularOrientation'] = function (block) {
   var identifier = Blockly.FtcJava.importDeclareAssign_(block, 'IDENTIFIER', 'BNO055IMU');
   var axesReference = Blockly.FtcJava.valueToCode(
-      block, 'AXES_REFERENCE', Blockly.FtcJava.ORDER_COMMA);
+    block, 'AXES_REFERENCE', Blockly.FtcJava.ORDER_COMMA);
   var axesOrder = Blockly.FtcJava.valueToCode(
-      block, 'AXES_ORDER', Blockly.FtcJava.ORDER_COMMA);
+    block, 'AXES_ORDER', Blockly.FtcJava.ORDER_COMMA);
   var angleUnit = Blockly.FtcJava.valueToCode(
-      block, 'ANGLE_UNIT', Blockly.FtcJava.ORDER_COMMA);
+    block, 'ANGLE_UNIT', Blockly.FtcJava.ORDER_COMMA);
   var code = identifier + '.getAngularOrientation(' + axesReference + ', ' + axesOrder + ', ' + angleUnit + ')';
   return [code, Blockly.FtcJava.ORDER_FUNCTION_CALL];
 };
