@@ -38,9 +38,9 @@ function writeMotorPowers() {
     var motors = JSON.parse(localStorage.getItem('motorPowers'));
     var encoderResets = JSON.parse(localStorage.getItem("motorResetEncoders"));
     var servos = JSON.parse(localStorage.getItem('servoPositions'));
-    for (var i = 0; i < motors.length; i++)
-        if (!motors[i])
-            motors[i] = 0;
+    // for (var i = 0; i < motors.length; i++)
+    //     if (!motors[i])
+    //         motors[i] = 0;
     for (var i = 0; i < servos.length; i++)
         if (!servos[i])
             servos[i] = 0;
@@ -53,6 +53,7 @@ function writeMotorPowers() {
         if (encoderResets[i] == true)
             //UnityInstance.SendMessage("PhotonNetworkPlayer(Clone)", "resetEncoders");
             encoderResets[i] = false;
+    UnityInstance.SendMessage("Management","SetRightVel",1);
     UnityInstance.SendMessage("PhotonNetworkPlayer(Clone)", "setFrontLeftVel", motors[0]);
     UnityInstance.SendMessage("PhotonNetworkPlayer(Clone)", "setFrontRightVel", motors[1]);
     UnityInstance.SendMessage("PhotonNetworkPlayer(Clone)", "setBackLeftVel", motors[2]);
@@ -61,6 +62,11 @@ function writeMotorPowers() {
     UnityInstance.SendMessage("PhotonNetworkPlayer(Clone)", "setMotor6", motors[5]);
     UnityInstance.SendMessage("PhotonNetworkPlayer(Clone)", "setMotor7", motors[6]);
     UnityInstance.SendMessage("PhotonNetworkPlayer(Clone)", "setMotor8", motors[7]);
+
+    UnityInstance.SendMessage("EncoderActionManager","SetFrontLeft",motors[0]);
+    UnityInstance.SendMessage("EncoderActionManager","SetFrontRight",motors[1]);
+    UnityInstance.SendMessage("EncoderActionManager","SetBackLeft",motors[2]);
+    UnityInstance.SendMessage("EncoderActionManager","SetBackRight",motors[3]);
     //Old Code (Lean off of using this)
 
 
