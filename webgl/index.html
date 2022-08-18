@@ -169,6 +169,9 @@
     function setIMUSensorData(x, y, z, angularX, angularY, angularZ, positionX, positionY, positionZ) {
       localStorage.setItem('imuSensorReadings', "[[" + x + "," + y + "," + z + "," + angularX + "," + angularY + "," + angularZ + "," + positionX + "," + positionY + "," + positionZ + "]]");
     }
+    function setSignalSensor(signalType) {
+      localStorage.setItem('signalType', signalType);
+    }
 	  //Old Code (Lean off of using this)
 
 
