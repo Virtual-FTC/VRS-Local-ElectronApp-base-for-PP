@@ -1,4 +1,4 @@
-#now runs PP field
+#now runs PP field  8-25
 #8-8 this runs ULtimate Goal-ready for PP
  # vFTC-Local
 
