@@ -53,20 +53,24 @@ function writeMotorPowers() {
         if (encoderResets[i] == true)
             //UnityInstance.SendMessage("PhotonNetworkPlayer(Clone)", "resetEncoders");
             encoderResets[i] = false;
-    UnityInstance.SendMessage("Management","SetRightVel",1);
-    UnityInstance.SendMessage("PhotonNetworkPlayer(Clone)", "setFrontLeftVel", motors[0]);
-    UnityInstance.SendMessage("PhotonNetworkPlayer(Clone)", "setFrontRightVel", motors[1]);
-    UnityInstance.SendMessage("PhotonNetworkPlayer(Clone)", "setBackLeftVel", motors[2]);
-    UnityInstance.SendMessage("PhotonNetworkPlayer(Clone)", "setBackRightVel", motors[3]);
-    UnityInstance.SendMessage("PhotonNetworkPlayer(Clone)", "setMotor5", motors[4]);
-    UnityInstance.SendMessage("PhotonNetworkPlayer(Clone)", "setMotor6", motors[5]);
-    UnityInstance.SendMessage("PhotonNetworkPlayer(Clone)", "setMotor7", motors[6]);
-    UnityInstance.SendMessage("PhotonNetworkPlayer(Clone)", "setMotor8", motors[7]);
+    UnityInstance.SendMessage("JSAppIntegration","SetFrontLeft",motors[0]);
+    UnityInstance.SendMessage("JSAppIntegration","SetFrontRight",motors[1]);
+    UnityInstance.SendMessage("JSAppIntegration","SetBackLeft",motors[2]);
+    UnityInstance.SendMessage("JSAppIntegration","SetBackRight",motors[3]);
+    UnityInstance.SendMessage("JSAppIntegration","SetMotor1",motors[5]);
+    // UnityInstance.SendMessage("PhotonNetworkPlayer(Clone)", "setFrontLeftVel", motors[0]);
+    // UnityInstance.SendMessage("PhotonNetworkPlayer(Clone)", "setFrontRightVel", motors[1]);
+    // UnityInstance.SendMessage("PhotonNetworkPlayer(Clone)", "setBackLeftVel", motors[2]);
+    // UnityInstance.SendMessage("PhotonNetworkPlayer(Clone)", "setBackRightVel", motors[3]);
+    // UnityInstance.SendMessage("PhotonNetworkPlayer(Clone)", "setMotor5", motors[4]);
+    // UnityInstance.SendMessage("PhotonNetworkPlayer(Clone)", "setMotor6", motors[5]);
+    // UnityInstance.SendMessage("PhotonNetworkPlayer(Clone)", "setMotor7", motors[6]);
+    // UnityInstance.SendMessage("PhotonNetworkPlayer(Clone)", "setMotor8", motors[7]);
 
-    UnityInstance.SendMessage("EncoderActionManager","SetFrontLeft",motors[0]);
-    UnityInstance.SendMessage("EncoderActionManager","SetFrontRight",motors[1]);
-    UnityInstance.SendMessage("EncoderActionManager","SetBackLeft",motors[2]);
-    UnityInstance.SendMessage("EncoderActionManager","SetBackRight",motors[3]);
+    // UnityInstance.SendMessage("EncoderActionManager","SetFrontLeft",motors[0]);
+    // UnityInstance.SendMessage("EncoderActionManager","SetFrontRight",motors[1]);
+    // UnityInstance.SendMessage("EncoderActionManager","SetBackLeft",motors[2]);
+    // UnityInstance.SendMessage("EncoderActionManager","SetBackRight",motors[3]);
     //Old Code (Lean off of using this)
 
 
