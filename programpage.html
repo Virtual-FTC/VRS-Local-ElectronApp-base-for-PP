@@ -685,18 +685,8 @@
               <div class="dropdown dropdown-dark"
                 style="display: inline-block; background-color: #FFFFFF; height: 24.8px;">
                 <select id="lessonSelectNovice" class="dropdown-select" onChange="loadNoviceLesson()" style="font-size:20px;">
-                  <option value=-1>-Coding Lessons-</option>
-                  <option value=0>Drive to White Line</option>
-                  <option value=1>Drive to White Line with 4 Motors</option>
-                  <option value=2>Drive Forward & Make 90 Degree Turn</option>
-                  <option value=3>Drive and Rotate in Square</option>
-                  <option value=4>Drive in Square Using Loops</option>
-                  <option value=5>Drive and Strafe in Square</option>
-                  <option value=6>Strafe with loops</option>
-                  <option value=7>Wobble Goal - 1st and 2nd Positions</option>
-                  <option value=8>Wobble Goal - 3rd Position</option>
-                  <option value=7>Shoot and Reload Rings</option>
-                  <option value=7>Powershot Scoring</option>
+                  <option value=-1>-Coding Lessons Coming Soon-</option>
+
                 </select>
               </div>
 			  <a class="button1" style="margin-right: 10px; padding: 6px; padding-top: 1.5px; height: 15px;" target="_blank"
@@ -814,7 +804,7 @@
   <div id="programLoading">
 	<h1 id="loadingProgText" style="text-align: center; padding-top: 47.5%;">Loading Tools</h1>
   </div>
-	  
+
   <div id="overlay" class="overlay">
     <div id="overlayInfo">
       <div style="display: flex; padding-top: 2.5px;">
@@ -1072,10 +1062,10 @@
 	//Some Functions need Toolbox Loaded to Work
 	function toolboxLoaded(toolboxTxt) {
       workspace.updateToolbox(toolboxTxt);
-	  
+
 	  //Sets up Title Category
       workspace.getToolbox().getToolboxItemById('Title').setDisabled('true');
-	  
+
 	  //Sets up Search Category
       searchInput = document.createElement('input');
       searchInput.type = "text";
@@ -1083,7 +1073,7 @@
       searchInput.classList.add("searchInput");
       searchInput.addEventListener("input", searchFor);
       searchInput.addEventListener("focus", searchFor);
-      
+
       document.getElementById('Searcher.label').parentElement.appendChild(searchInput);
       document.getElementById('Searcher.label').parentElement.style.pointerEvents = "all";
 	}
