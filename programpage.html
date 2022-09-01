@@ -638,17 +638,17 @@
             <div
               style="width:100%; overflow:hidden; overflow-wrap: break-word; background-color: #323232; display: flex; justify-content: space-between;">
               <h2 style="font-size: 20px; padding-right: 17.5px;">
-                <u>Ultimate Goal Autonomous Actions:</u><br>
-                Park Robot on White Line in the middle<br><br>
-                Rings Scored in Tower Goal<br>
+                <u>Power play  Autonomous Actions Points:</u><br>
+                Park  <br><br>
+                 <br>
                 &nbsp;&nbsp;&nbsp;&nbsp;Low<br>
                 &nbsp;&nbsp;&nbsp;&nbsp;Mid<br>
                 &nbsp;&nbsp;&nbsp;&nbsp;High<br><br>
-                Ring knocks over a center Powershot<br><br>
-                Wobble Goal Delivered to Correct Square<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;0 Rings in front of Robot<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;1 Ring in front of Robot<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;4 Rings in front of Robot<br>
+                 <br><br>
+                 <br>
+                &nbsp;&nbsp;&nbsp;&nbsp; <br>
+                &nbsp;&nbsp;&nbsp;&nbsp; <br>
+                &nbsp;&nbsp;&nbsp;&nbsp; <br>
               </h2>
               <h2 style="font-size: 20px; padding-right: 17.5px;">
                 <br>
@@ -685,18 +685,8 @@
               <div class="dropdown dropdown-dark"
                 style="display: inline-block; background-color: #FFFFFF; height: 24.8px;">
                 <select id="lessonSelectNovice" class="dropdown-select" onChange="loadNoviceLesson()" style="font-size:20px;">
-                  <option value=-1>-Coding Lessons-</option>
-                  <option value=0>Drive to White Line</option>
-                  <option value=1>Drive to White Line with 4 Motors</option>
-                  <option value=2>Drive Forward & Make 90 Degree Turn</option>
-                  <option value=3>Drive and Rotate in Square</option>
-                  <option value=4>Drive in Square Using Loops</option>
-                  <option value=5>Drive and Strafe in Square</option>
-                  <option value=6>Strafe with loops</option>
-                  <option value=7>Wobble Goal - 1st and 2nd Positions</option>
-                  <option value=8>Wobble Goal - 3rd Position</option>
-                  <option value=7>Shoot and Reload Rings</option>
-                  <option value=7>Powershot Scoring</option>
+                  <option value=-1>-Coding Lessons to come-</option>
+
                 </select>
               </div>
 			  <a class="button1" style="margin-right: 10px; padding: 6px; padding-top: 1.5px; height: 15px;" target="_blank"
@@ -726,14 +716,8 @@
               <div class="dropdown dropdown-dark"
                 style="display: inline-block; background-color: #FFFFFF; height: 24.8px;">
                 <select id="lessonSelectAdvanced" class="dropdown-select" onChange="loadAdvancedLesson()" style="font-size:20px;">
-                  <option value=-1>-Coding Lessons-</option>
-                  <option value=3>Drive and Rotate in a Square</option> <!-- Loops			-->
-                  <option value=4>Drive and Strafe in a Square</option> <!-- Strafing		-->
-                  <option value=5>Wobble Goal - 1st Position</option> <!-- First Task		-->
-                  <option value=6>Wobble Goal - 2nd Position</option> <!-- Encoders		-->
-                  <option value=7>Wobble Goal - 3rd Position</option> <!-- Functions		-->
-                  <option value=8>Drive and Shoot into High Goal</option> <!-- New Motors		-->
-                  <option value=9>Drive and Shoot at Powershots</option> <!-- Complex task	-->
+                  <option value=-1>-Coding Lessons to come-</option>
+
                 </select>
               </div>
 			  <a class="button1" style="margin-right: 10px; padding: 6px; padding-top: 1.5px; height: 15px;" target="_blank"
@@ -814,7 +798,7 @@
   <div id="programLoading">
 	<h1 id="loadingProgText" style="text-align: center; padding-top: 47.5%;">Loading Tools</h1>
   </div>
-	  
+
   <div id="overlay" class="overlay">
     <div id="overlayInfo">
       <div style="display: flex; padding-top: 2.5px;">
@@ -1072,10 +1056,10 @@
 	//Some Functions need Toolbox Loaded to Work
 	function toolboxLoaded(toolboxTxt) {
       workspace.updateToolbox(toolboxTxt);
-	  
+
 	  //Sets up Title Category
       workspace.getToolbox().getToolboxItemById('Title').setDisabled('true');
-	  
+
 	  //Sets up Search Category
       searchInput = document.createElement('input');
       searchInput.type = "text";
@@ -1083,7 +1067,7 @@
       searchInput.classList.add("searchInput");
       searchInput.addEventListener("input", searchFor);
       searchInput.addEventListener("focus", searchFor);
-      
+
       document.getElementById('Searcher.label').parentElement.appendChild(searchInput);
       document.getElementById('Searcher.label').parentElement.style.pointerEvents = "all";
 	}
