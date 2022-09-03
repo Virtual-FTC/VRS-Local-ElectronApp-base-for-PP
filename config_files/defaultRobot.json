@@ -25,25 +25,25 @@
 			"encoder": 560
 		},
 		{
-			"name": "ringCollection",
+			"name": "motor5",
 			"type": "normal",
 			"maxrpm": 340,
 			"encoder": 560
 		},
 		{
-			"name": "ringLoader",
+			"name": "motor6",
 			"type": "normal",
 			"maxrpm": 340,
 			"encoder": 560
 		},
 		{
-			"name": "ringShooter",
+			"name": "motor4",
 			"type": "normal",
 			"maxrpm": 340,
 			"encoder": 560
 		},
 		{
-			"name": "wobbleActuator",
+			"name": "motor7",
 			"type": "normal",
 			"maxrpm": 340,
 			"encoder": 560

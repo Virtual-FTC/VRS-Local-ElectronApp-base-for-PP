@@ -4,10 +4,10 @@ const directions = {
     'frontRight': 1,
     'backLeft': 2,
     'backRight': 3,
-    'ringCollection': 4,
-    'ringLoader': 5,
-    'ringShooter': 6,
-    'wobbleActuator': 7
+    'motor5': 4,
+    'motor6': 5,
+    'motor4': 6,
+    'motor7': 7
 }
 
 const removeWordsJAVA = [
