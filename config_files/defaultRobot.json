@@ -37,7 +37,7 @@
 			"encoder": 560
 		},
 		{
-			"name": "motor4",
+			"name": "motor7",
 			"type": "normal",
 			"maxrpm": 340,
 			"encoder": 560

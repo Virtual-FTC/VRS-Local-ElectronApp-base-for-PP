@@ -844,7 +844,7 @@ function loadAdvancedLesson() {
 		break;
 	case "8":
 		document.getElementById('lessonTextAdvanced').innerText = "Difficulty: Hard\n" +
-			"Looks like the engineering team has just slapped a shooting mechanism onto your robot. Time to learn how that works. It seems they have wired in a new \"motor6\" and \"motor4\" motor. Maybe you could even drop off a wobble goal into one of the positions in the same program!" +
+			"Looks like the engineering team has just slapped a shooting mechanism onto your robot. Time to learn how that works. It seems they have wired in a new \"motor6\" and \"motor7\" motor. Maybe you could even drop off a wobble goal into one of the positions in the same program!" +
 			"\n\nYou'll Learn:\nHandling Multiple Tasks\nComplex Motors";
 		break;
 	case "9":

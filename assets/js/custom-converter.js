@@ -6,7 +6,7 @@ const directions = {
     'backRight': 3,
     'motor5': 5,
     'motor6': 6,
-    'motor4': 7,
+    'motor7': 7,
     'motor7': 8
 }
 
