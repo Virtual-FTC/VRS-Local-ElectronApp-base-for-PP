@@ -7,7 +7,7 @@ const directions = {
     'motor5': 5,
     'motor6': 6,
     'motor7': 7,
-    'motor7': 8
+    'motor8': 8
 }
 
 const removeWordsJAVA = [
