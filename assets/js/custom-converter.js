@@ -4,10 +4,10 @@ const directions = {
     'frontRight': 1,
     'backLeft': 2,
     'backRight': 3,
-    'motor5': 4,
-    'motor6': 5,
-    'motor4': 6,
-    'motor7': 7
+    'motor5': 5,
+    'motor6': 6,
+    'motor4': 7,
+    'motor7': 8
 }
 
 const removeWordsJAVA = [
@@ -21,7 +21,7 @@ const gamepadBoxVars = {
 const replaceJSString = [
     ,[": number ", ""]
     ,[": string ", ""]
-    , ["{}", "{\n}"]    
+    , ["{}", "{\n}"]
     , ['opModeIsActive', 'linearOpMode.opModeIsActive']
     , ['Range.clip(', 'range.clip(']
 ]
@@ -126,7 +126,7 @@ const valueConverter = (str) => {
         let value = getBracketContent(sides[1])
         return `colorSensor.getDistance(${colorData[colorIndex]}, ${value})`;
     }
-    
+
     else if(str.includes(".getPower()")){
         const exeVars = /this.(\w+).getPower/.exec(str)
         let returnStr = str.replace("()", "")
@@ -188,8 +188,8 @@ const valueConverter = (str) => {
     else if(/(\w+)\.toColor\(\)/.test(str)){
         const values = /(\w+).toColor\(\)/.exec(str)
         return str.replace(/(\w+).toColor\(\)/, `colorUtil.normalized("Color", ${values[1]})`)
-    }    
-    
+    }
+
     else if(/\bmisc.colorToHue\((\w+)\)/.test(str)){
         const values = /\bmisc.colorToHue\((\w+)\)/.exec(str)
         return str.replace(/\bmisc.colorToHue\((\w+)\)/, `colorUtil.get("Hue", ${values[1]})`)
@@ -204,14 +204,14 @@ const valueConverter = (str) => {
         return str.replace(/\bmisc.formatNumber\(/, "misc.roundDecimal(")
     }
 
-    
+
     else if(/gamepad(\d+)\.(\w+)_stick_(\w)/.test(str)){
         const gamepadV = /gamepad(\d+).(\w+)_stick_(\w)/.exec(str)
         const keyV = `${gamepadV[2]}_stick_${gamepadV[3]}`
         let returnStr = ""
         if(gamepadValues[keyV]<4)
             returnStr =  `gamepad.numberValue(${gamepadV[1]-1}, ${gamepadValues[keyV]})`
-        else 
+        else
             returnStr =  `gamepad.boolValue(${gamepadV[1]-1}, ${gamepadValues[keyV]}, 'Both')`
         return returnStr
 
@@ -229,8 +229,8 @@ const valueConverter = (str) => {
         return str.replace(/\bColor\.parseColor\("(\w+)"\)/, `colorUtil.textToColor('${values[1]}')`)
     }
 
-    
-    
+
+
     return str
 }
 const capitalize = (str) => {
@@ -302,7 +302,7 @@ const customConvert = (str) => {
         const value = valueChecker(matches[2]);
         return `motor.setProperty([${mortorVars[varName]}], 'Power', [${value?value:0}]);`;
     }
-    else if (str.includes('setMode(')) {        
+    else if (str.includes('setMode(')) {
         let hardmaps = /this.(\w+).setMode\(DcMotor.RunMode.(\w+)\);/g.exec(str);
         const varName = hardmaps[1];
         const value = hardmaps[2];
@@ -313,7 +313,7 @@ const customConvert = (str) => {
         const varName = matches[1];
         const value = valueChecker(matches[2]);
         return `motor.setProperty([${mortorVars[varName]}], 'TargetPosition', [${value?value:0}]);`;
-    }    
+    }
     else if (str.includes('setZeroPowerBehavior(')) {
         let matches = /this.(\w+).setZeroPowerBehavior\(DcMotor.ZeroPowerBehavior.(\w+)\);/g.exec(str);
         console.log("matches : ", matches)
@@ -412,7 +412,7 @@ async function convert_2js(url, javaCode, callback) {
 
             })
 
-        
+
 
         replaceJSString.map(word => {
             result = result.replaceAll(word[0], word[1])
@@ -423,7 +423,7 @@ async function convert_2js(url, javaCode, callback) {
         result = result.replaceAll(/<(\w+)>/g, "")
         result = result.replaceAll(/\bparseFloat\b/g, "")
         result = result.replaceAll(/\bJavaUtil./g, "misc.")
-        
+
 
 
         if(/export class (\w+) extends LinearOpMode\b/g.test(result)){
@@ -444,7 +444,7 @@ async function convert_2js(url, javaCode, callback) {
             }
 
             brackets += checkBrackets(lineTxt);
-            // var 
+            // var
             if (brackets == 1 && !funcName) {
                 const values = /(public)? (\w+)\((.*)\)(: void)? {/g.exec(lineTxt)
                 funcName =   values[2];
@@ -463,7 +463,7 @@ async function convert_2js(url, javaCode, callback) {
         }
 
         console.log("Vars : ", mortorVars, colorVars, funcBlocks, funcValues)
-        // funcBlocks['runOpMode'] = funcBlocks['runOpMode'].join("\n")   
+        // funcBlocks['runOpMode'] = funcBlocks['runOpMode'].join("\n")
         if (typeof funcBlocks['constructor'] != 'function' && funcBlocks['constructor'])
             funcBlocks['constructor'].map(line => {
                 const varValue = line.trim().split(" = ")
@@ -488,16 +488,16 @@ async function convert_2js(url, javaCode, callback) {
 
         Object.keys(funcBlocks).map(key => {
             if (key != "constructor")
-                jsString += `async function ${key}(${funcValues[key]}) { 
+                jsString += `async function ${key}(${funcValues[key]}) {
                 ${funcBlocks[key]}
             }\n`
         })
 
         if (OpMode == "LinearOpMode")
-            jsString += `          
+            jsString += `
             await runOpMode();`
         else
-            jsString += `  
+            jsString += `
             async function runOpMode() {
                 await init();
                 while (!linearOpMode.isStarted())
@@ -507,7 +507,7 @@ async function convert_2js(url, javaCode, callback) {
                   await loop();
                 await stop();
               }
-            
+
             await runOpMode();`
 
 
