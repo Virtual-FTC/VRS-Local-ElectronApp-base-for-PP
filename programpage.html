@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html>
 
 <head>
@@ -572,11 +572,7 @@
         <div style="width: 10px; display: inline-block;"></div>
         <button class="button1" onclick="resetField()">Reset Field</button>
         <div style="width: 10px; display: inline-block;"></div>
-        <button class="button1" onclick="report a Bug">Report a Bug</button>
-        <div style="width: 10px; display: inline-block;"></div>
-        <a href="<https://github.com/jweiland1/VRS-Bug-Report/issues"><button class="button1">Report a Bug</button></a>
-        <div style="width: 10px; display: inline-block;"></div>
-        <a href="<https://github.com/jweiland1/VRS-Bug-Report/issues>"><button class="button1">Report a Bug</button></a>
+
       </div>
       <div id="programInit" style="display: inline-block;">
         <button id="initBttn" class="button1">Initialize Program</button>
@@ -589,6 +585,7 @@
     <div style="min-width: 12.5px; display: inline-block;"></div>
     <button class="button1" onClick="displayPopUp(true)" style="min-width: 100px; height: 25px; margin-top: 2.5px;">How
       to Use</button>
+    <button class="button1" onclick="openBugReport()" style="min-width: 140px; height: 25px; margin-top: 2.5px;">Report a Bug</button>
   </div>
 
 
@@ -1140,6 +1137,11 @@
       }
     }
 
+    function openBugReport() {
+        window.open("https://github.com/jweiland1/VRS-Bug-Report/issues",
+                    "", "width=300, height=300");
+    }
+
     //Returns array of searched blocks
     var searchFlyout = function (workspace) {
       if (blockList.length == 0) {
@@ -1151,6 +1153,7 @@
       }
       return blockList;
     };
+
 
     //Assigns new Blocks to SearchCategory when opened
     workspace.registerToolboxCategoryCallback(
