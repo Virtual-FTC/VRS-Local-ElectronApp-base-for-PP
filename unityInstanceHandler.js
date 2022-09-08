@@ -58,6 +58,7 @@ function writeMotorPowers() {
     UnityInstance.SendMessage("JSAppIntegration","SetBackLeft",motors[2]);
     UnityInstance.SendMessage("JSAppIntegration","SetBackRight",motors[3]);
     UnityInstance.SendMessage("JSAppIntegration","SetMotor1",motors[5]);
+    UnityInstance.SendMessage("JSAppIntegration","SetMotor2",motors[6]);
     // UnityInstance.SendMessage("PhotonNetworkPlayer(Clone)", "setFrontLeftVel", motors[0]);
     // UnityInstance.SendMessage("PhotonNetworkPlayer(Clone)", "setFrontRightVel", motors[1]);
     // UnityInstance.SendMessage("PhotonNetworkPlayer(Clone)", "setBackLeftVel", motors[2]);
