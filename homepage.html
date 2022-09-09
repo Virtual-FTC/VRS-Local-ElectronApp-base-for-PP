@@ -348,6 +348,66 @@
 			border: none;
 			cursor: pointer;
 		}
+		
+		#RobotGuide {
+			/* Auto layout */
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+
+			position: absolute;
+			
+			left: 3.5%;
+			top: 70vh;
+
+			/* Linear Style 1 */
+			
+		}
+		
+		#GuideButton{
+			width: 13vw;
+			height: 4.5vh;
+			bottom: 5px;
+			top: 10px;
+			margin-top: 5px;
+			margin-bottom: 5px;
+			background: linear-gradient(267.66deg, #FF7300 -14.49%, #FF2702 112.73%);
+			border-radius: 100px;
+
+			border: none;
+			cursor: pointer;
+		}
+		
+		a:link {
+		  text-decoration: none;
+		}
+
+		a:visited {
+		  text-decoration: none;
+		}
+
+		a:hover {
+		  text-decoration: none;
+		}
+
+		a:active {
+		  text-decoration: none;
+		}
+		
+		#GuideButton:hover {
+			transition-duration: 0.4s;
+			border: .15vw white solid;
+			text-shadow: .2vw .2vw .25vw #000000;
+		}
+
+		#GuideButton:focus {
+			transition-duration: 0.4s;
+			border: .15vw white solid;
+			text-shadow: .2vw .2vw .25vw #000000;
+			outline: none;
+			box-shadow: none;
+		}
 
 		#RobotConfig:hover {
 			transition-duration: 0.4s;
@@ -371,6 +431,28 @@
 			font-weight: normal;
 			font-size: 1.33vw;
 			line-height: 28px;
+			display: flex;
+			justify-content: center;
+
+			/* White */
+			color: #FFFFFF;
+
+
+			/* Inside auto layout */
+			flex: none;
+			order: 0;
+			flex-grow: 0;
+			margin: 0px 10px;
+		}
+		
+		#LinkText {
+			/* Button text */
+
+			font-family: Jura;
+			font-style: normal;
+			font-weight: normal;
+			font-size: 1vw;
+			line-height:  28px;
 			display: flex;
 			justify-content: center;
 
@@ -622,6 +704,18 @@
 			<div id="ConfigText">Robot Configuration</div>
 		</button>
 		<div id="VersionText">Version 1.5.0 - 9/1/2022</div>
+		<div id="RobotGuide">
+		<a href="https://docs.google.com/document/d/1g0GSu2Rnbj5TDsk0JRswiGNEctW-sUYZYuSNPoaAQl8/edit?"
+		<button id="GuideButton">
+			<div id="LinkText">Get Started - Guide</div>
+		</button>
+		</a>
+		<a href="https://youtu.be/VYarNWM-8Ek"
+		<button id="GuideButton">
+			<div id="LinkText">Get Started - Video</div>
+		</button>
+		</a>
+		</div>
 	</div>
 	<div id="NavItems">
 		<button class="NavButtons" id="how-to-use-button">How
@@ -718,6 +812,7 @@
 			document.getElementById('Circle1').style.animation = "none";
 			document.getElementById('Circle2').style.animation = "none";
 			document.getElementById('FieldLogo').style.animation = "none";
+			document.getElementById('RobotGuide').style.animation = "none";
 		}
 
 		//Open Overlay
@@ -751,6 +846,7 @@
 			setTimeout(() => {
 				document.getElementById('OrangeBKGD').style.animation = "Intro_BKGD 1s ease reverse both";
 				document.getElementById('MainText').style.animation = "Intro_SlideFromLeft .75s ease reverse both";
+				document.getElementById('RobotGuide').style.animation = "Intro_SlideFromLeft .75s ease reverse both";
 				document.getElementById('Icons').style.animation = "Intro_SlideFromTop .75s ease reverse both";
 				document.getElementById('localButton').style.animation = "Intro_Selections 1s ease reverse both";
 				document.getElementById('multiplayerButton').style.animation = "Intro_Selections 1s ease reverse both";
@@ -760,6 +856,7 @@
 			}, 5);
 
 			document.getElementById('RobotConfig').style.transition = "0s";
+			document.getElementById('RobotGuide').style.transition = "0s";
 
 			setTimeout(() => {
 				var bttnLink = document.createElement('a');
