@@ -52,7 +52,7 @@
     "colorSensor": [
         {
             #This value will determine the name of the motor in the program
-            "name": "bottomColorSensor",
+            "name": "frontColorSensor",
 
             #This value does nothing
             "type": "REV Color Sensor V3"

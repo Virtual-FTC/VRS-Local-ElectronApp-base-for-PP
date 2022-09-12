@@ -28,7 +28,7 @@ const replaceJSString = [
 
 const modeTypes = ["LinearOpMode", "OpMode"]
 const colorData = {
-    'bottomColorSensor': 0
+    'frontColorSensor': 0
 }
 const exteralFuncs = {
     "JavaUtil.randomInt":

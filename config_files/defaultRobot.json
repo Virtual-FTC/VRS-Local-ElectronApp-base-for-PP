@@ -77,7 +77,7 @@
 	],
 	"colorSensor": [
 		{
-			"name": "bottomColorSensor",
+			"name": "frontColorSensor",
 			"type": "REV Color Sensor V3"
 		}
 	],
