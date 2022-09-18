@@ -127,7 +127,7 @@
       console.log("TOuchSensorValues: " + obj.touchSensorReadings);
     }
 
-    function setColorSensorData(R, G, B, Distance,Direction) {
+    function setColorSensorData(R, G, B, Distance, Direction) {
       // console.log("SETTING COLOR SENSOR READINGSS: " + R + "," + G + "," + B + "," + Distance + "," + Direction);
       localStorage.setItem('colorSensorReadings', "[[" + R + "," + G + "," + B + "," + Distance + "," + Direction + "]]");
     }
@@ -146,23 +146,24 @@
 
     //Old Code (Lean off of using this)
     function setFrontLeftEncoders(encoders) {
-      frontLeftEncoder = encoders;
+      frontLeftEncoder = -encoders;
       updateEncoderLocalStorage();
     }
     function setFrontRightEncoders(encoders) {
-      frontRightEncoder = encoders;
+      frontRightEncoder = -encoders;
       updateEncoderLocalStorage();
     }
     function setBackLeftEncoders(encoders) {
-      backLeftEncoder = encoders;
+      backLeftEncoder = -encoders;
       updateEncoderLocalStorage();
     }
     function setBackRightEncoders(encoders) {
-      backRightEncoder = encoders;
+      backRightEncoder = -encoders;
       updateEncoderLocalStorage();
     }
     function updateEncoderLocalStorage() {
       var motorPositions = "[" + frontLeftEncoder + ", " + frontRightEncoder + ", " + backLeftEncoder + ", " + backRightEncoder + "]";
+      console.log("motorEncoders: " + motorPositions);
       localStorage.setItem('motorCurrentPositions', motorPositions);
     }
 
