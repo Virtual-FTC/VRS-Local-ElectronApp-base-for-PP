@@ -869,37 +869,63 @@ function variableUpdate() {
 					throw "TypeError: Cannot read a motor property of improper type";
 				}
 
+
+
 				//Implements Realistic Reversed Motors on Right Side
 				if (i == 1 || i == 3)
 					motorPower *= -1;
 				//Implements REVERSE feature
 				if (robotConfig["motors"][i]["Direction"] == "REVERSE")
 					motorPower *= -1;
+
 				//If Disabled, no power
-				if (robotConfig["motors"][i]["Enabled"] == false)
-					motorPowers[i] = motorPowers[i] * .958;
-				//ZeroPowerBehavior things
-				else if (robotConfig["motors"][i]["ZeroPowerBehavior"] == "FLOAT" && motorPower < .1)
-					motorPowers[i] = motorPowers[i] * .998 + motorPower * .002;
-				//Different Mode Functionality
-				else if (robotConfig["motors"][i]["Mode"] == "RUN_WITHOUT_ENCODER")
-					motorPowers[i] = motorPowers[i] * .9958 + motorPower * .0042;
-				else if (robotConfig["motors"][i]["Mode"] == "RUN_USING_ENCODER")
-					motorPowers[i] = motorPowers[i] * .958 + motorPower * .042;
-				else if (robotConfig["motors"][i]["Mode"] == "RUN_TO_POSITION") {
+				if (robotConfig["motors"][i]["Enabled"] == false) {
+					//motorPowers[i] = motorPowers[i] * .958;
+					motorPower = 0 ;
+				} else if (robotConfig["motors"][i]["Mode"] == "STOP_AND_RESET_ENCODER") {
+					motorPower = 0.0 ;
+					// wpk - will also need to add code to reset the encoder
+
+				} else if (robotConfig["motors"][i]["Mode"] == "RUN_TO_POSITION") {
 					if (motor.isBusy(i))
 						motorPowers[i] = Math.max(motorPower * .5, (motorPowers[i] * .9375 + motorPower * .0625)) * Math.min(Math.max((robotConfig["motors"][i]["TargetPosition"] - robotConfig["motors"][i]["CurrentPosition"]) * 100, -1), 1);
 					else
 						motorPowers[i] = 0;
+				} else {
+					// if the power is so small that the motor would be stopped...
+					if ( motorPower < 0.05 ) {
+						if (robotConfig["motors"][i]["ZeroPowerBehavior"] == "FLOAT") {
+							// factor is some amount of current motor power to simulate a drop off in speed based on the decay value ;
+							motorPowers[i] = motorPowers[i] * .95 + motorPower * .05;
+						} else {
+							motorPowers[i] = 0.0 ;
+						}
+					} else {
+						motorPowers[i] = motorPower ;
+					}
+					// if (robotConfig["motors"][i]["ZeroPowerBehavior"] == "FLOAT" && motorPower < .1)
+					// 	motorPowers[i] = motorPowers[i] * .998 + motorPower * .002;
+					// 	//Different Mode Functionality
+					// else if (robotConfig["motors"][i]["Mode"] == "RUN_WITHOUT_ENCODER")
+					// 	motorPowers[i] = motorPowers[i] * .9958 + motorPower * .0042;
+					// else if (robotConfig["motors"][i]["Mode"] == "RUN_USING_ENCODER")
+					// 	motorPowers[i] = motorPowers[i] * .958 + motorPower * .042;
+
 				}
+	
 
-				//Wobble Goal motor can't interpolate
-				if (i == 7)
-					motorPowers[i] = motorPower;
+				//ZeroPowerBehavior things
 
-				//Sets up Powers to JSON to send to Unity
-				if (i == 6)
-					motorPowers[i] *= 1.015; //I could not program the robot to shoot in the top goal :(
+
+
+
+				// //Wobble Goal motor can't interpolate
+				// if (i == 7)
+				// 	motorPowers[i] = motorPower;
+
+				// //Sets up Powers to JSON to send to Unity
+				// if (i == 6)
+				// 	motorPowers[i] *= 1.015; //I could not program the robot to shoot in the top goal :(
 			}
 			localStorage.setItem("motorPowers", JSON.stringify(motorPowers));
 			motorPowers[6] /= 1.015;
