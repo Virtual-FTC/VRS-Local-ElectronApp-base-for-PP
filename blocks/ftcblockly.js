@@ -863,8 +863,18 @@ function variableUpdate() {
 
 				//Sets Power/Velocity to Variable
 				var motorPower = robotConfig["motors"][i]["Power"];
-				if (robotConfig["motors"][i]["Mode"] == "RUN_USING_ENCODER" || robotConfig["motors"][i]["Mode"] == "RUN_TO_POSITION")
+				// if (robotConfig["motors"][i]["Mode"] == "RUN_USING_ENCODER" || robotConfig["motors"][i]["Mode"] == "RUN_TO_POSITION")
+				// 	motorPower = robotConfig["motors"][i]["Velocity"] / (robotConfig["motors"][i]["maxrpm"] * robotConfig["motors"][i]["encoder"] / 60);
+
+				if (robotConfig["motors"][i]["Mode"] == "RUN_USING_ENCODER")
 					motorPower = robotConfig["motors"][i]["Velocity"] / (robotConfig["motors"][i]["maxrpm"] * robotConfig["motors"][i]["encoder"] / 60);
+
+				if (robotConfig["motors"][i]["Mode"] == "RUN_TO_POSITION") {
+					//var desiredVel = robotConfig["motors"][i]["Velocity"]
+					motorPower = robotConfig["motors"][i]["Velocity"] / (robotConfig["motors"][i]["maxrpm"] * robotConfig["motors"][i]["encoder"] / 60);
+				}
+
+
 				if (isNaN(motorPower) && document.getElementById('programInit').style.display == "none") {
 					throw "TypeError: Cannot read a motor property of improper type";
 				}
@@ -893,7 +903,7 @@ function variableUpdate() {
 						motorPowers[i] = 0;
 				} else {
 					// if the power is so small that the motor would be stopped...
-					if ( motorPower < 0.05 ) {
+					if ( Math.abs(motorPower) < 0.05 ) {
 						if (robotConfig["motors"][i]["ZeroPowerBehavior"] == "FLOAT") {
 							// factor is some amount of current motor power to simulate a drop off in speed based on the decay value ;
 							motorPowers[i] = motorPowers[i] * .95 + motorPower * .05;
