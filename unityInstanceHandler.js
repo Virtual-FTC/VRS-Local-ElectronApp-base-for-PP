@@ -45,22 +45,46 @@ function writeMotorPowers() {
         if (!servos[i])
             servos[i] = 0;
 
-    localStorage.setItem('motorResetEncoders', "[false, false, false, false, false, false, false, false]");
+    // localStorage.setItem('motorResetEncoders', "[false, false, false, false, false, false, false, false]");
 
 
-    //Old Code (Lean off of using this)
-    for (var i = 0; i < encoderResets.length; i++)
-        if (encoderResets[i] == true)
-            //UnityInstance.SendMessage("PhotonNetworkPlayer(Clone)", "resetEncoders");
-            encoderResets[i] = false;
+    // //Old Code (Lean off of using this)
+    // for (var i = 0; i < encoderResets.length; i++)
+    //     if (encoderResets[i] == true)
+    //         //UnityInstance.SendMessage("PhotonNetworkPlayer(Clone)", "resetEncoders");
+    //         encoderResets[i] = false;
+
     UnityInstance.SendMessage("JSAppIntegration","SetFrontLeft",motors[0]);
+    if ( encoderResets[0]) {
+        UnityInstance.SendMessage("JSAppIntegration","ResetFrontLeftEncoder");
+    }
+
     UnityInstance.SendMessage("JSAppIntegration","SetFrontRight",motors[1]);
+    if ( encoderResets[1]) {
+        UnityInstance.SendMessage("JSAppIntegration","ResetFrontRightEncoder");
+    }
+
     UnityInstance.SendMessage("JSAppIntegration","SetBackLeft",motors[2]);
+    if ( encoderResets[2]) {
+        UnityInstance.SendMessage("JSAppIntegration","ResetBackLeftEncoder");
+    }
+
     UnityInstance.SendMessage("JSAppIntegration","SetBackRight",motors[3]);
+    if ( encoderResets[3]) {
+        UnityInstance.SendMessage("JSAppIntegration","ResetBackRightEncoder");
+    }
+
     UnityInstance.SendMessage("JSAppIntegration","SetMotor1",motors[5]);
+    if ( encoderResets[5]) {
+        UnityInstance.SendMessage("JSAppIntegration","ResetMotor1Encoder");
+    }
+
     UnityInstance.SendMessage("JSAppIntegration","SetMotor2",motors[4]);
-    UnityInstance.SendMessage("JSAppIntegration","SetMotor3",motors[6]);
-    UnityInstance.SendMessage("JSAppIntegration","SetMotor4",motors[7]);
+    if ( encoderResets[4]) {
+        UnityInstance.SendMessage("JSAppIntegration","ResetMotor2Encoder");
+    }
+
+
     // UnityInstance.SendMessage("PhotonNetworkPlayer(Clone)", "setFrontLeftVel", motors[0]);
     // UnityInstance.SendMessage("PhotonNetworkPlayer(Clone)", "setFrontRightVel", motors[1]);
     // UnityInstance.SendMessage("PhotonNetworkPlayer(Clone)", "setBackLeftVel", motors[2]);
