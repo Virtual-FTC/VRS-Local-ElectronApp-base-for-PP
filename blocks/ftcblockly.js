@@ -35,6 +35,8 @@ function resetProperties() {
 	telemetryItems.splice(0, telemetryItems.length);
 	telemetryLogs.splice(0, telemetryLogs.length);
 	telemetryLogCapacity = 9;
+	localStorage.setItem("motorResetEncoders", "[false, false, false, false, false, false, false, false]")
+
 }
 
 var programStart = false;
@@ -158,21 +160,40 @@ let motor = {
 			//Translates Power to Velocity
 			if (property == 'Power') {
 				values[i] = Math.min(1, Math.max(values[i], -1));
-				robotConfig["motors"][motorNums[i]]["Velocity"] = values[i] * robotConfig["motors"][motorNums[i]]["MaxSpeed"];
+				if (robotConfig["motors"][motorNums[i]]["Mode"] == 'STOP_AND_RESET_ENCODER' ) {
+					robotConfig["motors"][motorNums[i]]["Power"] = 0 ;
+					robotConfig["motors"][motorNums[i]]["Velocity"] = 0;
+				} else {
+					robotConfig["motors"][motorNums[i]]["Power"] = values[i];
+					robotConfig["motors"][motorNums[i]]["Velocity"] = values[i] * robotConfig["motors"][motorNums[i]]["MaxSpeed"];
+				}
 			}
-			if (property == 'MaxSpeed')
+
+			else if (property == 'MaxSpeed')
 				values[i] = Math.min((robotConfig["motors"][i]["maxrpm"] * robotConfig["motors"][i]["encoder"] / 60), Math.max(values[i], -(robotConfig["motors"][i]["maxrpm"] * robotConfig["motors"][i]["encoder"] / 60)));
 			//Translates Velocity to Power
-			if (property == 'Velocity') {
-				robotConfig["motors"][motorNums[i]]["Power"] = Math.min(1, Math.max(values[i] / robotConfig["motors"][motorNums[i]]["MaxSpeed"], -1));
-				var maxSpeed = (robotConfig["motors"][i]["maxrpm"] * robotConfig["motors"][i]["encoder"] / 60);
-				robotConfig["motors"][motorNums[i]]["Velocity"] = Math.min(maxSpeed, Math.max(values[i], -maxSpeed));
+
+			else if (property == 'Velocity') {
+				if (robotConfig["motors"][motorNums[i]]["Mode"] == 'STOP_AND_RESET_ENCODER' ) {
+					robotConfig["motors"][motorNums[i]]["Power"] = 0 ;
+					robotConfig["motors"][motorNums[i]]["Velocity"] = 0;
+				} else {
+					robotConfig["motors"][motorNums[i]]["Power"] = Math.min(1, Math.max(values[i] / robotConfig["motors"][motorNums[i]]["MaxSpeed"], -1));
+					var maxSpeed = (robotConfig["motors"][i]["maxrpm"] * robotConfig["motors"][i]["encoder"] / 60);
+					robotConfig["motors"][motorNums[i]]["Velocity"] = Math.min(maxSpeed, Math.max(values[i], -maxSpeed));
+				}
 			}
-			else if (property == 'Mode' && values[i] == 'STOP_AND_RESET_ENCODER') {
-				robotConfig["motors"][motorNums[i]]["Power"] = 0;
-				robotConfig["motors"][motorNums[i]]["Velocity"] = 0;
+
+			else if (property == 'Mode') {
 				var resetValues = JSON.parse(localStorage.getItem("motorResetEncoders"));
-				resetValues[motorNums[i]] = true;
+				if ( values[i] == 'STOP_AND_RESET_ENCODER') {
+					robotConfig["motors"][motorNums[i]]["Power"] = 0;
+					robotConfig["motors"][motorNums[i]]["Velocity"] = 0;
+					resetValues[motorNums[i]] = true;
+				} else {
+					resetValues[motorNums[i]] = false;
+				}
+				robotConfig["motors"][motorNums[i]]["Mode"] = values[i] ;
 				localStorage.setItem("motorResetEncoders", JSON.stringify(resetValues));
 			}
 			else
@@ -866,13 +887,13 @@ function variableUpdate() {
 				// if (robotConfig["motors"][i]["Mode"] == "RUN_USING_ENCODER" || robotConfig["motors"][i]["Mode"] == "RUN_TO_POSITION")
 				// 	motorPower = robotConfig["motors"][i]["Velocity"] / (robotConfig["motors"][i]["maxrpm"] * robotConfig["motors"][i]["encoder"] / 60);
 
-				if (robotConfig["motors"][i]["Mode"] == "RUN_USING_ENCODER")
-					motorPower = robotConfig["motors"][i]["Velocity"] / (robotConfig["motors"][i]["maxrpm"] * robotConfig["motors"][i]["encoder"] / 60);
+				// if (robotConfig["motors"][i]["Mode"] == "RUN_USING_ENCODER")
+				// 	motorPower = robotConfig["motors"][i]["Velocity"] / (robotConfig["motors"][i]["maxrpm"] * robotConfig["motors"][i]["encoder"] / 60);
 
-				if (robotConfig["motors"][i]["Mode"] == "RUN_TO_POSITION") {
-					//var desiredVel = robotConfig["motors"][i]["Velocity"]
-					motorPower = robotConfig["motors"][i]["Velocity"] / (robotConfig["motors"][i]["maxrpm"] * robotConfig["motors"][i]["encoder"] / 60);
-				}
+				// if (robotConfig["motors"][i]["Mode"] == "RUN_TO_POSITION") {
+				// 	//var desiredVel = robotConfig["motors"][i]["Velocity"]
+				// 	motorPower = robotConfig["motors"][i]["Velocity"] / (robotConfig["motors"][i]["maxrpm"] * robotConfig["motors"][i]["encoder"] / 60);
+				// }
 
 
 				if (isNaN(motorPower) && document.getElementById('programInit').style.display == "none") {
@@ -880,6 +901,7 @@ function variableUpdate() {
 				}
 
 
+				// wpk - does this really need to be done here? Or can we just look at the reverse status of the motor?
 
 				//Implements Realistic Reversed Motors on Right Side
 				if (i == 1 || i == 3)
@@ -892,18 +914,21 @@ function variableUpdate() {
 				if (robotConfig["motors"][i]["Enabled"] == false) {
 					//motorPowers[i] = motorPowers[i] * .958;
 					motorPower = 0 ;
-				} else if (robotConfig["motors"][i]["Mode"] == "STOP_AND_RESET_ENCODER") {
-					motorPower = 0.0 ;
-					// wpk - will also need to add code to reset the encoder
+				} 				
 
-				} else if (robotConfig["motors"][i]["Mode"] == "RUN_TO_POSITION") {
-					if (motor.isBusy(i))
-						motorPowers[i] = Math.max(motorPower * .5, (motorPowers[i] * .9375 + motorPower * .0625)) * Math.min(Math.max((robotConfig["motors"][i]["TargetPosition"] - robotConfig["motors"][i]["CurrentPosition"]) * 100, -1), 1);
+				if (robotConfig["motors"][i]["Mode"] == "RUN_TO_POSITION") {
+					if (motor.isBusy(i)) {
+						// implement proportional power input based on error from target value
+						var positionError = robotConfig["motors"][i]["TargetPosition"] - robotConfig["motors"][i]["CurrentPosition"] ;
+						var kP = 0.5 ;
+						var desiredPower = positionError * kP ;
+						motorPowers[i] = Math.min( Math.abs(robotConfig["motors"][i]["Power"], Math.abs(desiredPower) )) * Math.sign(positionError) ;
+					}
 					else
 						motorPowers[i] = 0;
 				} else {
 					// if the power is so small that the motor would be stopped...
-					if ( Math.abs(motorPower) < 0.05 ) {
+					if ( Math.abs(motorPower) < 0.01 ) {
 						if (robotConfig["motors"][i]["ZeroPowerBehavior"] == "FLOAT") {
 							// factor is some amount of current motor power to simulate a drop off in speed based on the decay value ;
 							motorPowers[i] = motorPowers[i] * .95 + motorPower * .05;
@@ -913,32 +938,13 @@ function variableUpdate() {
 					} else {
 						motorPowers[i] = motorPower ;
 					}
-					// if (robotConfig["motors"][i]["ZeroPowerBehavior"] == "FLOAT" && motorPower < .1)
-					// 	motorPowers[i] = motorPowers[i] * .998 + motorPower * .002;
-					// 	//Different Mode Functionality
-					// else if (robotConfig["motors"][i]["Mode"] == "RUN_WITHOUT_ENCODER")
-					// 	motorPowers[i] = motorPowers[i] * .9958 + motorPower * .0042;
-					// else if (robotConfig["motors"][i]["Mode"] == "RUN_USING_ENCODER")
-					// 	motorPowers[i] = motorPowers[i] * .958 + motorPower * .042;
-
 				}
-	
-
-				//ZeroPowerBehavior things
-
-
-
-
-				// //Wobble Goal motor can't interpolate
-				// if (i == 7)
-				// 	motorPowers[i] = motorPower;
-
-				// //Sets up Powers to JSON to send to Unity
-				// if (i == 6)
-				// 	motorPowers[i] *= 1.015; //I could not program the robot to shoot in the top goal :(
 			}
+
 			localStorage.setItem("motorPowers", JSON.stringify(motorPowers));
-			motorPowers[6] /= 1.015;
+
+			// wpk not sure what this is for...
+			// motorPowers[6] /= 1.015;
 		} catch (err) {
 			document.getElementById("telemetryText").innerText = "<Program has stopped!>\n" + err;
 			resetProgramExecution();
