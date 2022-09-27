@@ -160,35 +160,23 @@ let motor = {
 			//Translates Power to Velocity
 			if (property == 'Power') {
 				values[i] = Math.min(1, Math.max(values[i], -1));
-				if (robotConfig["motors"][motorNums[i]]["Mode"] == 'STOP_AND_RESET_ENCODER' ) {
-					robotConfig["motors"][motorNums[i]]["Power"] = 0 ;
-					robotConfig["motors"][motorNums[i]]["Velocity"] = 0;
-				} else {
-					robotConfig["motors"][motorNums[i]]["Power"] = values[i];
-					robotConfig["motors"][motorNums[i]]["Velocity"] = values[i] * robotConfig["motors"][motorNums[i]]["MaxSpeed"];
-				}
+				robotConfig["motors"][motorNums[i]]["Power"] = values[i];
+				robotConfig["motors"][motorNums[i]]["Velocity"] = values[i] * robotConfig["motors"][motorNums[i]]["MaxSpeed"];
 			}
 
 			else if (property == 'MaxSpeed')
 				values[i] = Math.min((robotConfig["motors"][i]["maxrpm"] * robotConfig["motors"][i]["encoder"] / 60), Math.max(values[i], -(robotConfig["motors"][i]["maxrpm"] * robotConfig["motors"][i]["encoder"] / 60)));
-			//Translates Velocity to Power
 
+			//Translates Velocity to Power
 			else if (property == 'Velocity') {
-				if (robotConfig["motors"][motorNums[i]]["Mode"] == 'STOP_AND_RESET_ENCODER' ) {
-					robotConfig["motors"][motorNums[i]]["Power"] = 0 ;
-					robotConfig["motors"][motorNums[i]]["Velocity"] = 0;
-				} else {
-					robotConfig["motors"][motorNums[i]]["Power"] = Math.min(1, Math.max(values[i] / robotConfig["motors"][motorNums[i]]["MaxSpeed"], -1));
-					var maxSpeed = (robotConfig["motors"][i]["maxrpm"] * robotConfig["motors"][i]["encoder"] / 60);
-					robotConfig["motors"][motorNums[i]]["Velocity"] = Math.min(maxSpeed, Math.max(values[i], -maxSpeed));
-				}
+				robotConfig["motors"][motorNums[i]]["Power"] = Math.min(1, Math.max(values[i] / robotConfig["motors"][motorNums[i]]["MaxSpeed"], -1));
+				var maxSpeed = (robotConfig["motors"][i]["maxrpm"] * robotConfig["motors"][i]["encoder"] / 60);
+				robotConfig["motors"][motorNums[i]]["Velocity"] = Math.min(maxSpeed, Math.max(values[i], -maxSpeed));
 			}
 
 			else if (property == 'Mode') {
 				var resetValues = JSON.parse(localStorage.getItem("motorResetEncoders"));
 				if ( values[i] == 'STOP_AND_RESET_ENCODER') {
-					robotConfig["motors"][motorNums[i]]["Power"] = 0;
-					robotConfig["motors"][motorNums[i]]["Velocity"] = 0;
 					resetValues[motorNums[i]] = true;
 				} else {
 					resetValues[motorNums[i]] = false;
@@ -373,7 +361,7 @@ let colorSensor = {
 			returnVar = sensorObj[property];
 		//Applies Gain to RGBA Values
 		if (property == "Red" || property == "Green" || property == "Blue" || property == "Alpha")
-			returnVar = Math.round(returnVar * (sensorObj["Gain"] / 2.0));
+			returnVar = Math.round(returnVar * (sensorObj["Gain"] / 2.0) * 255.0);
 		return returnVar;
 	},
 	getDistance: function (sensorNum, unit) {
@@ -884,28 +872,15 @@ function variableUpdate() {
 
 				//Sets Power/Velocity to Variable
 				var motorPower = robotConfig["motors"][i]["Power"];
-				// if (robotConfig["motors"][i]["Mode"] == "RUN_USING_ENCODER" || robotConfig["motors"][i]["Mode"] == "RUN_TO_POSITION")
-				// 	motorPower = robotConfig["motors"][i]["Velocity"] / (robotConfig["motors"][i]["maxrpm"] * robotConfig["motors"][i]["encoder"] / 60);
-
-				// if (robotConfig["motors"][i]["Mode"] == "RUN_USING_ENCODER")
-				// 	motorPower = robotConfig["motors"][i]["Velocity"] / (robotConfig["motors"][i]["maxrpm"] * robotConfig["motors"][i]["encoder"] / 60);
-
-				// if (robotConfig["motors"][i]["Mode"] == "RUN_TO_POSITION") {
-				// 	//var desiredVel = robotConfig["motors"][i]["Velocity"]
-				// 	motorPower = robotConfig["motors"][i]["Velocity"] / (robotConfig["motors"][i]["maxrpm"] * robotConfig["motors"][i]["encoder"] / 60);
-				// }
-
-
 				if (isNaN(motorPower) && document.getElementById('programInit').style.display == "none") {
 					throw "TypeError: Cannot read a motor property of improper type";
 				}
 
-
-				// wpk - does this really need to be done here? Or can we just look at the reverse status of the motor?
-
-				//Implements Realistic Reversed Motors on Right Side
+				//Implements Realistic Reversed Motors on Right Side. These motors are reversed here so that when "REVERSE" is applied
+				// in block code, everything gets pointed in the right direction.
 				if (i == 1 || i == 3)
 					motorPower *= -1;
+
 				//Implements REVERSE feature
 				if (robotConfig["motors"][i]["Direction"] == "REVERSE")
 					motorPower *= -1;
@@ -914,7 +889,11 @@ function variableUpdate() {
 				if (robotConfig["motors"][i]["Enabled"] == false) {
 					//motorPowers[i] = motorPowers[i] * .958;
 					motorPower = 0 ;
-				} 				
+				}
+				
+				if (robotConfig["motors"][i]["Mode"] == "STOP_AND_RESET_ENCODER") {
+					motorPower = 0.0 ;
+				}
 
 				if (robotConfig["motors"][i]["Mode"] == "RUN_TO_POSITION") {
 					if (motor.isBusy(i)) {
