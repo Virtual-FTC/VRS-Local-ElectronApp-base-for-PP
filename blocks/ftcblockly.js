@@ -361,7 +361,7 @@ let colorSensor = {
 			returnVar = sensorObj[property];
 		//Applies Gain to RGBA Values
 		if (property == "Red" || property == "Green" || property == "Blue" || property == "Alpha")
-			returnVar = Math.round(returnVar * (sensorObj["Gain"] / 2.0));
+			returnVar = Math.round(returnVar * (sensorObj["Gain"] / 2.0) * 255.0);
 		return returnVar;
 	},
 	getDistance: function (sensorNum, unit) {
