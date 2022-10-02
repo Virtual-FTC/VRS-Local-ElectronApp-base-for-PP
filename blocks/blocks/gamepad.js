@@ -51,16 +51,16 @@ function getControlValues(property) {
   var code;
   switch (property) {
     case 'A':                
-      code = '0, \'Xbox\'';  
+      code = '0, \'Both\'';  
       break;                 
     case 'AtRest':           
       code = '-1, \'Both\''; 
       break;                 
     case 'B':                
-      code = '1, \'Xbox\'';  
+      code = '1, \'Both\'';  
       break;                 
     case 'Back':             
-      code = '8, \'Xbox\'';  
+      code = '8, \'Both\'';  
       break;                 
     case 'Circle':           
       code = '1, \'P\'';     
@@ -126,7 +126,7 @@ function getControlValues(property) {
       code = '2, \'P\'';
       break;
     case 'Start':
-      code = '9, \'Xbox\'';
+      code = '9, \'Both\'';
       break;
     case 'Touchpad':
       code = '17, \'P\'';
@@ -135,10 +135,10 @@ function getControlValues(property) {
       code = '3, \'P\'';
       break;
     case 'X':
-      code = '2, \'Xbox\'';
+      code = '2, \'Both\'';
       break;
     case 'Y':
-      code = '3, \'Xbox\'';
+      code = '3, \'Both\'';
       break;
     default:
       throw 'Unexpected property ' + property + ' (gamepad_getProperty).';
