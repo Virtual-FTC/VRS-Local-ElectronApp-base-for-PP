@@ -181,9 +181,15 @@
       localStorage.setItem('motorCurrentPositions', motorPositions);
     }
 
-    function setIMUSensorData(x, y, z, angularX, angularY, angularZ, positionX, positionY, positionZ) {
-      localStorage.setItem('imuSensorReadings', "[[" + x + "," + y + "," + z + "," + angularX + "," + angularY + "," + angularZ + "," + positionX + "," + positionY + "," + positionZ + "]]");
+    function setIMUSensorData(x, y, z, angularX, angularY, angularZ, positionX, positionY, positionZ, orientationX, orientationY, orientationZ) {
+      var temp = "[[" + x + "," + y + "," + z + "," 
+                                                     + angularX + "," + angularY + "," + angularZ + "," 
+                                                     + positionX + "," + positionY + "," + positionZ + "," 
+                                                     + orientationX + "," + orientationY + "," + orientationZ 
+                                                     + "]]"
+      localStorage.setItem('imuSensorReadings', temp);
     }
+
     function setSignalSensor(signalType) {
       localStorage.setItem('signalType', signalType);
     }

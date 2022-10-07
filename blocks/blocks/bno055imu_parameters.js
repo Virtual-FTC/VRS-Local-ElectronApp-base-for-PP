@@ -38,6 +38,7 @@ bno055imuParametersIdentifierForJavaScript = 'imuParameters'
       interpreter.setProperty(globalObject, 'imuParameters', imuParam);
 */
 
+
 Blockly.Blocks['bno055imuParameters_getProperty'] = {
   init: function() {
     var PROPERTY_CHOICES = [
