@@ -301,8 +301,12 @@ let acceleration = {
 	create: function (units, x, y, z, time) {
 		return { "DistanceUnit": units || "CM", "XAccel": x || 0, "YAccel": y || 0, "ZAccel": z || 0, "AcquisitionTime": time || 0 };
 	},
-	get: function (property, variable) { return variable[property]; },
-	toText: function (variable) { return `(${misc.formatNumber(variable["XAccel"], 3)} ${misc.formatNumber(variable["YAccel"], 3)} ${misc.formatNumber(variable["ZAccel"], 3)})${variable["DistanceUnit"].toLowerCase()}/s^2` },
+	get: function (property, variable) { 
+		return variable[property]; 
+	},
+	toText: function (variable) { 
+		return `(${misc.formatNumber(variable["XAccel"], 3)} ${misc.formatNumber(variable["YAccel"], 3)} ${misc.formatNumber(variable["ZAccel"], 3)})${variable["DistanceUnit"].toLowerCase()}/s^2` 
+	},
 	toDistanceUnit: function (variable, newUnit) {
 		let newVar = JSON.parse(JSON.stringify(variable));
 		if (variable["DistanceUnit"] == newUnit)
@@ -400,6 +404,10 @@ let distanceSensor = {
 
 let imu = {
 	//orderOfIMUSensorObjects ["x", "y", "z", "angularX", "angularY", "angularZ", "positionX", "positionY", "positionZ"] // add more, to match the block option
+
+	initialize: function(variable) {
+
+	},
 	get: function (property) {
 		if (property == "Acceleration") {
 			var list = [];
@@ -413,9 +421,77 @@ let imu = {
 			list["YRotationRate"] = robotConfig["IMU"][0]["angularY"]
 			list["ZRotationRate"] = robotConfig["IMU"][0]["angularZ"]
 			return list;
+		} else if (property == "AngularOrientation") {
+			var list = [];
+			list["FirstAngle"] = robotConfig["IMU"][0]["orientationX"]
+			list["SecondAngle"] = robotConfig["IMU"][0]["orientationY"]
+			list["ThirdAngle"] = robotConfig["IMU"][0]["orientationZ"]
+			return list;
+		} else if (property == "CalibrationStatus") {
+			return "IMU Calibration Status : s3 g3 a3 m3" ;
+		} else if (property == "SystemStatus") {
+			return "Operational" ;
 		}
 		return -1;
+	},
+	is: function(property){
+		if (property == "SystemCalibrated") {
+			return true ;
+		}
+		return -1 ;
+	},
+	getAngularOrientation: function() {
+		var list = [];
+		list["XOrientation"] = robotConfig["IMU"][0]["orientationX"]
+		list["YOrientation"] = robotConfig["IMU"][0]["orientationY"]
+		list["ZOrientation"] = robotConfig["IMU"][0]["orientationZ"]
+		return list;
 	}
+}
+
+
+let imuParameters = {
+	create: function() {
+		return {    
+				"AccelUnit": "METERS_PERSEC_PERSEC", 
+		 		"AccelerationIntegrationAlgorithm" : "NAIVE",
+				"AngelUnit" : "",
+				"CalibrationDataFile" : "" ,
+				"I2cAddress7Bit" : 0 ,
+				"I2cAddress8Bit" : 0 ,
+				"LoggingEnabled" : false ,
+				"LoggingTag" : "" ,
+				"SensorMode" : "ACCONLY" ,
+				"TempUnit" : "CELSIUS" 
+				};
+
+
+	},
+
+	get: function (property, variable) {
+		if ( property == "AccelUnit")
+			return variable[property] ;
+		else {
+			return "" ;
+		}
+	},
+
+	// getAccelUnit: function(variable) {
+	// 	return variable["AccelUnit"] ;
+	// }
+
+	// setProperty: function (variable, property, value) {
+	// 	variable[property] = value ;
+	// 	return;
+	// },
+
+	set: function (property, variable, value) {
+		variable[property] = value ;
+		return;
+	},
+
+
+
 }
 
 
@@ -556,9 +632,18 @@ let magneticFlux = {
 
 let orientation = {
 	create: function (refrence, order, units, x, y, z, time) {
-		return { "AxesReference": refrence || "EXTRINSIC", "AxesOrder": order || "XYX", "AngleUnit": units || "DEGREES", "FirstAngle": x || 0, "SecondAngle": y || 0, "ThirdAngle": z || 0, "AcquisitionTime": time || 0 };
+		return { 
+			"AxesReference": refrence || "EXTRINSIC", 
+			"AxesOrder": order || "XYX", 
+			"AngleUnit": units || "DEGREES", 
+			"FirstAngle": x || 0, 
+			"SecondAngle": y || 0, 
+			"ThirdAngle": z || 0, 
+			"AcquisitionTime": time || 0 };
 	},
-	get: function (property, variable) { return variable[property]; },
+	get: function (property, variable) { 
+		return variable[property]; 
+	},
 	toText: function (variable) {
 		if (variable["AngleUnit"] == "DEGREES")
 			return `${variable["AxesReference"]} ${variable["AxesOrder"]} ${Math.round(variable["FirstAngle"])} ${Math.round(variable["SecondAngle"])} ${Math.round(variable["ThirdAngle"])}`;
@@ -920,7 +1005,7 @@ function variableUpdate() {
 					if (motor.isBusy(i)) {
 						// implement proportional power input based on error from target value
 						var positionError = robotConfig["motors"][i]["TargetPosition"] - robotConfig["motors"][i]["CurrentPosition"] ;
-						var kP = 0.5 ;
+						var kP = 0.25 ;
 						var desiredPower = positionError * kP ;
 						motorPowers[i] = Math.min( Math.abs(robotConfig["motors"][i]["Power"], Math.abs(desiredPower) )) * Math.sign(positionError) ;
 					}
@@ -1012,7 +1097,7 @@ function variableUpdate() {
 
 	//Receives IMU Sensor Data
 	var imuSensorReadings = JSON.parse(localStorage.getItem("imuSensorReadings"));
-	var orderOfIMUSensorObjects = ["x", "y", "z", "angularX", "angularY", "angularZ", "positionX", "positionY", "positionZ"] // add more, to match the block option
+	var orderOfIMUSensorObjects = ["x", "y", "z", "angularX", "angularY", "angularZ", "posX", "posY", "posZ","orientationX", "orientationY", "orientationZ"] // add more, to match the block option
 	for (i = 0; i < robotConfig["IMU"].length; i++) {
 		for (j = 0; j < imuSensorReadings[i].length; j++) {
 			robotConfig["IMU"][i][orderOfIMUSensorObjects[j]] = imuSensorReadings[i][j];

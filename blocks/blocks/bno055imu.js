@@ -39,7 +39,7 @@
 
 //VRS-Put property in call
 Blockly.JavaScript['bno055imu_setProperty'] = function (block) {
-  var identifier = block.getFieldValue('IDENTIFIER');
+  var identifier = block.getFieldValue('IDENTIFIER').slice(0, -1);
   var property = block.getFieldValue('PROP');
   var value = Blockly.JavaScript.valueToCode(
     block, 'VALUE', Blockly.JavaScript.ORDER_NONE);
@@ -193,9 +193,10 @@ Blockly.Blocks['bno055imu_getProperty'] = {
 };
 
 Blockly.JavaScript['bno055imu_getProperty'] = function (block) {
-  var identifier = block.getFieldValue('IDENTIFIER');
+  var identifier = block.getFieldValue('IDENTIFIER').slice(0,-1);
   var property = block.getFieldValue('PROP');
-  var code = identifier.slice(0, -1) + '.get(\"' + property + '\")';
+//  var code = identifier.slice(0, -1) + '.get(\"' + property + '\")';
+  var code = identifier + '.get(\"' + property + '\")';
   return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
@@ -313,11 +314,15 @@ Blockly.Blocks['bno055imu_getProperty_Orientation'] = {
   }
 };
 
-Blockly.JavaScript['bno055imu_getProperty_Orientation'] = function (block) {
-  var identifier = block.getFieldValue('IDENTIFIER');
-  var code = identifier + '.getAngularOrientation()';
-  return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
-};
+
+Blockly.JavaScript['bno055imu_getProperty_Orientation'] =
+  Blockly.JavaScript['bno055imu_getProperty'];
+
+// Blockly.JavaScript['bno055imu_getProperty_Orientation'] = function (block) {
+//   var identifier = block.getFieldValue('IDENTIFIER').slice(0,-1);
+//   var code = identifier + '.getAngularOrientation()';
+//   return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
+// };
 
 Blockly.FtcJava['bno055imu_getProperty_Orientation'] =
   Blockly.FtcJava['bno055imu_getProperty'];
@@ -352,10 +357,10 @@ Blockly.Blocks['bno055imu_getProperty_AngularVelocity'] = {
 };
 
 Blockly.JavaScript['bno055imu_getProperty_AngularVelocity'] = function (block) {
-  var identifier = block.getFieldValue('IDENTIFIER');
+  var identifier = block.getFieldValue('IDENTIFIER').slice(0,-1);
   var angleUnit = Blockly.JavaScript.valueToCode(
     block, 'ANGLE_UNIT', Blockly.JavaScript.ORDER_NONE);
-  var code = identifier.slice(0, -1) + '.get(\"AngularVelocity\")';
+  var code = identifier + '.get(\"AngularVelocity\")';
   return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
@@ -738,7 +743,7 @@ Blockly.Blocks['bno055imu_getProperty_Array'] = {
 };
 
 Blockly.JavaScript['bno055imu_getProperty_Array'] = function (block) {
-  var identifier = block.getFieldValue('IDENTIFIER');
+  var identifier = block.getFieldValue('IDENTIFIER').slice(0, -1);
   var property = block.getFieldValue('PROP');
   var code = 'JSON.parse(' + identifier + '.get(\"' + property + '\"))';
   return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
@@ -843,7 +848,7 @@ Blockly.Blocks['bno055imu_initialize'] = {
 };
 
 Blockly.JavaScript['bno055imu_initialize'] = function (block) {
-  var identifier = block.getFieldValue('IDENTIFIER');
+  var identifier = block.getFieldValue('IDENTIFIER').slice(0, -1);
   var parameters = Blockly.JavaScript.valueToCode(
     block, 'PARAMETERS', Blockly.JavaScript.ORDER_NONE);
   return identifier + '.initialize(' + parameters + ');\n';
@@ -883,7 +888,7 @@ Blockly.Blocks['bno055imu_startAccelerationIntegration_with1'] = {
 };
 
 Blockly.JavaScript['bno055imu_startAccelerationIntegration_with1'] = function (block) {
-  var identifier = block.getFieldValue('IDENTIFIER');
+  var identifier = block.getFieldValue('IDENTIFIER').slice(0, -1);
   var msPollInterval = Blockly.JavaScript.valueToCode(
     block, 'MS_POLL_INTERVAL', Blockly.JavaScript.ORDER_NONE);
   return identifier + '.startAccelerationIntegration_with1(' + msPollInterval + ');\n';
@@ -929,7 +934,7 @@ Blockly.Blocks['bno055imu_startAccelerationIntegration_with3'] = {
 };
 
 Blockly.JavaScript['bno055imu_startAccelerationIntegration_with3'] = function (block) {
-  var identifier = block.getFieldValue('IDENTIFIER');
+  var identifier = block.getFieldValue('IDENTIFIER').slice(0, -1);
   var initialPosition = Blockly.JavaScript.valueToCode(
     block, 'INITIAL_POSITION', Blockly.JavaScript.ORDER_COMMA);
   var initialVelocity = Blockly.JavaScript.valueToCode(
@@ -967,7 +972,7 @@ Blockly.Blocks['bno055imu_stopAccelerationIntegration'] = {
 };
 
 Blockly.JavaScript['bno055imu_stopAccelerationIntegration'] = function (block) {
-  var identifier = block.getFieldValue('IDENTIFIER');
+  var identifier = block.getFieldValue('IDENTIFIER').slice(0, -1);
   return identifier + '.stopAccelerationIntegration();\n';
 };
 
@@ -991,7 +996,7 @@ Blockly.Blocks['bno055imu_isSystemCalibrated'] = {
 };
 
 Blockly.JavaScript['bno055imu_isSystemCalibrated'] = function (block) {
-  var identifier = block.getFieldValue('IDENTIFIER');
+  var identifier = block.getFieldValue('IDENTIFIER').slice(0,-1);
   var code = identifier + '.is(\"SystemCalibrated\")';
   return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
@@ -1016,7 +1021,7 @@ Blockly.Blocks['bno055imu_isGyroCalibrated'] = {
 };
 
 Blockly.JavaScript['bno055imu_isGyroCalibrated'] = function (block) {
-  var identifier = block.getFieldValue('IDENTIFIER');
+  var identifier = block.getFieldValue('IDENTIFIER').slice(0, -1);
   var code = identifier + '.is(\"GyroCalibrated\")';
   return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
@@ -1041,7 +1046,7 @@ Blockly.Blocks['bno055imu_isAccelerometerCalibrated'] = {
 };
 
 Blockly.JavaScript['bno055imu_isAccelerometerCalibrated'] = function (block) {
-  var identifier = block.getFieldValue('IDENTIFIER');
+  var identifier = block.getFieldValue('IDENTIFIER').slice(0, -1);
   var code = identifier + '.is(\"AccelerometerCalibrated\")';
   return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
@@ -1066,7 +1071,7 @@ Blockly.Blocks['bno055imu_isMagnetometerCalibrated'] = {
 };
 
 Blockly.JavaScript['bno055imu_isMagnetometerCalibrated'] = function (block) {
-  var identifier = block.getFieldValue('IDENTIFIER');
+  var identifier = block.getFieldValue('IDENTIFIER').slice(0, -1);
   var code = identifier + '.is(\"MagnetometerCalibrated\")';
   return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
@@ -1095,7 +1100,7 @@ Blockly.Blocks['bno055imu_saveCalibrationData'] = {
 };
 
 Blockly.JavaScript['bno055imu_saveCalibrationData'] = function (block) {
-  var identifier = block.getFieldValue('IDENTIFIER');
+  var identifier = block.getFieldValue('IDENTIFIER').slice(0, -1);
   var fileName = Blockly.JavaScript.valueToCode(
     block, 'FILE_NAME', Blockly.JavaScript.ORDER_NONE);
   return identifier + '.saveCalibrationData(' + fileName + ');\n';
@@ -1131,7 +1136,7 @@ Blockly.Blocks['bno055imu_getAngularVelocity'] = {
 };
 
 Blockly.JavaScript['bno055imu_getAngularVelocity'] = function (block) {
-  var identifier = block.getFieldValue('IDENTIFIER');
+  var identifier = block.getFieldValue('IDENTIFIER').slice(0, -1);
   var angleUnit = Blockly.JavaScript.valueToCode(
     block, 'ANGLE_UNIT', Blockly.JavaScript.ORDER_NONE);
   var code = identifier + '.getAngularVelocity(' + angleUnit + ')';
@@ -1173,7 +1178,7 @@ Blockly.Blocks['bno055imu_getAngularOrientation'] = {
 };
 
 Blockly.JavaScript['bno055imu_getAngularOrientation'] = function (block) {
-  var identifier = block.getFieldValue('IDENTIFIER');
+  var identifier = block.getFieldValue('IDENTIFIER').slice(0,-1);
   var axesReference = Blockly.JavaScript.valueToCode(
     block, 'AXES_REFERENCE', Blockly.JavaScript.ORDER_COMMA);
   var axesOrder = Blockly.JavaScript.valueToCode(
