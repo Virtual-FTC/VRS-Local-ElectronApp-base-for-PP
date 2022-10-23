@@ -84,6 +84,16 @@ function writeMotorPowers() {
         UnityInstance.SendMessage("JSAppIntegration","ResetMotor2Encoder");
     }
 
+    UnityInstance.SendMessage("JSAppIntegration","SetMotor3",motors[6]);
+    if ( encoderResets[6]) {
+        UnityInstance.SendMessage("JSAppIntegration","ResetMotor3Encoder");
+    }
+/*
+    UnityInstance.SendMessage("JSAppIntegration","SetMotor4",motors[7]);
+    if ( encoderResets[7]) {
+        UnityInstance.SendMessage("JSAppIntegration","ResetMotor4Encoder");
+    }*/
+    //enabling this makes motor 3 not work. unsure of why.
 
     // UnityInstance.SendMessage("PhotonNetworkPlayer(Clone)", "setFrontLeftVel", motors[0]);
     // UnityInstance.SendMessage("PhotonNetworkPlayer(Clone)", "setFrontRightVel", motors[1]);

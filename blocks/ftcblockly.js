@@ -979,7 +979,7 @@ function variableUpdate() {
 				// 	//var desiredVel = robotConfig["motors"][i]["Velocity"]
 				// 	motorPower = robotConfig["motors"][i]["Velocity"] / (robotConfig["motors"][i]["maxrpm"] * robotConfig["motors"][i]["encoder"] / 60);
 				// }
-
+				
 
 				if (isNaN(motorPower) && document.getElementById('programInit').style.display == "none") {
 					throw "TypeError: Cannot read a motor property of improper type";
