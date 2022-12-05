@@ -166,6 +166,72 @@
 			visibility: hidden;
 		}
 	}
+
+  .modal {
+			display: none; 
+			position: fixed; 
+			z-index: 1;
+			left: 0;
+			top: 0;
+			width: 100%; 
+			height: 100%;
+			overflow: auto; 
+			background-color: rgb(0,0,0); 
+			background-color: rgba(0,0,0,0.4); 
+			}
+
+			/* Modal Content/Box */
+			.modal-content {
+			background-color: #fefefe;
+			margin: 5% auto; 
+			padding: 20px;
+			border: 1px solid #888;
+			width: 80%; 
+			}
+
+			.close {
+			color: #aaa;
+			float: right;
+			font-size: 28px;
+			font-weight: bold;
+			}
+
+			.close:hover,
+			.close:focus {
+			color: black;
+			text-decoration: none;
+			cursor: pointer;
+		}
+
+    .NavButtons {
+			border-radius: 1vh;
+			color: #242424;
+			text-align: center;
+			font-family: Jura;
+			text-decoration: none;
+			font-size: 1vw;
+			font-weight: 600;
+			cursor: pointer;
+			padding: .66vh .75vw;
+			color: rgb(255, 255, 255);
+			background-color: transparent;
+			border: .1vw solid rgb(255, 255, 255);
+			flex: 0 0 auto;
+		}
+
+		.NavButtons:hover {
+			transition-duration: 0.4s;
+			background-color: white;
+			color: #242424;
+		}
+
+		.NavButtons:focus {
+			transition-duration: 0.4s;
+			background-color: white;
+			color: #242424;
+			outline: none;
+			box-shadow: none;
+		}
 	
   </style>
 </head>
@@ -175,7 +241,19 @@
   <div id="LoadingScreen"></div>
   <div style="display: flex;">
     <a onclick="goBack()" id="backButton"><i class="fa fa-chevron-left"></i></a>
+    <button class="NavButtons" id="Keybinds" style="margin-right: 0.5%; margin-left:auto;">
+      Keybinds
+    </button>
+  <div style="width: 1vw;"></div>
   </div>
+
+  <!-- Keybinds modal -->
+  <div id="keybindModal" class="modal">
+		<div class="modal-content">
+		  <span class="close">&times;</span>
+		  <img src="/assets/joystick.JPG" style="margin-left: 22%; margin-right: auto;" width="60%" height="60%">
+		</div>  
+	</div>
 
 
   <div class="container" style="display: flex;">
@@ -185,6 +263,7 @@
           scrolling="no" hidden></iframe>
         <div class="center" id="loadingTextDiv">
           <h1 id="loadingText">Loading Field</h1>
+        </div>
         </div>
       </div>
     </div>
@@ -239,6 +318,28 @@
       window.history.go(-1);
 		}, 500);
 	}
+
+  	//Open Modal
+		var modal = document.getElementById("keybindModal");
+
+		var btn = document.getElementById("Keybinds");
+
+		var span = document.getElementsByClassName("close")[0];
+
+
+		btn.onclick = function() {
+		modal.style.display = "block";
+		}
+
+		span.onclick = function() {
+		modal.style.display = "none";
+		}
+
+		window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+		}
   </script>
 </body>
 
